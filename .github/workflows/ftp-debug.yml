@@ -1,0 +1,32 @@
+name: FTP path check
+
+# Manual, read-only: lists folders as the FTP account sees them, to find the
+# correct FTP_SERVER_DIR. Run from Actions > FTP path check > Run workflow.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List FTP folders
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          echo "FTP home folder after login:"
+          curl -sS --ssl-reqd --max-time 30 --user "$FTP_USERNAME:$FTP_PASSWORD" \
+            -Q "PWD" "ftp://$FTP_SERVER/" -o /dev/null -v 2>&1 | grep -E '^< 257' || true
+          for d in / /www/ /www/codexbloc.com/ /codexbloc.com/ \
+                   /www/codexbloc.com/wp-content/themes/codexbloc/ \
+                   /wp-content/themes/codexbloc/ \
+                   /codexbloc.com/wp-content/themes/codexbloc/; do
+            echo ""
+            echo "---- $d ----"
+            curl -sS --ssl-reqd --list-only --max-time 30 \
+              --user "$FTP_USERNAME:$FTP_PASSWORD" "ftp://$FTP_SERVER$d" 2>&1 | head -40 || true
+          done
