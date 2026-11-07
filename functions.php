@@ -16,6 +16,7 @@ define( 'CODEXBLOC_URI', get_template_directory_uri() );
 require_once CODEXBLOC_DIR . '/inc/defaults.php';
 require_once CODEXBLOC_DIR . '/inc/template-tags.php';
 require_once CODEXBLOC_DIR . '/inc/customizer.php';
+require_once CODEXBLOC_DIR . '/inc/contact.php';
 
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once CODEXBLOC_DIR . '/inc/woocommerce.php';

@@ -50,7 +50,7 @@ jobs:
           local-dir: ./
           exclude: |
             **/.git*
-            **/.github/**
+            **/.git*/**
             **/node_modules/**
             **/src/**
             **/package*.json
