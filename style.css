@@ -1,0 +1,18 @@
+/*
+Theme Name: Codexbloc
+Theme URI: https://codexbloc.com/
+Author: Codexbloc
+Author URI: https://codexbloc.com/
+Description: A very light, fast, mobile-first theme for selling WordPress plugins, themes and PrestaShop modules with WooCommerce. Built with Tailwind CSS (compiled to one small stylesheet), system fonts, no jQuery of its own, and ready for monthly/yearly premium plans via WooCommerce Subscriptions.
+Version: 1.0.0
+Requires at least: 6.2
+Tested up to: 6.8
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: codexbloc
+Tags: e-commerce, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, blog, one-column, two-columns, wide-blocks
+*/
+
+/* All styles are compiled from src/input.css into assets/css/main.css (Tailwind).
+   This file only holds the theme header so WordPress can recognise the theme. */

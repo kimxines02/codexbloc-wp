@@ -1,0 +1,13 @@
+{
+  "name": "codexbloc-theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Codexbloc WordPress theme - Tailwind build",
+  "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./assets/css/main.css --minify",
+    "dev": "tailwindcss -i ./src/input.css -o ./assets/css/main.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
