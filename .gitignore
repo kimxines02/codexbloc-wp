@@ -1,4 +1,37 @@
+# Dependencies (installed by npm ci during deploy)
 node_modules/
-.DS_Store
+vendor/
+
+# Environment and secrets
 .env
 .env.*
+*.pem
+*.key
+
+# Deployment state (lives on the server only)
+.ftp-deploy-sync-state.json
+
+# Logs and caches
+*.log
+npm-debug.log*
+.npm/
+.cache/
+.eslintcache
+.phpcs-cache
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archives and local build leftovers
+*.zip
+*.tar.gz
+*.map

@@ -52,6 +52,19 @@ jobs:
             **/.git*
             **/.git*/**
             **/node_modules/**
+            **/vendor/**
             **/src/**
             **/package*.json
             **/tailwind.config.js
+            **/composer.*
+            **/README.md
+            **/*.log
+            **/*.map
+            **/*.zip
+            **/.env*
+            **/.DS_Store
+            **/Thumbs.db
+            **/.vscode/**
+            **/.idea/**
+            **/.editorconfig
+            **/phpcs.xml*
