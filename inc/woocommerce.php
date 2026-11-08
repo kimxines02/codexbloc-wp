@@ -333,6 +333,29 @@ function codexbloc_single_upgrade() {
 add_action( 'woocommerce_single_product_summary', 'codexbloc_single_upgrade', 36 );
 
 /**
+ * Wrap the add-to-cart form and whatever plugins print right after it
+ * (PayPal / Stripe express buttons) so they can sit side by side.
+ * Variable and grouped products keep the stacked layout: their forms
+ * hold option pickers that need the full width.
+ */
+function codexbloc_buy_box_open() {
+	global $product;
+	if ( $product instanceof WC_Product && ! $product->is_type( array( 'variable', 'grouped' ) ) ) {
+		$GLOBALS['codexbloc_buy_box'] = true;
+		echo '<div class="cb-buy">';
+	}
+}
+add_action( 'woocommerce_before_add_to_cart_form', 'codexbloc_buy_box_open', 1 );
+
+function codexbloc_buy_box_close() {
+	if ( ! empty( $GLOBALS['codexbloc_buy_box'] ) ) {
+		$GLOBALS['codexbloc_buy_box'] = false;
+		echo '</div>';
+	}
+}
+add_action( 'woocommerce_after_add_to_cart_form', 'codexbloc_buy_box_close', 999 );
+
+/**
  * Description tab: wrap the product description in the theme's article styles.
  */
 function codexbloc_description_tab() {

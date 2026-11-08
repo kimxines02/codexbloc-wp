@@ -193,19 +193,30 @@ div.type-product > .onsale { @apply left-4 top-4; }
 .summary .price { @apply mt-3 block text-2xl font-semibold text-ink; }
 .summary .woocommerce-product-details__short-description { @apply mt-4 leading-relaxed text-slate-600; }
 .summary .woocommerce-product-details__short-description p { @apply mb-3; }
-/* Purchase area: buttons stacked at one width, left-aligned with the text above */
+/* Purchase area */
 .summary form.cart { @apply mt-6 flex max-w-md flex-wrap items-stretch gap-3; }
 .summary form.variations_form { @apply block; }
 .woocommerce-variation-add-to-cart { @apply flex max-w-md flex-wrap items-stretch gap-3; }
 /* Sold-individually products render an empty quantity box; don't let it take space */
 .summary .quantity:has(input[type="hidden"]) { display: none; }
 .summary form.cart .single_add_to_cart_button { @apply min-w-0 flex-1 basis-40; }
-/* Express checkout buttons (PayPal Payments, Stripe, WooPayments) on their own row */
-.summary .ppc-button-wrapper, .summary #ppc-button-ppcp-gateway,
-.summary #wc-stripe-payment-request-wrapper, .summary #wcpay-express-checkout-element,
-.summary .wc-stripe-product-checkout-container { @apply m-0 w-full basis-full; }
 .summary .ppc-button-wrapper iframe, .summary #ppc-button-ppcp-gateway iframe { @apply block; }
 .summary #wc-stripe-payment-request-button-separator { display: none; }
+
+/* Simple products: add to cart + express checkout (PayPal, Stripe, WooPayments)
+   side by side from tablet up, stacked full-width on phones.
+   .cb-buy wraps the cart form and anything plugins print right after it. */
+.cb-buy { @apply mt-6 flex max-w-xl flex-col gap-3 sm:flex-row sm:items-start; }
+.cb-buy > :empty { display: none; }
+.cb-buy > *, .cb-buy form.cart > * { @apply m-0 w-full min-w-0 sm:flex-1 sm:basis-0; }
+.cb-buy form.cart { @apply m-0 max-w-none flex-col flex-nowrap sm:flex-row; }
+.cb-buy form.cart > input[type="hidden"], .cb-buy form.cart > .quantity:has(input[type="hidden"]) { display: none; }
+.cb-buy .single_add_to_cart_button { @apply w-full px-5; }
+.cb-buy .ppc-button-wrapper, .cb-buy #ppc-button-ppcp-gateway,
+.cb-buy #wc-stripe-payment-request-wrapper, .cb-buy #wcpay-express-checkout-element,
+.cb-buy .wc-stripe-product-checkout-container { @apply m-0 w-full min-w-0 sm:flex-1 sm:basis-0; }
+/* A quantity picker stays its natural width next to the button */
+.cb-buy form.cart > .quantity:not(:has(input[type="hidden"])) { @apply w-auto flex-none sm:flex-none; }
 .woocommerce-variation-price .price { @apply mb-4 mt-2; }
 .woocommerce-variation-description { @apply mb-3 text-sm text-slate-600; }
 .quantity input.qty { @apply h-12 w-20 px-2 text-center; }
