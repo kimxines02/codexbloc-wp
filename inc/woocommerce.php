@@ -267,11 +267,24 @@ function codexbloc_single_links() {
 		$links[] = array( __( 'Free version on WordPress.org', 'codexbloc' ), codexbloc_product_field( $id, 'wporg_url' ) );
 	}
 
+	if ( $product->is_purchasable() && ! codexbloc_is_wporg_free( $product ) ) {
+		$assurances = array(
+			array( 'shield', __( 'Secure checkout', 'codexbloc' ) ),
+			array( 'download', __( 'Instant download', 'codexbloc' ) ),
+			array( 'clock', __( '1 year of updates & support', 'codexbloc' ) ),
+		);
+		echo '<ul class="mt-4 flex max-w-md flex-wrap gap-x-5 gap-y-2 text-sm text-slate-500">';
+		foreach ( $assurances as $item ) {
+			echo '<li class="inline-flex items-center gap-1.5">' . codexbloc_icon( $item[0], 'h-4 w-4 text-slate-400' ) . esc_html( $item[1] ) . '</li>'; // phpcs:ignore WordPress.Security.EscapeOutput
+		}
+		echo '</ul>';
+	}
+
 	if ( $links ) {
-		echo '<div class="mt-4 flex flex-wrap gap-2">';
+		echo '<div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-slate-200 pt-5">';
 		foreach ( $links as $link ) {
 			printf(
-				'<a class="btn btn-outline !px-4 !py-2 !text-sm" href="%s" target="_blank" rel="noopener">%s%s</a>',
+				'<a class="inline-flex items-center gap-1.5 text-sm font-medium text-accent no-underline hover:text-accent-dark" href="%s" target="_blank" rel="noopener">%s%s</a>',
 				esc_url( $link[1] ),
 				esc_html( $link[0] ),
 				codexbloc_icon( 'external', 'h-3.5 w-3.5' ) // phpcs:ignore WordPress.Security.EscapeOutput

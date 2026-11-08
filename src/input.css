@@ -193,13 +193,23 @@ div.type-product > .onsale { @apply left-4 top-4; }
 .summary .price { @apply mt-3 block text-2xl font-semibold text-ink; }
 .summary .woocommerce-product-details__short-description { @apply mt-4 leading-relaxed text-slate-600; }
 .summary .woocommerce-product-details__short-description p { @apply mb-3; }
-.summary form.cart { @apply mt-6 flex flex-wrap items-center gap-3; }
+/* Purchase area: buttons stacked at one width, left-aligned with the text above */
+.summary form.cart { @apply mt-6 flex max-w-md flex-wrap items-stretch gap-3; }
 .summary form.variations_form { @apply block; }
-.woocommerce-variation-add-to-cart { @apply flex flex-wrap items-center gap-3; }
+.woocommerce-variation-add-to-cart { @apply flex max-w-md flex-wrap items-stretch gap-3; }
+/* Sold-individually products render an empty quantity box; don't let it take space */
+.summary .quantity:has(input[type="hidden"]) { display: none; }
+.summary form.cart .single_add_to_cart_button { @apply min-w-0 flex-1 basis-40; }
+/* Express checkout buttons (PayPal Payments, Stripe, WooPayments) on their own row */
+.summary .ppc-button-wrapper, .summary #ppc-button-ppcp-gateway,
+.summary #wc-stripe-payment-request-wrapper, .summary #wcpay-express-checkout-element,
+.summary .wc-stripe-product-checkout-container { @apply m-0 w-full basis-full; }
+.summary .ppc-button-wrapper iframe, .summary #ppc-button-ppcp-gateway iframe { @apply block; }
+.summary #wc-stripe-payment-request-button-separator { display: none; }
 .woocommerce-variation-price .price { @apply mb-4 mt-2; }
 .woocommerce-variation-description { @apply mb-3 text-sm text-slate-600; }
 .quantity input.qty { @apply h-12 w-20 px-2 text-center; }
-.summary .single_add_to_cart_button { @apply h-12 px-7; }
+.summary .single_add_to_cart_button { @apply h-12 px-7 text-base; }
 p.stock { @apply my-3 text-sm font-medium text-emerald-600; }
 p.stock.out-of-stock { @apply text-red-600; }
 .product_meta { @apply mt-6 space-y-1 border-t border-slate-200 pt-4 text-sm text-slate-500; }
