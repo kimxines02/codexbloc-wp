@@ -3,6 +3,7 @@
  * - Mobile menu toggle
  * - Header search dropdown closes on outside click / Escape
  * - Turns WooCommerce variation dropdowns (e.g. Monthly / Yearly) into pill buttons
+ * - Product gallery thumbnails as a slider (vertical beside the image on sm+)
  */
 (function () {
 	'use strict';
@@ -120,5 +121,100 @@
 		document.addEventListener('DOMContentLoaded', initAllPills);
 	} else {
 		initAllPills();
+	}
+
+	/* Product gallery thumbnail slider -------------------------------------- */
+	var chevron = '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>';
+	var sideBySide = window.matchMedia ? window.matchMedia('(min-width: 640px)') : null;
+
+	function isVertical() { return !!(sideBySide && sideBySide.matches); }
+
+	function initThumbs(gallery) {
+		var list = gallery.querySelector('.flex-control-thumbs');
+		if (!list || list.closest('.cb-thumbs')) { return; }
+
+		var wrap = document.createElement('div');
+		wrap.className = 'cb-thumbs';
+		list.parentNode.insertBefore(wrap, list);
+		wrap.appendChild(list);
+
+		function makeBtn(cls, label) {
+			var b = document.createElement('button');
+			b.type = 'button';
+			b.className = 'cb-thumbs-btn ' + cls;
+			b.setAttribute('aria-label', label);
+			b.innerHTML = chevron;
+			wrap.appendChild(b);
+			return b;
+		}
+		var prev = makeBtn('cb-thumbs-prev', 'Previous images');
+		var next = makeBtn('cb-thumbs-next', 'Next images');
+		next.firstChild.style.transform = 'scaleX(-1)';
+
+		function update() {
+			var v = isVertical();
+			var pos = v ? list.scrollTop : list.scrollLeft;
+			var max = v ? list.scrollHeight - list.clientHeight : list.scrollWidth - list.clientWidth;
+			prev.disabled = pos <= 1;
+			next.disabled = pos >= max - 1;
+		}
+
+		function page(dir) {
+			var v = isVertical();
+			var amount = (v ? list.clientHeight : list.clientWidth) * 0.8 * dir;
+			list.scrollBy(v ? { top: amount, behavior: 'smooth' } : { left: amount, behavior: 'smooth' });
+		}
+
+		// Keep the active thumbnail in view when the main image changes.
+		function revealActive() {
+			var img = list.querySelector('img.flex-active');
+			var li = img ? img.closest('li') : null;
+			if (!li) { return; }
+			var v = isVertical();
+			var start = v ? li.offsetTop : li.offsetLeft;
+			var size = v ? li.offsetHeight : li.offsetWidth;
+			var view = v ? list.clientHeight : list.clientWidth;
+			var pos = v ? list.scrollTop : list.scrollLeft;
+			var target = null;
+			if (start < pos) { target = start; } else if (start + size > pos + view) { target = start + size - view; }
+			if (target !== null) {
+				list.scrollTo(v ? { top: target, behavior: 'smooth' } : { left: target, behavior: 'smooth' });
+			}
+		}
+
+		prev.addEventListener('click', function () { page(-1); });
+		next.addEventListener('click', function () { page(1); });
+		list.addEventListener('scroll', update, { passive: true });
+		window.addEventListener('resize', update);
+		if (sideBySide && sideBySide.addEventListener) { sideBySide.addEventListener('change', update); }
+		if (window.MutationObserver) {
+			new MutationObserver(revealActive).observe(list, { subtree: true, attributes: true, attributeFilter: ['class'] });
+		}
+		Array.prototype.forEach.call(list.querySelectorAll('img'), function (img) {
+			if (!img.complete) { img.addEventListener('load', update); }
+		});
+		update();
+	}
+
+	function watchGalleries() {
+		var galleries = document.querySelectorAll('.woocommerce-product-gallery');
+		Array.prototype.forEach.call(galleries, function (gallery) {
+			initThumbs(gallery);
+			// FlexSlider builds the thumbnail list after load; wait for it.
+			if (window.MutationObserver && !gallery.querySelector('.cb-thumbs')) {
+				var obs = new MutationObserver(function () {
+					if (gallery.querySelector('.flex-control-thumbs')) {
+						obs.disconnect();
+						initThumbs(gallery);
+					}
+				});
+				obs.observe(gallery, { childList: true });
+			}
+		});
+	}
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', watchGalleries);
+	} else {
+		watchGalleries();
 	}
 })();

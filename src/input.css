@@ -187,6 +187,35 @@ div.type-product > .onsale { @apply left-4 top-4; }
 .flex-control-thumbs img { @apply cursor-pointer rounded-lg border border-slate-200 opacity-60 transition hover:opacity-100; }
 .flex-control-thumbs img.flex-active { @apply border-accent opacity-100; }
 
+/* Thumbnail slider (wrapped in .cb-thumbs by theme.js).
+   Phones: swipeable row under the image. sm+: vertical column left of the image. */
+.cb-thumbs { @apply relative mt-3; }
+.cb-thumbs .flex-control-thumbs {
+  @apply m-0 flex snap-x snap-mandatory gap-2 overflow-x-auto overscroll-contain scroll-smooth p-0;
+  scrollbar-width: none;
+}
+.cb-thumbs .flex-control-thumbs::-webkit-scrollbar { display: none; }
+.cb-thumbs .flex-control-thumbs li { @apply m-0 w-[calc((100%-2rem)/5)] flex-none snap-start p-0; }
+.cb-thumbs .flex-control-thumbs img { @apply block aspect-square h-auto w-full object-cover; }
+.cb-thumbs-btn {
+  @apply absolute top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-md transition hover:text-accent;
+}
+.cb-thumbs-btn[disabled] { @apply pointer-events-none opacity-0; }
+.cb-thumbs-prev { @apply -left-3; }
+.cb-thumbs-next { @apply -right-3; }
+
+@media (min-width: 640px) {
+  .woocommerce-product-gallery:has(.cb-thumbs) { @apply grid grid-cols-[5rem_minmax(0,1fr)] gap-3; }
+  .woocommerce-product-gallery:has(.cb-thumbs) > .flex-viewport { @apply col-start-2 row-start-1; }
+  /* height:0 + min-height:100% = as tall as the main image, never taller */
+  .cb-thumbs { @apply col-start-1 row-start-1 mt-0 h-0 min-h-full; }
+  .cb-thumbs .flex-control-thumbs { @apply h-full snap-y flex-col overflow-x-hidden overflow-y-auto; }
+  .cb-thumbs .flex-control-thumbs li { @apply w-full; }
+  .cb-thumbs-btn { @apply left-1/2 top-auto -translate-x-1/2 translate-y-0 rotate-90; }
+  .cb-thumbs-prev { @apply -top-3; }
+  .cb-thumbs-next { @apply -bottom-3; }
+}
+
 .summary .product_title { @apply m-0 text-3xl font-semibold leading-tight tracking-tight text-ink; }
 .summary .woocommerce-product-rating { @apply mt-2 flex items-center gap-2 text-sm; }
 .summary .woocommerce-review-link { @apply text-slate-500 no-underline hover:text-accent; }
