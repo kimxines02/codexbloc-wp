@@ -36,6 +36,8 @@ function codexbloc_defaults() {
 		'newsletter_button' => __( 'Subscribe', 'codexbloc' ),
 		'newsletter_action' => '',
 		'newsletter_field'  => 'EMAIL',
+		'all_access_url'    => '',
+		'addons_url'        => '',
 	);
 }
 
@@ -141,12 +143,110 @@ function codexbloc_plans() {
 		),
 		'premium' => array(
 			'title' => __( 'Premium plans', 'codexbloc' ),
-			'text'  => __( 'Extra features, faster support and regular updates. Billed monthly or yearly.', 'codexbloc' ),
+			'text'  => __( 'Extra features, priority support and a year of updates. Licensed per site, billed yearly.', 'codexbloc' ),
 			'items' => array(
 				__( 'Advanced features on top of the free version', 'codexbloc' ),
 				__( 'Priority email support', 'codexbloc' ),
-				__( 'Updates for as long as you subscribe', 'codexbloc' ),
+				__( 'Keeps working even if you do not renew', 'codexbloc' ),
 			),
+		),
+	);
+}
+
+/**
+ * Per-product license tiers shown on the Pricing page.
+ * Prices are typical starting prices; each product page shows its exact price.
+ */
+function codexbloc_license_tiers() {
+	return array(
+		array(
+			'name'     => __( 'Single site', 'codexbloc' ),
+			'price'    => '€39',
+			'period'   => __( '/ year', 'codexbloc' ),
+			'note'     => __( 'For one store.', 'codexbloc' ),
+			'sites'    => __( '1 site', 'codexbloc' ),
+			'featured' => false,
+		),
+		array(
+			'name'     => __( 'Business', 'codexbloc' ),
+			'price'    => '€79',
+			'period'   => __( '/ year', 'codexbloc' ),
+			'note'     => __( 'For a few stores or staging + live.', 'codexbloc' ),
+			'sites'    => __( 'Up to 5 sites', 'codexbloc' ),
+			'featured' => true,
+		),
+		array(
+			'name'     => __( 'Agency', 'codexbloc' ),
+			'price'    => '€149',
+			'period'   => __( '/ year', 'codexbloc' ),
+			'note'     => __( 'For agencies and client work.', 'codexbloc' ),
+			'sites'    => __( 'Unlimited sites', 'codexbloc' ),
+			'featured' => false,
+		),
+	);
+}
+
+/**
+ * What every premium license includes.
+ */
+function codexbloc_license_includes() {
+	return array(
+		__( 'All premium features of the plugin', 'codexbloc' ),
+		__( '12 months of updates', 'codexbloc' ),
+		__( '12 months of priority email support', 'codexbloc' ),
+		__( 'License key for one-click updates in your dashboard', 'codexbloc' ),
+		__( 'Plugin keeps working if you do not renew', 'codexbloc' ),
+	);
+}
+
+/**
+ * All-access bundle (WordPress products only). Shown as "coming soon" until
+ * "All-access: checkout link" is set in the Customizer.
+ */
+function codexbloc_all_access() {
+	return array(
+		'title'   => __( 'WP All-Access', 'codexbloc' ),
+		'text'    => __( 'Every premium WordPress plugin and theme we make, current and future, on unlimited sites.', 'codexbloc' ),
+		'price'   => '€179',
+		'period'  => __( '/ year', 'codexbloc' ),
+		'monthly' => __( 'or €19 / month', 'codexbloc' ),
+		'items'   => array(
+			__( 'All premium WordPress plugins and themes', 'codexbloc' ),
+			__( 'New products added automatically', 'codexbloc' ),
+			__( 'Unlimited sites', 'codexbloc' ),
+			__( 'Priority support for everything', 'codexbloc' ),
+		),
+	);
+}
+
+/**
+ * Pricing FAQ. Review these against your checkout provider's terms.
+ */
+function codexbloc_pricing_faqs() {
+	return array(
+		array(
+			'q' => __( 'What happens if I do not renew?', 'codexbloc' ),
+			'a' => __( 'The plugin keeps working on your site with all its premium features. You just stop receiving updates and support until you renew.', 'codexbloc' ),
+		),
+		array(
+			'q' => __( 'Can I try it before buying?', 'codexbloc' ),
+			'a' => __( 'Yes. Every premium plugin has a free version on WordPress.org, so you can test the core features on your store first.', 'codexbloc' ),
+		),
+		array(
+			'q' => __( 'Can I move to a bigger plan later?', 'codexbloc' ),
+			'a' => __( 'Yes. Contact us and we will upgrade your license. You only pay the difference.', 'codexbloc' ),
+		),
+		array(
+			'q' => __( 'Do staging and local sites count?', 'codexbloc' ),
+			'a' => __( 'No. Development, staging and localhost sites do not count toward your site limit.', 'codexbloc' ),
+		),
+		array(
+			'q' => __( 'Are taxes included?', 'codexbloc' ),
+			'a' => __( 'Prices are shown in euros without VAT. Any VAT or sales tax for your country is calculated at checkout.', 'codexbloc' ),
+		),
+		array(
+			'q' => __( 'Where can I buy PrestaShop modules?', 'codexbloc' ),
+			'a' => __( 'Our PrestaShop modules are sold through PrestaShop Addons, the official marketplace. They are not part of the WordPress plans on this page.', 'codexbloc' ),
 		),
 	);
 }

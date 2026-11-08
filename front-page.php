@@ -36,7 +36,7 @@ $prices    = codexbloc_service_prices();
 				<ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600">
 					<li class="flex items-center gap-2"><?php echo codexbloc_icon( 'check', 'h-4 w-4 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Free on WordPress.org', 'codexbloc' ); ?></li>
 					<li class="flex items-center gap-2"><?php echo codexbloc_icon( 'check', 'h-4 w-4 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Built lean and fast', 'codexbloc' ); ?></li>
-					<li class="flex items-center gap-2"><?php echo codexbloc_icon( 'check', 'h-4 w-4 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Monthly or yearly plans', 'codexbloc' ); ?></li>
+					<li class="flex items-center gap-2"><?php echo codexbloc_icon( 'check', 'h-4 w-4 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Yearly licenses, no lock-in', 'codexbloc' ); ?></li>
 				</ul>
 			</div>
 
@@ -55,7 +55,7 @@ $prices    = codexbloc_service_prices();
 						<li class="flex items-center gap-4 p-4">
 							<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent"><?php echo codexbloc_icon( 'bolt', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 							<span class="min-w-0 grow"><span class="block font-semibold text-ink sm:truncate"><?php esc_html_e( 'Premium plugins', 'codexbloc' ); ?></span><span class="block text-sm text-slate-500"><?php esc_html_e( 'More features, priority support', 'codexbloc' ); ?></span></span>
-							<span class="shrink-0 rounded-full bg-accent-soft px-2.5 py-1 text-xs font-medium text-accent"><?php esc_html_e( 'Monthly / Yearly', 'codexbloc' ); ?></span>
+							<span class="shrink-0 rounded-full bg-accent-soft px-2.5 py-1 text-xs font-medium text-accent"><?php esc_html_e( 'From €39 / yr', 'codexbloc' ); ?></span>
 						</li>
 						<li class="flex items-center gap-4 p-4">
 							<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500"><?php echo codexbloc_icon( 'code', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
@@ -133,7 +133,7 @@ $prices    = codexbloc_service_prices();
 	<section id="premium" class="cb-container scroll-mt-24 pt-16 sm:pt-24" aria-labelledby="cb-plans-title">
 		<div class="mx-auto max-w-2xl text-center">
 			<h2 id="cb-plans-title" class="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"><?php esc_html_e( 'Start free. Upgrade when you are ready.', 'codexbloc' ); ?></h2>
-			<p class="mt-3 text-slate-600"><?php esc_html_e( 'Every plugin has a free version. Premium adds more features, and you pick monthly or yearly billing at checkout.', 'codexbloc' ); ?></p>
+			<p class="mt-3 text-slate-600"><?php esc_html_e( 'Every plugin has a free version. Premium adds more features, priority support and a year of updates.', 'codexbloc' ); ?></p>
 		</div>
 
 		<div class="mx-auto mt-10 grid grid-cols-1 max-w-4xl gap-5 md:grid-cols-2">
@@ -149,7 +149,7 @@ $prices    = codexbloc_service_prices();
 					</ul>
 					<div class="mt-auto pt-8">
 						<?php if ( $is_premium ) : ?>
-							<a class="btn btn-primary w-full" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'See premium plugins', 'codexbloc' ); ?></a>
+							<a class="btn btn-primary w-full" href="<?php echo esc_url( codexbloc_pricing_url() ); ?>"><?php esc_html_e( 'See pricing', 'codexbloc' ); ?></a>
 						<?php else : ?>
 							<?php $wporg = codexbloc_mod( 'wporg_url' ); ?>
 							<a class="btn btn-outline w-full" href="<?php echo esc_url( $wporg ? $wporg : $shop_url ); ?>"<?php echo $wporg ? ' target="_blank" rel="noopener"' : ''; ?>><?php echo $wporg ? esc_html__( 'Find us on WordPress.org', 'codexbloc' ) : esc_html__( 'Browse free plugins', 'codexbloc' ); ?></a>

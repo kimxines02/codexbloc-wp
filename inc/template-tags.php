@@ -298,3 +298,11 @@ function codexbloc_link( $url ) {
 	}
 	return $url;
 }
+
+/**
+ * URL of the Pricing page (slug "pricing"), or the homepage plans section.
+ */
+function codexbloc_pricing_url() {
+	$page = get_page_by_path( 'pricing' );
+	return $page ? get_permalink( $page ) : home_url( '/#premium' );
+}
