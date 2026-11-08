@@ -31,6 +31,11 @@ function codexbloc_defaults() {
 		'linkedin_url'    => '',
 		'terms_url'       => '',
 		'wporg_url'       => '',
+		'newsletter_title'  => __( 'Get product updates in your inbox', 'codexbloc' ),
+		'newsletter_text'   => __( 'New plugins, feature releases and WooCommerce tips. One short email a month.', 'codexbloc' ),
+		'newsletter_button' => __( 'Subscribe', 'codexbloc' ),
+		'newsletter_action' => '',
+		'newsletter_field'  => 'EMAIL',
 	);
 }
 

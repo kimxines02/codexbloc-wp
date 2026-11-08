@@ -87,6 +87,11 @@ function codexbloc_customize_register( $wp_customize ) {
 		'linkedin_url'    => array( __( 'LinkedIn URL', 'codexbloc' ), 'url' ),
 		'terms_url'       => array( __( 'Terms of Service URL', 'codexbloc' ), 'url' ),
 		'wporg_url'       => array( __( 'Your WordPress.org profile URL', 'codexbloc' ), 'url' ),
+		'newsletter_title'  => array( __( 'Newsletter: heading', 'codexbloc' ), 'text' ),
+		'newsletter_text'   => array( __( 'Newsletter: description', 'codexbloc' ), 'textarea' ),
+		'newsletter_button' => array( __( 'Newsletter: button text', 'codexbloc' ), 'text' ),
+		'newsletter_action' => array( __( 'Newsletter: form action URL from your email provider (blank = built-in signup)', 'codexbloc' ), 'url' ),
+		'newsletter_field'  => array( __( 'Newsletter: email field name used by your provider (e.g. EMAIL for Mailchimp)', 'codexbloc' ), 'text' ),
 	);
 
 	foreach ( $text_fields as $key => $field ) {
@@ -108,6 +113,23 @@ function codexbloc_customize_register( $wp_customize ) {
 			)
 		);
 	}
+
+	$wp_customize->add_setting(
+		'codexbloc_newsletter_show',
+		array(
+			'default'           => true,
+			'sanitize_callback' => 'wp_validate_boolean',
+		)
+	);
+	$wp_customize->add_control(
+		'codexbloc_newsletter_show',
+		array(
+			'label'    => __( 'Show newsletter signup above the footer', 'codexbloc' ),
+			'section'  => 'codexbloc_section',
+			'type'     => 'checkbox',
+			'priority' => 2,
+		)
+	);
 
 	$wp_customize->add_setting(
 		'codexbloc_accent',

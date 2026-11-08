@@ -13,6 +13,10 @@ $email    = codexbloc_mod( 'contact_email' );
 $privacy  = function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '';
 $terms    = codexbloc_mod( 'terms_url' );
 $socials  = codexbloc_social_links();
+
+if ( codexbloc_newsletter_enabled() ) {
+	get_template_part( 'template-parts/newsletter' );
+}
 ?>
 
 <footer class="mt-20 border-t border-slate-200 bg-slate-50">
