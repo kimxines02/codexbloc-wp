@@ -216,6 +216,37 @@ div.type-product > .onsale { @apply left-4 top-4; }
   .cb-thumbs-next { @apply -bottom-3; }
 }
 
+/* Image lightbox (built by theme.js on a native <dialog>).
+   Image on the left, thumbnail column on the right; thumbnails become a row on phones. */
+.woocommerce-product-gallery__image a { @apply cursor-zoom-in; }
+.cb-zoom-btn {
+  @apply absolute right-3 top-3 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-md transition hover:text-accent;
+}
+.cb-lightbox {
+  @apply fixed inset-0 m-0 h-[100dvh] max-h-none w-screen max-w-none border-0 bg-transparent p-0 text-white;
+}
+.cb-lightbox::backdrop { background: rgb(0 0 0 / 0.92); }
+.cb-lb-inner { @apply flex h-full flex-col sm:flex-row; }
+.cb-lb-stage { @apply relative flex min-h-0 min-w-0 flex-1 items-center justify-center px-4 pb-10 pt-16 sm:px-20 sm:py-12; }
+.cb-lb-img { @apply max-h-full max-w-full select-none rounded-lg object-contain; }
+.cb-lb-nav {
+  @apply absolute top-1/2 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-white/10 text-white transition hover:bg-white/25;
+}
+.cb-lb-nav[disabled] { @apply pointer-events-none opacity-0; }
+.cb-lb-prev { @apply left-2 sm:left-5; }
+.cb-lb-next { @apply right-2 sm:right-5; }
+.cb-lb-count { @apply absolute bottom-3 left-1/2 m-0 -translate-x-1/2 text-sm tabular-nums text-white/70; }
+.cb-lb-close {
+  @apply absolute right-3 top-3 z-20 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-0 bg-white/10 text-white transition hover:bg-white/25;
+}
+.cb-lb-side { @apply flex-none border-t border-white/10 bg-black/40 p-3 sm:w-40 sm:overflow-y-auto sm:border-l sm:border-t-0 sm:px-4 sm:pb-4 sm:pt-20; scrollbar-width: thin; }
+.cb-lb-thumbs { @apply m-0 flex list-none gap-2 overflow-x-auto p-0 sm:flex-col sm:gap-3 sm:overflow-visible; scrollbar-width: none; }
+.cb-lb-thumbs::-webkit-scrollbar { display: none; }
+.cb-lb-thumbs li { @apply m-0 w-16 flex-none p-0 sm:w-full; }
+.cb-lb-thumbs button { @apply block w-full cursor-pointer overflow-hidden rounded-lg border-0 bg-white/5 p-0 opacity-50 ring-2 ring-transparent transition hover:opacity-100; }
+.cb-lb-thumbs button[aria-current="true"] { @apply opacity-100 ring-white; }
+.cb-lb-thumbs img { @apply block aspect-square h-auto w-full object-cover; }
+
 .summary .product_title { @apply m-0 text-3xl font-semibold leading-tight tracking-tight text-ink; }
 .summary .woocommerce-product-rating { @apply mt-2 flex items-center gap-2 text-sm; }
 .summary .woocommerce-review-link { @apply text-slate-500 no-underline hover:text-accent; }

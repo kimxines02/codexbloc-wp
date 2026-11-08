@@ -15,8 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Theme support. Gallery zoom and lightbox are left off on purpose (they load
- * extra scripts); the light slider is kept for products with several images.
+ * Theme support. WooCommerce's zoom and PhotoSwipe lightbox are left off on
+ * purpose (they load extra scripts); the light slider is kept for products with
+ * several images, and theme.js adds its own small lightbox.
  */
 function codexbloc_woocommerce_setup() {
 	add_theme_support(
