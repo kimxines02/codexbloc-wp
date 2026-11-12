@@ -18,6 +18,7 @@ require_once CODEXBLOC_DIR . '/inc/template-tags.php';
 require_once CODEXBLOC_DIR . '/inc/customizer.php';
 require_once CODEXBLOC_DIR . '/inc/contact.php';
 require_once CODEXBLOC_DIR . '/inc/newsletter.php';
+require_once CODEXBLOC_DIR . '/inc/showcase.php';
 
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once CODEXBLOC_DIR . '/inc/woocommerce.php';
