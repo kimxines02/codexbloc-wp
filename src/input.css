@@ -90,6 +90,7 @@ select, textarea {
   @apply w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-base text-ink placeholder:text-slate-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25;
 }
 select { @apply pr-9; }
+input.cb-input-dark { @apply border-white/15 bg-white/10 text-white placeholder:text-slate-400 focus:border-white/40 focus:ring-white/20; }
 textarea { @apply min-h-28; }
 input[type="search"]::-webkit-search-cancel-button { display: none; }
 

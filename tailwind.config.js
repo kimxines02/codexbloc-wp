@@ -4,6 +4,7 @@ module.exports = {
     './*.php',
     './inc/**/*.php',
     './template-parts/**/*.php',
+    './codexbloc-showcase/**/*.php',
     './assets/js/**/*.js',
   ],
   theme: {
