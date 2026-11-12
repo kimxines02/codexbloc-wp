@@ -125,6 +125,39 @@ function codexbloc_cleanup_head() {
 add_action( 'init', 'codexbloc_cleanup_head' );
 
 /**
+ * Site icon (favicon). Uses the Codexbloc mark from assets/img/icons/ unless a
+ * Site Icon is set in Appearance > Customize > Site Identity, which then wins.
+ */
+function codexbloc_favicon_tags() {
+	if ( has_site_icon() ) {
+		return;
+	}
+	$dir = CODEXBLOC_URI . '/assets/img/icons/';
+	$ver = '?v=' . CODEXBLOC_VERSION;
+	printf( '<link rel="icon" href="%s" sizes="any">' . "\n", esc_url( $dir . 'favicon.ico' . $ver ) );
+	printf( '<link rel="icon" href="%s" type="image/svg+xml">' . "\n", esc_url( $dir . 'favicon.svg' . $ver ) );
+	printf( '<link rel="icon" href="%s" sizes="192x192" type="image/png">' . "\n", esc_url( $dir . 'icon-192.png' . $ver ) );
+	printf( '<link rel="apple-touch-icon" href="%s">' . "\n", esc_url( $dir . 'apple-touch-icon.png' . $ver ) );
+	echo '<meta name="theme-color" content="#ffffff">' . "\n";
+}
+add_action( 'wp_head', 'codexbloc_favicon_tags', 2 );
+add_action( 'login_head', 'codexbloc_favicon_tags' );
+add_action( 'admin_head', 'codexbloc_favicon_tags' );
+
+/**
+ * /favicon.ico: WordPress redirects it to its own "W" logo when no Site Icon
+ * is set. Send it to the Codexbloc icon instead (browsers and Google use it).
+ */
+function codexbloc_favicon_ico() {
+	if ( has_site_icon() ) {
+		return;
+	}
+	wp_safe_redirect( CODEXBLOC_URI . '/assets/img/icons/favicon.ico', 301 );
+	exit;
+}
+add_action( 'do_faviconico', 'codexbloc_favicon_ico' );
+
+/**
  * Excerpt tweaks.
  */
 add_filter(
