@@ -206,7 +206,7 @@ function codexbloc_menu_fallback( $args ) {
 		if ( $page ) {
 			$items[] = array( $label, get_permalink( $page ) );
 		}
-		if ( 'services' === $slug && wp_count_posts( 'cb_showcase' )->publish ) {
+		if ( 'services' === $slug && post_type_exists( 'cb_showcase' ) && wp_count_posts( 'cb_showcase' )->publish ) {
 			$items[] = array( __( 'Showcase', 'codexbloc' ), get_post_type_archive_link( 'cb_showcase' ) );
 		}
 	}

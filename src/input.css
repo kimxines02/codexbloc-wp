@@ -47,24 +47,6 @@
   .cb-pills button[aria-checked="true"] { @apply border-accent bg-accent-soft text-accent ring-1 ring-accent; }
   .cb-pills button:disabled { @apply cursor-not-allowed opacity-40; }
   td.has-pills select { @apply sr-only; }
-
-  /* Showcase: filter pills + screenshot that scrolls top-to-bottom on hover */
-  .cb-sc-pill {
-    @apply inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 no-underline transition hover:border-slate-400 hover:text-ink;
-  }
-  .cb-sc-pill[aria-current="page"] { @apply border-accent bg-accent-soft text-accent ring-1 ring-accent; }
-  .cb-sc-shot { @apply relative overflow-hidden; }
-  .cb-sc-shot img {
-    @apply absolute inset-0 h-full w-full object-cover;
-    object-position: top;
-    transition: object-position 6s ease-in-out;
-  }
-  .cb-sc-card:hover .cb-sc-shot img,
-  .cb-sc-card:focus-within .cb-sc-shot img { object-position: bottom; transition-duration: 8s; }
-  @media (prefers-reduced-motion: reduce) {
-    .cb-sc-shot img { transition: none; }
-    .cb-sc-card:hover .cb-sc-shot img { object-position: top; }
-  }
 }
 
 /* ==========================================================================
