@@ -14,12 +14,13 @@ $privacy  = function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url
 $terms    = codexbloc_mod( 'terms_url' );
 $socials  = codexbloc_social_links();
 
-if ( codexbloc_newsletter_enabled() ) {
+$show_newsletter = codexbloc_newsletter_enabled();
+if ( $show_newsletter ) {
 	get_template_part( 'template-parts/newsletter' );
 }
 ?>
 
-<footer class="mt-20 border-t border-slate-200 bg-slate-50">
+<footer class="<?php echo $show_newsletter ? '' : 'mt-20 border-t border-slate-200 '; ?>bg-slate-50">
 	<div class="cb-container py-12">
 		<div class="grid grid-cols-1 gap-10 md:grid-cols-12">
 

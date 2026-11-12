@@ -1,6 +1,6 @@
 <?php
 /**
- * Newsletter signup section, shown above the footer.
+ * Newsletter signup: full-width band directly above the footer.
  *
  * @package Codexbloc
  */
@@ -8,19 +8,25 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 ?>
 
-<section id="newsletter" class="cb-container mt-20 scroll-mt-24" aria-labelledby="cb-newsletter-title">
-	<div class="rounded-3xl bg-accent-soft px-6 py-10 sm:px-10 md:py-12">
-		<div class="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
+<section id="newsletter" class="relative isolate mt-20 scroll-mt-24 overflow-hidden bg-ink" aria-labelledby="cb-newsletter-title">
+	<div class="cb-dots pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
+	<div class="pointer-events-none absolute -top-40 right-[-10%] -z-10 h-96 w-96 rounded-full bg-accent/35 blur-3xl" aria-hidden="true"></div>
+	<div class="pointer-events-none absolute -bottom-48 left-[-5%] -z-10 h-80 w-80 rounded-full bg-accent/15 blur-3xl" aria-hidden="true"></div>
 
-			<div>
-				<span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-accent shadow-sm">
-					<?php echo codexbloc_icon( 'mail', 'h-5 w-5' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+	<div class="cb-container py-14 sm:py-16">
+		<div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+
+			<div class="flex items-start gap-5">
+				<span class="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white ring-1 ring-white/15 sm:flex">
+					<?php echo codexbloc_icon( 'mail', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 				</span>
-				<h2 id="cb-newsletter-title" class="mt-4 text-2xl sm:text-3xl"><?php echo esc_html( codexbloc_mod( 'newsletter_title' ) ); ?></h2>
-				<p class="mt-2 max-w-md text-slate-600"><?php echo esc_html( codexbloc_mod( 'newsletter_text' ) ); ?></p>
+				<div>
+					<p class="text-xs font-medium uppercase tracking-[0.14em] text-slate-400"><?php esc_html_e( 'Newsletter', 'codexbloc' ); ?></p>
+					<h2 id="cb-newsletter-title" class="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl"><?php echo esc_html( codexbloc_mod( 'newsletter_title' ) ); ?></h2>
+					<p class="mt-2 max-w-lg leading-relaxed text-slate-400"><?php echo esc_html( codexbloc_mod( 'newsletter_text' ) ); ?></p>
+				</div>
 			</div>
 
 			<div>

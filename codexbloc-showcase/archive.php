@@ -85,7 +85,7 @@ $cb_newsletter = codexbloc_newsletter_enabled();
 							</div>
 						</div>
 						<div>
-							<?php get_template_part( 'template-parts/newsletter-form', null, array( 'dark' => true ) ); ?>
+							<?php get_template_part( 'template-parts/newsletter-form' ); ?>
 						</div>
 					</div>
 				</div>
