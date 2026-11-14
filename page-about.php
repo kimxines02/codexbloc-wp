@@ -19,21 +19,6 @@ get_header();
 $shop_url = codexbloc_shop_url();
 $contact  = codexbloc_link( codexbloc_mod( 'contact_url' ) );
 
-/**
- * Category link with a shop fallback.
- *
- * @param string $slug Product category slug.
- */
-$cat_link = function ( $slug ) use ( $shop_url ) {
-	if ( taxonomy_exists( 'product_cat' ) ) {
-		$term = get_term_by( 'slug', $slug, 'product_cat' );
-		if ( $term && ! is_wp_error( $term ) ) {
-			return get_term_link( $term );
-		}
-	}
-	return $shop_url;
-};
-
 $showcase = post_type_exists( 'cb_showcase' ) ? get_post_type_archive_link( 'cb_showcase' ) : '';
 
 // Starting price for website packages (inc/defaults.php).
@@ -51,7 +36,7 @@ $offers = array(
 			__( 'Tested with current releases', 'codexbloc' ),
 		),
 		'label'  => __( 'Browse plugins', 'codexbloc' ),
-		'url'    => $cat_link( 'wordpress-plugins' ),
+		'url'    => codexbloc_cat_url( 'wordpress-plugins' ),
 	),
 	array(
 		'icon'   => 'code',
@@ -63,7 +48,7 @@ $offers = array(
 			__( 'Easy to make your own', 'codexbloc' ),
 		),
 		'label'  => $showcase ? __( 'See sample sites', 'codexbloc' ) : __( 'Browse themes', 'codexbloc' ),
-		'url'    => $showcase ? $showcase : $cat_link( 'wordpress-themes' ),
+		'url'    => $showcase ? $showcase : codexbloc_cat_url( 'wordpress-themes' ),
 	),
 	array(
 		'icon'   => 'bag',

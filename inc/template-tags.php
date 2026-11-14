@@ -302,6 +302,21 @@ function codexbloc_link( $url ) {
 }
 
 /**
+ * Link to a product category by slug, falling back to the shop page.
+ *
+ * @param string $slug Product category slug.
+ */
+function codexbloc_cat_url( $slug ) {
+	if ( taxonomy_exists( 'product_cat' ) ) {
+		$term = get_term_by( 'slug', $slug, 'product_cat' );
+		if ( $term && ! is_wp_error( $term ) ) {
+			return get_term_link( $term );
+		}
+	}
+	return codexbloc_shop_url();
+}
+
+/**
  * Add anchor ids to H2 headings in rendered content and collect them for a table of contents.
  *
  * @param string $content Rendered post content (after the_content filters).

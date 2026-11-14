@@ -335,6 +335,11 @@ table.variations label { @apply mb-2 block text-sm font-semibold text-ink; }
 .cb-prose-sections > h2:not(:first-child) { @apply mt-14 border-t border-slate-200 pt-10; }
 .cb-prose-sections > h2 { @apply text-xl sm:text-2xl; }
 
+/* Floating section index: active section */
+.cb-index .cb-index-link.is-active .cb-index-dot { @apply h-2.5 w-2.5 bg-accent ring-4 ring-accent/15; }
+#cb-index-menu .cb-index-link.is-active { @apply bg-accent-soft text-accent; }
+#cb-index-menu .cb-index-link.is-active .cb-index-dot { @apply bg-accent; }
+
 /* About page section nav: active pill */
 .cb-subnav a.is-active { @apply bg-ink text-white hover:bg-ink hover:text-white; }
 
