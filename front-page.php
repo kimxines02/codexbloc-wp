@@ -16,6 +16,7 @@ $shop_url  = codexbloc_shop_url();
 $cta_url   = codexbloc_mod( 'hero_cta_url' ) ? codexbloc_link( codexbloc_mod( 'hero_cta_url' ) ) : $shop_url;
 $cta2_url  = codexbloc_link( codexbloc_mod( 'hero_cta2_url' ) );
 $contact   = codexbloc_link( codexbloc_mod( 'contact_url' ) );
+$quote_url = add_query_arg( 'topic', 'project', $contact ); // Services: no prices, ask for a quote.
 $showcase  = post_type_exists( 'cb_showcase' ) ? get_post_type_archive_link( 'cb_showcase' ) : '';
 
 // Hero: the three ways we help, so visitors can pick a path at a glance.
@@ -270,7 +271,7 @@ if ( codexbloc_newsletter_enabled() ) {
 					<p class="text-lg font-semibold text-white"><?php esc_html_e( 'Let\'s build something together', 'codexbloc' ); ?></p>
 					<p class="mt-1 text-sm text-slate-400"><?php esc_html_e( 'Tell us about your project and we will get back to you with a free, no-obligation quote.', 'codexbloc' ); ?></p>
 				</div>
-				<a class="btn btn-primary flex-none" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Tell us about your project', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+				<a class="btn btn-primary flex-none" href="<?php echo esc_url( $quote_url ); ?>"><?php esc_html_e( 'Tell us about your project', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 			</div>
 
 		</div>

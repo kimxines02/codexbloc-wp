@@ -223,115 +223,6 @@ add_filter(
 );
 
 /**
- * Prices are never shown: every product that is not a free WordPress.org
- * download is "Contact us for pricing". The price, sale badge and cart
- * buttons are hidden and replaced with a link to the contact form.
- */
-function codexbloc_is_quote_only( $product ) {
-	return $product instanceof WC_Product && ! codexbloc_is_wporg_free( $product );
-}
-
-/**
- * Contact page URL, pre-filled with the pricing topic and the product name.
- *
- * @param WC_Product|null $product Product being asked about.
- */
-function codexbloc_quote_url( $product = null ) {
-	$args = array( 'topic' => 'presales' );
-	if ( $product instanceof WC_Product ) {
-		$args['product'] = $product->get_name();
-	}
-	return add_query_arg( array_map( 'rawurlencode', $args ), codexbloc_link( codexbloc_mod( 'contact_url' ) ) );
-}
-
-// No add to cart for quote-only products (simple and variations).
-foreach ( array( 'woocommerce_is_purchasable', 'woocommerce_variation_is_purchasable' ) as $codexbloc_hook ) {
-	add_filter(
-		$codexbloc_hook,
-		function ( $purchasable, $product ) {
-			return ( ! is_admin() && codexbloc_is_quote_only( $product ) ) ? false : $purchasable;
-		},
-		20,
-		2
-	);
-}
-
-// Hide the price everywhere on the storefront.
-add_filter(
-	'woocommerce_get_price_html',
-	function ( $price, $product ) {
-		return ( ! is_admin() && codexbloc_is_quote_only( $product ) ) ? '' : $price;
-	},
-	30,
-	2
-);
-
-// Hide the "Sale!" badge, which hints at pricing.
-add_filter(
-	'woocommerce_sale_flash',
-	function ( $html, $post, $product ) {
-		return codexbloc_is_quote_only( $product ) ? '' : $html;
-	},
-	10,
-	3
-);
-
-// Keep prices out of search results (structured data).
-add_filter(
-	'woocommerce_structured_data_product',
-	function ( $markup, $product ) {
-		if ( codexbloc_is_quote_only( $product ) ) {
-			unset( $markup['offers'] );
-		}
-		return $markup;
-	},
-	10,
-	2
-);
-
-// Product grids: "Contact us for pricing" instead of add to cart.
-add_filter(
-	'woocommerce_loop_add_to_cart_link',
-	function ( $html, $product ) {
-		if ( ! codexbloc_is_quote_only( $product ) ) {
-			return $html;
-		}
-		return sprintf(
-			'<a href="%s" class="button">%s</a>',
-			esc_url( codexbloc_quote_url( $product ) ),
-			esc_html__( 'Contact us for pricing', 'codexbloc' )
-		);
-	},
-	20,
-	2
-);
-
-// Single product: swap the price and cart form for a pricing enquiry box.
-add_action(
-	'woocommerce_single_product_summary',
-	function () {
-		global $product;
-		if ( codexbloc_is_quote_only( $product ) ) {
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
-			add_action( 'woocommerce_single_product_summary', 'codexbloc_single_quote_cta', 30 );
-		}
-	},
-	1
-);
-
-function codexbloc_single_quote_cta() {
-	global $product;
-	?>
-	<div class="my-6 max-w-md rounded-2xl border border-slate-200 bg-slate-50 p-5">
-		<p class="font-semibold text-ink"><?php esc_html_e( 'Pricing on request', 'codexbloc' ); ?></p>
-		<p class="mt-1 text-sm leading-relaxed text-slate-600"><?php esc_html_e( 'Tell us a little about your store and we will reply with a quote, usually within one business day.', 'codexbloc' ); ?></p>
-		<a class="btn btn-primary mt-4" href="<?php echo esc_url( codexbloc_quote_url( $product ) ); ?>"><?php esc_html_e( 'Contact us for pricing', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
-	</div>
-	<?php
-}
-
-/**
  * Single product: features, buttons and details.
  */
 function codexbloc_single_features() {
@@ -375,6 +266,19 @@ function codexbloc_single_links() {
 	}
 	if ( codexbloc_product_field( $id, 'wporg_url' ) && ! codexbloc_is_wporg_free( $product ) ) {
 		$links[] = array( __( 'Free version on WordPress.org', 'codexbloc' ), codexbloc_product_field( $id, 'wporg_url' ) );
+	}
+
+	if ( $product->is_purchasable() && ! codexbloc_is_wporg_free( $product ) ) {
+		$assurances = array(
+			array( 'shield', __( 'Secure checkout', 'codexbloc' ) ),
+			array( 'download', __( 'Instant download', 'codexbloc' ) ),
+			array( 'chat', __( 'Support from the developers', 'codexbloc' ) ),
+		);
+		echo '<ul class="mt-4 flex max-w-md flex-wrap gap-x-5 gap-y-2 text-sm text-slate-500">';
+		foreach ( $assurances as $item ) {
+			echo '<li class="inline-flex items-center gap-1.5">' . codexbloc_icon( $item[0], 'h-4 w-4 text-slate-400' ) . esc_html( $item[1] ) . '</li>'; // phpcs:ignore WordPress.Security.EscapeOutput
+		}
+		echo '</ul>';
 	}
 
 	if ( $links ) {

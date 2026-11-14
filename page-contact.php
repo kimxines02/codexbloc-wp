@@ -23,7 +23,7 @@ $recipient = codexbloc_contact_recipient();
 $topics    = codexbloc_contact_topics();
 $shop_url  = codexbloc_shop_url();
 
-// Pre-fill from links like /contact/?topic=presales&product=Name ("Contact us for pricing").
+// Pre-fill from links like /contact/?topic=project (service quotes) or &product=Name.
 // phpcs:disable WordPress.Security.NonceVerification
 if ( empty( $_POST['codexbloc_contact'] ) ) {
 	$get_topic = isset( $_GET['topic'] ) ? sanitize_key( wp_unslash( $_GET['topic'] ) ) : '';

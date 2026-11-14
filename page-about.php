@@ -18,6 +18,7 @@ get_header();
 
 $shop_url = codexbloc_shop_url();
 $contact  = codexbloc_link( codexbloc_mod( 'contact_url' ) );
+$quote    = add_query_arg( 'topic', 'project', $contact ); // Services: no prices, ask for a quote.
 
 $showcase = post_type_exists( 'cb_showcase' ) ? get_post_type_archive_link( 'cb_showcase' ) : '';
 
@@ -56,7 +57,7 @@ $offers = array(
 			__( 'Ongoing care and maintenance', 'codexbloc' ),
 		),
 		'label'  => __( 'Talk to us', 'codexbloc' ),
-		'url'    => $contact,
+		'url'    => $quote,
 	),
 );
 
@@ -232,7 +233,7 @@ while ( have_posts() ) {
 			</ol>
 
 			<p class="mt-8 text-center">
-				<a class="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-dark" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Get a free quote', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+				<a class="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-dark" href="<?php echo esc_url( $quote ); ?>"><?php esc_html_e( 'Get a free quote', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 			</p>
 		</div>
 	</section>
