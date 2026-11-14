@@ -17,7 +17,6 @@ $cta_url   = codexbloc_mod( 'hero_cta_url' ) ? codexbloc_link( codexbloc_mod( 'h
 $cta2_url  = codexbloc_link( codexbloc_mod( 'hero_cta2_url' ) );
 $contact   = codexbloc_link( codexbloc_mod( 'contact_url' ) );
 $plans     = codexbloc_plans();
-$prices    = codexbloc_service_prices();
 ?>
 
 <main id="main">
@@ -178,8 +177,8 @@ $prices    = codexbloc_service_prices();
 	</section>
 
 	<!-- Services -->
-	<section class="cb-container pt-16 sm:pt-24" aria-labelledby="cb-services-title">
-		<div class="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 px-6 py-12 sm:px-10 sm:py-16 lg:px-14">
+	<section class="mt-16 border-y border-slate-200 bg-slate-50 py-16 sm:mt-24 sm:py-24" aria-labelledby="cb-services-title">
+		<div class="cb-container">
 
 			<!-- Header -->
 			<div class="mx-auto max-w-2xl text-center">
@@ -223,54 +222,11 @@ $prices    = codexbloc_service_prices();
 				</ol>
 			</div>
 
-			<!-- Packages -->
-			<?php if ( $prices ) : ?>
-				<div class="mt-16">
-					<div class="mx-auto max-w-xl text-center">
-						<h3 class="text-2xl font-semibold tracking-tight text-ink"><?php esc_html_e( 'Website packages', 'codexbloc' ); ?></h3>
-						<p class="mt-2 text-sm text-slate-600"><?php esc_html_e( 'Clear starting prices. Every project gets a fixed quote before work begins.', 'codexbloc' ); ?></p>
-					</div>
-					<div class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
-						<?php foreach ( $prices as $price ) : ?>
-							<?php $featured = ! empty( $price['featured'] ); ?>
-							<div class="relative flex flex-col rounded-2xl bg-white p-7 <?php echo $featured ? 'border-2 border-accent shadow-[0_16px_40px_-16px_rgba(0,0,0,0.18)]' : 'border border-slate-200'; ?>">
-								<?php if ( $featured ) : ?>
-									<span class="absolute -top-3 left-7 rounded-full bg-accent px-3 py-1 text-xs font-medium text-white"><?php esc_html_e( 'Most popular', 'codexbloc' ); ?></span>
-								<?php endif; ?>
-								<h4 class="text-base font-semibold text-ink"><?php echo esc_html( $price['name'] ); ?></h4>
-								<?php if ( ! empty( $price['note'] ) ) : ?>
-									<p class="mt-1 text-sm text-slate-500"><?php echo esc_html( $price['note'] ); ?></p>
-								<?php endif; ?>
-								<?php if ( ! empty( $price['price'] ) ) : ?>
-									<p class="mt-5 flex items-baseline gap-1.5">
-										<span class="text-xs font-medium text-slate-500"><?php esc_html_e( 'From', 'codexbloc' ); ?></span>
-										<span class="text-3xl font-semibold tracking-tight text-ink"><?php echo esc_html( $price['price'] ); ?></span>
-									</p>
-								<?php endif; ?>
-								<?php if ( ! empty( $price['features'] ) ) : ?>
-									<ul class="mt-6 space-y-2.5 border-t border-slate-100 pt-6" role="list">
-										<?php foreach ( $price['features'] as $feature ) : ?>
-											<li class="flex items-start gap-2.5 text-sm text-slate-700">
-												<?php echo codexbloc_icon( 'check', 'mt-0.5 h-4 w-4 flex-none text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-												<span><?php echo esc_html( $feature ); ?></span>
-											</li>
-										<?php endforeach; ?>
-									</ul>
-								<?php endif; ?>
-								<div class="mt-auto pt-7">
-									<a class="btn <?php echo $featured ? 'btn-primary' : 'btn-outline'; ?> w-full" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Get a quote', 'codexbloc' ); ?></a>
-								</div>
-							</div>
-						<?php endforeach; ?>
-					</div>
-				</div>
-			<?php endif; ?>
-
 			<!-- CTA -->
 			<div class="mt-16 flex flex-col items-center justify-between gap-6 rounded-2xl bg-ink px-7 py-8 text-center sm:px-10 md:flex-row md:text-left">
 				<div>
-					<p class="text-lg font-semibold text-white"><?php esc_html_e( 'Not sure what you need?', 'codexbloc' ); ?></p>
-					<p class="mt-1 text-sm text-slate-400"><?php esc_html_e( 'Tell us about your project and we will reply within one business day with a free recommendation.', 'codexbloc' ); ?></p>
+					<p class="text-lg font-semibold text-white"><?php esc_html_e( 'Let\'s build something together', 'codexbloc' ); ?></p>
+					<p class="mt-1 text-sm text-slate-400"><?php esc_html_e( 'Tell us about your project and we will get back to you with a free, no-obligation quote.', 'codexbloc' ); ?></p>
 				</div>
 				<a class="btn btn-primary flex-none" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Tell us about your project', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 			</div>
