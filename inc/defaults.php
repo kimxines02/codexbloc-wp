@@ -313,3 +313,81 @@ function codexbloc_pricing_faqs() {
 		),
 	);
 }
+
+/**
+ * About page: "At a glance" facts shown beside the intro.
+ */
+function codexbloc_about_facts() {
+	return array(
+		array(
+			'icon'  => 'puzzle',
+			'label' => __( 'What we build', 'codexbloc' ),
+			'value' => __( 'Plugins, themes and websites', 'codexbloc' ),
+		),
+		array(
+			'icon'  => 'code',
+			'label' => __( 'Platforms', 'codexbloc' ),
+			'value' => __( 'WordPress & WooCommerce, PrestaShop soon', 'codexbloc' ),
+		),
+		array(
+			'icon'  => 'download',
+			'label' => __( 'How to start', 'codexbloc' ),
+			'value' => __( 'Free version first, upgrade when ready', 'codexbloc' ),
+		),
+		array(
+			'icon'  => 'chat',
+			'label' => __( 'Support', 'codexbloc' ),
+			'value' => __( 'Straight from the people who build it', 'codexbloc' ),
+		),
+	);
+}
+
+/**
+ * About page: story paragraphs. Typing content in the page editor replaces these.
+ */
+function codexbloc_about_story() {
+	return array(
+		__( 'Most online stores do not need more features. They need the right ones, built well. Too many plugins slow a site down, crowd the dashboard and take hours to set up.', 'codexbloc' ),
+		__( 'So we build focused tools for WordPress and WooCommerce that do one job properly. Each one is lightweight, tested against current releases, and comes with a free version you can try on your own store first.', 'codexbloc' ),
+		__( 'When a business needs more than a plugin, we design, build and look after the whole website with the same focus on speed and simplicity.', 'codexbloc' ),
+	);
+}
+
+/**
+ * About page: promises listed under the story.
+ */
+function codexbloc_about_promises() {
+	return array(
+		__( 'A free version of every plugin on WordPress.org', 'codexbloc' ),
+		__( 'No lock-in: premium plugins keep working if you do not renew', 'codexbloc' ),
+		__( 'Support from the people who write the code', 'codexbloc' ),
+	);
+}
+
+/**
+ * About page FAQ.
+ */
+function codexbloc_about_faqs() {
+	return array(
+		array(
+			'q' => __( 'Who is Codexbloc for?', 'codexbloc' ),
+			'a' => __( 'Store owners, small businesses and agencies who use WordPress and WooCommerce and want tools that are fast, simple and dependable.', 'codexbloc' ),
+		),
+		array(
+			'q' => __( 'Can I try a product before I buy?', 'codexbloc' ),
+			'a' => __( 'Yes. Every premium plugin has a free version on WordPress.org, so you can test it on your own store first. Themes come with sample sites you can preview.', 'codexbloc' ),
+		),
+		array(
+			'q' => __( 'What happens if I do not renew a premium license?', 'codexbloc' ),
+			'a' => __( 'The plugin keeps working on your site with all its premium features. You just stop receiving updates and support until you renew.', 'codexbloc' ),
+		),
+		array(
+			'q' => __( 'Do you build custom websites?', 'codexbloc' ),
+			'a' => __( 'Yes. We design, build and maintain WordPress websites and WooCommerce stores. Tell us about your project and we will reply with a free, no-obligation quote.', 'codexbloc' ),
+		),
+		array(
+			'q' => __( 'How do I get support?', 'codexbloc' ),
+			'a' => __( 'Free plugins are supported in the WordPress.org forums. Premium customers get priority email support. For anything else, use our contact page.', 'codexbloc' ),
+		),
+	);
+}
