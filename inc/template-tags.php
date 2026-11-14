@@ -356,3 +356,75 @@ function codexbloc_content_toc( $content ) {
 		'toc'     => $toc,
 	);
 }
+
+/**
+ * Find a published page URL by trying WooCommerce/WordPress settings, then common slugs.
+ *
+ * @param int[]    $ids   Candidate page IDs (from settings).
+ * @param string[] $slugs Candidate page slugs.
+ * @return string URL or empty string.
+ */
+function codexbloc_find_page_url( $ids, $slugs ) {
+	foreach ( $ids as $id ) {
+		$id = (int) $id;
+		if ( $id > 0 && 'publish' === get_post_status( $id ) ) {
+			return get_permalink( $id );
+		}
+	}
+	foreach ( $slugs as $slug ) {
+		$page = get_page_by_path( $slug );
+		if ( $page && 'publish' === $page->post_status ) {
+			return get_permalink( $page );
+		}
+	}
+	return '';
+}
+
+/**
+ * Legal page links for the footer. Links whose page is not found are omitted.
+ *
+ * @return array<int,array{label:string,url:string}>
+ */
+function codexbloc_legal_links() {
+	$terms_mod = codexbloc_mod( 'terms_url' );
+
+	$links = array(
+		array(
+			'label' => __( 'Privacy Policy', 'codexbloc' ),
+			'url'   => codexbloc_find_page_url(
+				array( get_option( 'wp_page_for_privacy_policy' ) ),
+				array( 'privacy-policy', 'privacy' )
+			),
+		),
+		array(
+			'label' => __( 'Terms and Conditions', 'codexbloc' ),
+			'url'   => $terms_mod ? codexbloc_link( $terms_mod ) : codexbloc_find_page_url(
+				array( get_option( 'woocommerce_terms_page_id' ) ),
+				array( 'terms-and-conditions', 'terms-conditions', 'terms-of-service', 'terms' )
+			),
+		),
+		array(
+			'label' => __( 'Refund and Returns Policy', 'codexbloc' ),
+			'url'   => codexbloc_find_page_url(
+				array( get_option( 'woocommerce_refund_returns_page_id' ) ),
+				array( 'refund_returns', 'refund-and-returns-policy', 'refund-returns-policy', 'refund-policy', 'returns-policy' )
+			),
+		),
+		array(
+			'label' => __( 'Cookie Policy', 'codexbloc' ),
+			'url'   => codexbloc_find_page_url(
+				array(),
+				array( 'cookie-policy', 'cookie-policy-eu', 'cookies-policy', 'cookies' )
+			),
+		),
+	);
+
+	return array_values(
+		array_filter(
+			$links,
+			function ( $link ) {
+				return '' !== $link['url'];
+			}
+		)
+	);
+}

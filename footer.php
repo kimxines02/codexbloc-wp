@@ -10,8 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $email    = codexbloc_mod( 'contact_email' );
-$privacy  = function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '';
-$terms    = codexbloc_mod( 'terms_url' );
+$legal    = codexbloc_legal_links();
 $socials  = codexbloc_social_links();
 
 $show_newsletter = codexbloc_newsletter_enabled();
@@ -24,7 +23,7 @@ if ( $show_newsletter ) {
 	<div class="cb-container py-12">
 		<div class="grid grid-cols-1 gap-10 md:grid-cols-12">
 
-			<div class="md:col-span-5">
+			<div class="md:col-span-4">
 				<?php codexbloc_logo(); ?>
 				<p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-600"><?php echo esc_html( codexbloc_mod( 'footer_text' ) ); ?></p>
 				<?php if ( $socials ) : ?>
@@ -32,7 +31,7 @@ if ( $show_newsletter ) {
 				<?php endif; ?>
 			</div>
 
-			<div class="md:col-span-3">
+			<div class="md:col-span-2">
 				<h2 class="text-sm font-semibold text-ink"><?php esc_html_e( 'Explore', 'codexbloc' ); ?></h2>
 				<?php
 				if ( has_nav_menu( 'footer' ) ) {
@@ -62,7 +61,18 @@ if ( $show_newsletter ) {
 				?>
 			</div>
 
-			<div class="md:col-span-4">
+			<?php if ( $legal ) : ?>
+				<div class="md:col-span-3">
+					<h2 class="text-sm font-semibold text-ink"><?php esc_html_e( 'Legal', 'codexbloc' ); ?></h2>
+					<ul class="mt-4 flex flex-col gap-2 text-sm">
+						<?php foreach ( $legal as $link ) : ?>
+							<li><a class="text-slate-600 hover:text-accent" href="<?php echo esc_url( $link['url'] ); ?>"><?php echo esc_html( $link['label'] ); ?></a></li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			<?php endif; ?>
+
+			<div class="<?php echo $legal ? 'md:col-span-3' : 'md:col-span-6'; ?>">
 				<h2 class="text-sm font-semibold text-ink"><?php esc_html_e( 'Questions?', 'codexbloc' ); ?></h2>
 				<p class="mt-4 text-sm leading-relaxed text-slate-600"><?php esc_html_e( 'Need help with a plugin or a custom project? We are happy to help.', 'codexbloc' ); ?></p>
 				<a class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-dark" href="<?php echo $email ? esc_url( 'mailto:' . antispambot( $email ) ) : esc_url( codexbloc_link( codexbloc_mod( 'contact_url' ) ) ); ?>">
@@ -74,14 +84,6 @@ if ( $show_newsletter ) {
 
 		<div class="mt-10 flex flex-col gap-3 border-t border-slate-200 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
 			<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'All rights reserved.', 'codexbloc' ); ?></p>
-			<p class="flex gap-4">
-				<?php if ( $terms ) : ?>
-					<a class="hover:text-accent" href="<?php echo esc_url( $terms ); ?>"><?php esc_html_e( 'Terms of Service', 'codexbloc' ); ?></a>
-				<?php endif; ?>
-				<?php if ( $privacy ) : ?>
-					<a class="hover:text-accent" href="<?php echo esc_url( $privacy ); ?>"><?php esc_html_e( 'Privacy Policy', 'codexbloc' ); ?></a>
-				<?php endif; ?>
-			</p>
 		</div>
 	</div>
 </footer>
