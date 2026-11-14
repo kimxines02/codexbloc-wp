@@ -22,6 +22,7 @@ require_once CODEXBLOC_DIR . '/inc/newsletter.php';
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once CODEXBLOC_DIR . '/inc/woocommerce.php';
 	require_once CODEXBLOC_DIR . '/inc/product-fields.php';
+	require_once CODEXBLOC_DIR . '/inc/free-downloads.php';
 }
 
 /**

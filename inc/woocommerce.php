@@ -178,52 +178,7 @@ add_filter(
 );
 
 /**
- * Free products that live on WordPress.org: no cart, just a download button.
- * A product counts as "free on WordPress.org" when it has a WordPress.org URL
- * in the Codexbloc details box and its price is empty or zero.
- */
-add_filter(
-	'woocommerce_is_purchasable',
-	function ( $purchasable, $product ) {
-		if ( ! is_admin() && codexbloc_is_wporg_free( $product ) ) {
-			return false;
-		}
-		return $purchasable;
-	},
-	10,
-	2
-);
-
-add_filter(
-	'woocommerce_loop_add_to_cart_link',
-	function ( $html, $product ) {
-		if ( codexbloc_is_wporg_free( $product ) ) {
-			return sprintf(
-				'<a href="%s" class="button" target="_blank" rel="noopener">%s</a>',
-				esc_url( codexbloc_product_field( $product->get_id(), 'wporg_url' ) ),
-				esc_html__( 'Download free', 'codexbloc' )
-			);
-		}
-		return $html;
-	},
-	10,
-	2
-);
-
-add_filter(
-	'woocommerce_get_price_html',
-	function ( $price, $product ) {
-		if ( codexbloc_is_wporg_free( $product ) ) {
-			return '<span class="woocommerce-Price-amount amount">' . esc_html__( 'Free', 'codexbloc' ) . '</span>';
-		}
-		return $price;
-	},
-	20,
-	2
-);
-
-/**
- * Single product: features, buttons and details.
+ * Single product: features, links and details (free download button: inc/free-downloads.php).
  */
 function codexbloc_single_features() {
 	global $product;
@@ -239,20 +194,6 @@ function codexbloc_single_features() {
 }
 add_action( 'woocommerce_single_product_summary', 'codexbloc_single_features', 25 );
 
-function codexbloc_single_free_cta() {
-	global $product;
-	if ( ! codexbloc_is_wporg_free( $product ) ) {
-		return;
-	}
-	printf(
-		'<div class="my-6"><a class="btn btn-primary" href="%s" target="_blank" rel="noopener">%s%s</a></div>',
-		esc_url( codexbloc_product_field( $product->get_id(), 'wporg_url' ) ),
-		esc_html__( 'Download free on WordPress.org', 'codexbloc' ),
-		codexbloc_icon( 'external', 'h-4 w-4' ) // phpcs:ignore WordPress.Security.EscapeOutput
-	);
-}
-add_action( 'woocommerce_single_product_summary', 'codexbloc_single_free_cta', 30 );
-
 function codexbloc_single_links() {
 	global $product;
 	$id    = $product->get_id();
@@ -264,11 +205,11 @@ function codexbloc_single_links() {
 	if ( codexbloc_product_field( $id, 'docs_url' ) ) {
 		$links[] = array( __( 'Documentation', 'codexbloc' ), codexbloc_product_field( $id, 'docs_url' ) );
 	}
-	if ( codexbloc_product_field( $id, 'wporg_url' ) && ! codexbloc_is_wporg_free( $product ) ) {
+	if ( codexbloc_product_field( $id, 'wporg_url' ) && ! codexbloc_is_free_product( $product ) ) {
 		$links[] = array( __( 'Free version on WordPress.org', 'codexbloc' ), codexbloc_product_field( $id, 'wporg_url' ) );
 	}
 
-	if ( $product->is_purchasable() && ! codexbloc_is_wporg_free( $product ) ) {
+	if ( $product->is_purchasable() && ! codexbloc_is_free_product( $product ) ) {
 		$assurances = array(
 			array( 'shield', __( 'Secure checkout', 'codexbloc' ) ),
 			array( 'download', __( 'Instant download', 'codexbloc' ) ),

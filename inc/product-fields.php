@@ -18,7 +18,7 @@ function codexbloc_product_field_defs() {
 		'wporg_url'        => array(
 			'label' => __( 'WordPress.org URL', 'codexbloc' ),
 			'type'  => 'url',
-			'help'  => __( 'Free plugin/theme page, e.g. https://wordpress.org/plugins/your-plugin/. If set and the price is empty or 0, the product shows a "Download free" button instead of add to cart.', 'codexbloc' ),
+			'help'  => __( 'Optional, e.g. https://wordpress.org/plugins/your-plugin/. Free products (price 0) without a downloadable file send logged-in customers here. On paid products it shows a "Free version on WordPress.org" link.', 'codexbloc' ),
 		),
 		'demo_url'         => array(
 			'label' => __( 'Live demo URL', 'codexbloc' ),
@@ -66,22 +66,6 @@ function codexbloc_product_field( $product_id, $key ) {
 function codexbloc_lines( $text ) {
 	$lines = preg_split( '/\r\n|\r|\n/', (string) $text );
 	return array_values( array_filter( array_map( 'trim', $lines ) ) );
-}
-
-/**
- * True when the product is free and has a WordPress.org page.
- *
- * @param WC_Product|false $product Product.
- */
-function codexbloc_is_wporg_free( $product ) {
-	if ( ! $product instanceof WC_Product ) {
-		return false;
-	}
-	if ( '' === codexbloc_product_field( $product->get_id(), 'wporg_url' ) ) {
-		return false;
-	}
-	$price = $product->get_price( 'edit' );
-	return '' === $price || 0.0 === (float) $price;
 }
 
 /**

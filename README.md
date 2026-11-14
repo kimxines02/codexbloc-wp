@@ -13,7 +13,11 @@ Tailwind CSS is compiled to one ~10 KB (gzipped) stylesheet. No web fonts, no jQ
 
 ## Adding products
 Products > Add New. Fill the **Codexbloc details** box under the description:
-- **WordPress.org URL** + price empty/0 = shows "Download free" instead of add to cart.
+- **Free products:** set the price to **0** (simple products). They show "Free" and a **Free download** button.
+  Customers must be logged in: visitors are sent to My Account to log in or register (email only), then straight to the download.
+  Attach the file under *Downloadable* in the product data; the first download records a ₱0 order so the file
+  is served through WooCommerce's protected link and listed in My Account > Downloads.
+  No file but a **WordPress.org URL**? Logged-in customers are sent to WordPress.org instead.
 - Version, requirements, key features (one per line), demo and docs links.
 Featured products (star in the product list) appear first on the homepage.
 
