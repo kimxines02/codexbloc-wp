@@ -83,46 +83,109 @@ function codexbloc_pillars() {
 
 /**
  * Services shown as a secondary section on the homepage.
+ * Each service lists the concrete deliverables included.
  */
 function codexbloc_services() {
 	return array(
 		array(
 			'icon'  => 'code',
 			'title' => __( 'Web design & development', 'codexbloc' ),
-			'text'  => __( 'Clean, mobile-friendly websites built around your brand.', 'codexbloc' ),
+			'text'  => __( 'Custom WordPress websites designed around your brand and built to convert.', 'codexbloc' ),
+			'items' => array(
+				__( 'Custom design, no generic templates', 'codexbloc' ),
+				__( 'Responsive on phones, tablets and desktops', 'codexbloc' ),
+				__( 'On-page SEO and fast load times', 'codexbloc' ),
+				__( 'Easy-to-edit pages you control', 'codexbloc' ),
+			),
 		),
 		array(
 			'icon'  => 'bag',
 			'title' => __( 'E-commerce solutions', 'codexbloc' ),
-			'text'  => __( 'Secure, scalable online stores designed to turn visitors into customers.', 'codexbloc' ),
+			'text'  => __( 'WooCommerce stores that are secure, easy to manage and ready to sell.', 'codexbloc' ),
+			'items' => array(
+				__( 'Product catalog and inventory setup', 'codexbloc' ),
+				__( 'Payment gateways (GCash, Maya, cards)', 'codexbloc' ),
+				__( 'Shipping, taxes and order emails', 'codexbloc' ),
+				__( 'Checkout tuned for conversions', 'codexbloc' ),
+			),
 		),
 		array(
 			'icon'  => 'shield',
 			'title' => __( 'Maintenance & optimization', 'codexbloc' ),
-			'text'  => __( 'Updates, speed tuning and security so your site stays healthy.', 'codexbloc' ),
+			'text'  => __( 'Ongoing care so your site stays fast, secure and up to date.', 'codexbloc' ),
+			'items' => array(
+				__( 'WordPress, theme and plugin updates', 'codexbloc' ),
+				__( 'Daily backups and security monitoring', 'codexbloc' ),
+				__( 'Speed and Core Web Vitals tuning', 'codexbloc' ),
+				__( 'Content edits and bug fixes', 'codexbloc' ),
+			),
 		),
 	);
 }
 
 /**
- * Service starting prices (PHP peso). Set to an empty array to hide.
+ * Service packages with starting prices (PHP peso). Set to an empty array to hide.
+ * Mark one package 'featured' => true to highlight it.
  */
 function codexbloc_service_prices() {
 	return array(
 		array(
-			'name'  => __( 'Starter', 'codexbloc' ),
-			'price' => '₱10,000+',
-			'note'  => __( '5 pages, mobile-ready, basic SEO, contact form', 'codexbloc' ),
+			'name'     => __( 'Starter', 'codexbloc' ),
+			'price'    => '₱10,000',
+			'note'     => __( 'For small businesses getting online.', 'codexbloc' ),
+			'features' => array(
+				__( 'Up to 5 pages', 'codexbloc' ),
+				__( 'Mobile-ready design', 'codexbloc' ),
+				__( 'Basic SEO setup', 'codexbloc' ),
+				__( 'Contact form', 'codexbloc' ),
+			),
 		),
 		array(
-			'name'  => __( 'Business', 'codexbloc' ),
-			'price' => '₱18,000+',
-			'note'  => __( '10 pages, SEO-optimized, social integration', 'codexbloc' ),
+			'name'     => __( 'Business', 'codexbloc' ),
+			'price'    => '₱18,000',
+			'note'     => __( 'For growing brands that need to be found.', 'codexbloc' ),
+			'featured' => true,
+			'features' => array(
+				__( 'Up to 10 pages', 'codexbloc' ),
+				__( 'Full SEO optimization', 'codexbloc' ),
+				__( 'Social media integration', 'codexbloc' ),
+				__( 'Everything in Starter', 'codexbloc' ),
+			),
 		),
 		array(
-			'name'  => __( 'E-Commerce', 'codexbloc' ),
-			'price' => '₱25,000+',
-			'note'  => __( 'Online store, 15 products, payment gateway, inventory', 'codexbloc' ),
+			'name'     => __( 'E-Commerce', 'codexbloc' ),
+			'price'    => '₱25,000',
+			'note'     => __( 'For selling products online.', 'codexbloc' ),
+			'features' => array(
+				__( 'Online store, up to 15 products', 'codexbloc' ),
+				__( 'Payment gateway setup', 'codexbloc' ),
+				__( 'Inventory management', 'codexbloc' ),
+				__( 'Everything in Business', 'codexbloc' ),
+			),
+		),
+	);
+}
+
+/**
+ * Service process steps shown on the homepage.
+ */
+function codexbloc_service_steps() {
+	return array(
+		array(
+			'title' => __( 'Discover', 'codexbloc' ),
+			'text'  => __( 'We learn your goals, audience and budget.', 'codexbloc' ),
+		),
+		array(
+			'title' => __( 'Design', 'codexbloc' ),
+			'text'  => __( 'You review a layout before we build.', 'codexbloc' ),
+		),
+		array(
+			'title' => __( 'Build', 'codexbloc' ),
+			'text'  => __( 'We develop, test and refine every page.', 'codexbloc' ),
+		),
+		array(
+			'title' => __( 'Launch & support', 'codexbloc' ),
+			'text'  => __( 'We go live and stay on hand after launch.', 'codexbloc' ),
 		),
 	);
 }

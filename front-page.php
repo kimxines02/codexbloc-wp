@@ -179,36 +179,102 @@ $prices    = codexbloc_service_prices();
 
 	<!-- Services -->
 	<section class="cb-container pt-16 sm:pt-24" aria-labelledby="cb-services-title">
-		<div class="rounded-3xl bg-slate-50 px-6 py-10 sm:px-10 sm:py-14">
+		<div class="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 px-6 py-12 sm:px-10 sm:py-16 lg:px-14">
+
+			<!-- Header -->
 			<div class="mx-auto max-w-2xl text-center">
-				<h2 id="cb-services-title" class="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"><?php esc_html_e( 'Need something custom?', 'codexbloc' ); ?></h2>
-				<p class="mt-3 text-slate-600"><?php esc_html_e( 'We also design and build websites and online stores, and keep them running smoothly.', 'codexbloc' ); ?></p>
+				<p class="text-xs font-semibold uppercase tracking-[0.14em] text-accent"><?php esc_html_e( 'Services', 'codexbloc' ); ?></p>
+				<h2 id="cb-services-title" class="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl"><?php esc_html_e( 'Websites and online stores, built for you', 'codexbloc' ); ?></h2>
+				<p class="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg"><?php esc_html_e( 'Beyond our plugins, we design, build and maintain WordPress websites and WooCommerce stores for businesses of every size.', 'codexbloc' ); ?></p>
 			</div>
 
-			<div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+			<!-- What we do -->
+			<div class="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-3">
 				<?php foreach ( codexbloc_services() as $service ) : ?>
-					<div class="rounded-2xl border border-slate-200 bg-white p-6">
+					<article class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-7 transition duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.12)]">
 						<span class="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent"><?php echo codexbloc_icon( $service['icon'], 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-						<h3 class="mt-4 font-semibold text-ink"><?php echo esc_html( $service['title'] ); ?></h3>
-						<p class="mt-1.5 text-sm leading-relaxed text-slate-600"><?php echo esc_html( $service['text'] ); ?></p>
-					</div>
+						<h3 class="mt-5 text-lg font-semibold tracking-tight text-ink"><?php echo esc_html( $service['title'] ); ?></h3>
+						<p class="mt-2 text-sm leading-relaxed text-slate-600"><?php echo esc_html( $service['text'] ); ?></p>
+						<?php if ( ! empty( $service['items'] ) ) : ?>
+							<ul class="mt-6 space-y-2.5 border-t border-slate-100 pt-6" role="list">
+								<?php foreach ( $service['items'] as $item ) : ?>
+									<li class="flex items-start gap-2.5 text-sm text-slate-700">
+										<?php echo codexbloc_icon( 'check', 'mt-0.5 h-4 w-4 flex-none text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+										<span><?php echo esc_html( $item ); ?></span>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
+					</article>
 				<?php endforeach; ?>
 			</div>
 
-			<?php if ( $prices ) : ?>
-				<dl class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-					<?php foreach ( $prices as $price ) : ?>
-						<div class="rounded-xl border border-slate-200 bg-white px-5 py-4">
-							<dt class="font-semibold text-ink"><?php echo esc_html( $price['name'] ); ?></dt>
-							<dd class="mt-1 text-xs leading-relaxed text-slate-500"><?php echo esc_html( $price['note'] ); ?></dd>
-						</div>
+			<!-- How we work -->
+			<div class="mt-16">
+				<h3 class="text-center text-xs font-semibold uppercase tracking-[0.14em] text-slate-500"><?php esc_html_e( 'How we work', 'codexbloc' ); ?></h3>
+				<ol class="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-4" role="list">
+					<?php foreach ( codexbloc_service_steps() as $i => $step ) : ?>
+						<li class="bg-white p-6">
+							<span class="text-sm font-semibold tabular-nums text-accent"><?php echo esc_html( sprintf( '%02d', $i + 1 ) ); ?></span>
+							<p class="mt-2 font-semibold text-ink"><?php echo esc_html( $step['title'] ); ?></p>
+							<p class="mt-1 text-sm leading-relaxed text-slate-600"><?php echo esc_html( $step['text'] ); ?></p>
+						</li>
 					<?php endforeach; ?>
-				</dl>
+				</ol>
+			</div>
+
+			<!-- Packages -->
+			<?php if ( $prices ) : ?>
+				<div class="mt-16">
+					<div class="mx-auto max-w-xl text-center">
+						<h3 class="text-2xl font-semibold tracking-tight text-ink"><?php esc_html_e( 'Website packages', 'codexbloc' ); ?></h3>
+						<p class="mt-2 text-sm text-slate-600"><?php esc_html_e( 'Clear starting prices. Every project gets a fixed quote before work begins.', 'codexbloc' ); ?></p>
+					</div>
+					<div class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
+						<?php foreach ( $prices as $price ) : ?>
+							<?php $featured = ! empty( $price['featured'] ); ?>
+							<div class="relative flex flex-col rounded-2xl bg-white p-7 <?php echo $featured ? 'border-2 border-accent shadow-[0_16px_40px_-16px_rgba(0,0,0,0.18)]' : 'border border-slate-200'; ?>">
+								<?php if ( $featured ) : ?>
+									<span class="absolute -top-3 left-7 rounded-full bg-accent px-3 py-1 text-xs font-medium text-white"><?php esc_html_e( 'Most popular', 'codexbloc' ); ?></span>
+								<?php endif; ?>
+								<h4 class="text-base font-semibold text-ink"><?php echo esc_html( $price['name'] ); ?></h4>
+								<?php if ( ! empty( $price['note'] ) ) : ?>
+									<p class="mt-1 text-sm text-slate-500"><?php echo esc_html( $price['note'] ); ?></p>
+								<?php endif; ?>
+								<?php if ( ! empty( $price['price'] ) ) : ?>
+									<p class="mt-5 flex items-baseline gap-1.5">
+										<span class="text-xs font-medium text-slate-500"><?php esc_html_e( 'From', 'codexbloc' ); ?></span>
+										<span class="text-3xl font-semibold tracking-tight text-ink"><?php echo esc_html( $price['price'] ); ?></span>
+									</p>
+								<?php endif; ?>
+								<?php if ( ! empty( $price['features'] ) ) : ?>
+									<ul class="mt-6 space-y-2.5 border-t border-slate-100 pt-6" role="list">
+										<?php foreach ( $price['features'] as $feature ) : ?>
+											<li class="flex items-start gap-2.5 text-sm text-slate-700">
+												<?php echo codexbloc_icon( 'check', 'mt-0.5 h-4 w-4 flex-none text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+												<span><?php echo esc_html( $feature ); ?></span>
+											</li>
+										<?php endforeach; ?>
+									</ul>
+								<?php endif; ?>
+								<div class="mt-auto pt-7">
+									<a class="btn <?php echo $featured ? 'btn-primary' : 'btn-outline'; ?> w-full" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Get a quote', 'codexbloc' ); ?></a>
+								</div>
+							</div>
+						<?php endforeach; ?>
+					</div>
+				</div>
 			<?php endif; ?>
 
-			<div class="mt-8 text-center">
-				<a class="btn btn-primary" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Tell us about your project', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+			<!-- CTA -->
+			<div class="mt-16 flex flex-col items-center justify-between gap-6 rounded-2xl bg-ink px-7 py-8 text-center sm:px-10 md:flex-row md:text-left">
+				<div>
+					<p class="text-lg font-semibold text-white"><?php esc_html_e( 'Not sure what you need?', 'codexbloc' ); ?></p>
+					<p class="mt-1 text-sm text-slate-400"><?php esc_html_e( 'Tell us about your project and we will reply within one business day with a free recommendation.', 'codexbloc' ); ?></p>
+				</div>
+				<a class="btn btn-primary flex-none" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Tell us about your project', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 			</div>
+
 		</div>
 	</section>
 
