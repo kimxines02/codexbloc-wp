@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<section id="newsletter" class="relative isolate mt-20 scroll-mt-24 overflow-hidden bg-ink" aria-labelledby="cb-newsletter-title">
+<section id="newsletter" class="relative isolate <?php echo is_front_page() ? '' : 'mt-20 '; ?>scroll-mt-24 overflow-hidden bg-ink" aria-labelledby="cb-newsletter-title">
 	<div class="cb-dots pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
 	<div class="pointer-events-none absolute -top-40 right-[-10%] -z-10 h-96 w-96 rounded-full bg-accent/35 blur-3xl" aria-hidden="true"></div>
 	<div class="pointer-events-none absolute -bottom-48 left-[-5%] -z-10 h-80 w-80 rounded-full bg-accent/15 blur-3xl" aria-hidden="true"></div>

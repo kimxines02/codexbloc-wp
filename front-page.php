@@ -177,7 +177,7 @@ $plans     = codexbloc_plans();
 	</section>
 
 	<!-- Services -->
-	<section class="mt-16 border-y border-slate-200 bg-slate-50 py-16 sm:mt-24 sm:py-24" aria-labelledby="cb-services-title">
+	<section class="mt-16 border-t border-slate-200 bg-slate-50 py-16 sm:mt-24 sm:py-24" aria-labelledby="cb-services-title">
 		<div class="cb-container">
 
 			<!-- Header -->
