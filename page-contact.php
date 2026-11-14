@@ -33,7 +33,7 @@ $shop_url  = codexbloc_shop_url();
 				<p class="inline-flex items-center rounded-full border border-accent/20 bg-white px-3 py-1 text-xs font-medium text-accent"><?php esc_html_e( 'Contact us', 'codexbloc' ); ?></p>
 				<?php while ( have_posts() ) : the_post(); ?>
 					<h1 class="mt-5 text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-5xl"><?php esc_html_e( 'How can we help?', 'codexbloc' ); ?></h1>
-					<p class="mt-5 text-lg leading-relaxed tracking-tight text-slate-600"><?php esc_html_e( 'Questions about a plugin, your license, or a custom project? Send us a message and the people who build our products will get back to you.', 'codexbloc' ); ?></p>
+					<p class="mt-5 text-lg leading-relaxed tracking-tight text-slate-600"><?php esc_html_e( 'Questions about a plugin, a theme, or a custom project? Send us a message and the people who build our products will get back to you.', 'codexbloc' ); ?></p>
 				<?php endwhile; ?>
 			</div>
 		</div>
@@ -54,7 +54,7 @@ $shop_url  = codexbloc_shop_url();
 				<div class="rounded-2xl border border-slate-200 bg-white p-6">
 					<span class="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent"><?php echo codexbloc_icon( 'clock', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 					<h2 class="mt-4 font-semibold text-ink"><?php esc_html_e( 'Response time', 'codexbloc' ); ?></h2>
-					<p class="mt-1.5 text-sm leading-relaxed text-slate-600"><?php esc_html_e( 'We reply within one business day, Monday to Friday. Premium customers get priority.', 'codexbloc' ); ?></p>
+					<p class="mt-1.5 text-sm leading-relaxed text-slate-600"><?php esc_html_e( 'We reply within one business day, Monday to Friday.', 'codexbloc' ); ?></p>
 				</div>
 
 				<div class="rounded-2xl border border-slate-200 bg-white p-6">

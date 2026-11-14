@@ -16,9 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-$shop_url    = codexbloc_shop_url();
-$contact     = codexbloc_link( codexbloc_mod( 'contact_url' ) );
-$pricing_url = codexbloc_pricing_url();
+$shop_url = codexbloc_shop_url();
+$contact  = codexbloc_link( codexbloc_mod( 'contact_url' ) );
 
 /**
  * Category link with a shop fallback.
@@ -37,24 +36,19 @@ $cat_link = function ( $slug ) use ( $shop_url ) {
 
 $showcase = post_type_exists( 'cb_showcase' ) ? get_post_type_archive_link( 'cb_showcase' ) : '';
 
-// Starting prices, kept in sync with the Pricing page data.
-$license_tiers = codexbloc_license_tiers();
+// Starting price for website packages (inc/defaults.php).
 $service_tiers = codexbloc_service_prices();
-$plugin_from   = ! empty( $license_tiers ) ? $license_tiers[0]['price'] . ' ' . $license_tiers[0]['period'] : '';
 $service_from  = ! empty( $service_tiers ) ? $service_tiers[0]['price'] : '';
 
 $offers = array(
 	array(
 		'icon'   => 'puzzle',
 		'title'  => __( 'WordPress plugins', 'codexbloc' ),
-		'text'   => __( 'Focused tools for WooCommerce stores. Every premium plugin starts as a free version you can try first.', 'codexbloc' ),
-		'points' => array_filter(
-			array(
-				__( 'Free version on WordPress.org', 'codexbloc' ),
-				/* translators: %s: starting price, e.g. "€39 / year". */
-				$plugin_from ? sprintf( __( 'Premium from %s', 'codexbloc' ), $plugin_from ) : '',
-				__( 'Priority email support', 'codexbloc' ),
-			)
+		'text'   => __( 'Focused tools for WooCommerce stores that do one job well and keep your site fast.', 'codexbloc' ),
+		'points' => array(
+			__( 'Free on WordPress.org', 'codexbloc' ),
+			__( 'Lightweight and easy to set up', 'codexbloc' ),
+			__( 'Tested with current releases', 'codexbloc' ),
 		),
 		'label'  => __( 'Browse plugins', 'codexbloc' ),
 		'url'    => $cat_link( 'wordpress-plugins' ),
@@ -260,7 +254,7 @@ while ( have_posts() ) {
 			</ol>
 
 			<p class="mt-8 text-center">
-				<a class="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-dark" href="<?php echo esc_url( $pricing_url ); ?>"><?php esc_html_e( 'See packages and pricing', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+				<a class="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-dark" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Get a free quote', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 			</p>
 		</div>
 	</section>

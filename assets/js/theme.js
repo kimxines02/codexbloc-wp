@@ -2,7 +2,7 @@
  * Codexbloc theme script (vanilla JS, no dependencies).
  * - Mobile menu toggle
  * - Header search dropdown closes on outside click / Escape
- * - Turns WooCommerce variation dropdowns (e.g. Monthly / Yearly) into pill buttons
+ * - Turns WooCommerce variation dropdowns (e.g. size or version) into pill buttons
  * - Product gallery thumbnails as a slider (vertical beside the image on sm+)
  * - Product image lightbox with a thumbnail column on the right
  */

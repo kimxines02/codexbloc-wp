@@ -18,11 +18,11 @@ function codexbloc_defaults() {
 		'accent'          => '#0071e3',
 		'hero_eyebrow'    => __( 'Plugins & themes for WordPress and WooCommerce', 'codexbloc' ),
 		'hero_title'      => __( 'Lightweight tools that help your online store sell more.', 'codexbloc' ),
-		'hero_text'       => __( 'Simple, fast plugins and themes for WooCommerce. Start with a free version, upgrade to premium when you need more. PrestaShop modules are coming soon.', 'codexbloc' ),
+		'hero_text'       => __( 'Simple, fast plugins and themes for WooCommerce, plus websites and online stores built for you. PrestaShop modules are coming soon.', 'codexbloc' ),
 		'hero_cta_label'  => __( 'Browse products', 'codexbloc' ),
 		'hero_cta_url'    => '',
-		'hero_cta2_label' => __( 'See premium plans', 'codexbloc' ),
-		'hero_cta2_url'   => '#premium',
+		'hero_cta2_label' => __( 'Our services', 'codexbloc' ),
+		'hero_cta2_url'   => '#services',
 		'contact_url'     => '/contact/',
 		'contact_email'   => '',
 		'footer_text'     => __( 'Plugins, themes and web services for WordPress and WooCommerce stores. PrestaShop modules coming soon.', 'codexbloc' ),
@@ -36,8 +36,6 @@ function codexbloc_defaults() {
 		'newsletter_button' => __( 'Subscribe', 'codexbloc' ),
 		'newsletter_action' => '',
 		'newsletter_field'  => 'EMAIL',
-		'all_access_url'    => '',
-		'addons_url'        => '',
 	);
 }
 
@@ -191,130 +189,6 @@ function codexbloc_service_steps() {
 }
 
 /**
- * Free vs premium comparison on the homepage.
- */
-function codexbloc_plans() {
-	return array(
-		'free'    => array(
-			'title' => __( 'Free plugins', 'codexbloc' ),
-			'text'  => __( 'Solid core features you can install in one click from WordPress.org.', 'codexbloc' ),
-			'items' => array(
-				__( 'Core features included', 'codexbloc' ),
-				__( 'Automatic updates from WordPress.org', 'codexbloc' ),
-				__( 'Community support forum', 'codexbloc' ),
-			),
-		),
-		'premium' => array(
-			'title' => __( 'Premium plans', 'codexbloc' ),
-			'text'  => __( 'Extra features, priority support and a year of updates. Licensed per site, billed yearly.', 'codexbloc' ),
-			'items' => array(
-				__( 'Advanced features on top of the free version', 'codexbloc' ),
-				__( 'Priority email support', 'codexbloc' ),
-				__( 'Keeps working even if you do not renew', 'codexbloc' ),
-			),
-		),
-	);
-}
-
-/**
- * Per-product license tiers shown on the Pricing page.
- * Prices are typical starting prices; each product page shows its exact price.
- */
-function codexbloc_license_tiers() {
-	return array(
-		array(
-			'name'     => __( 'Single site', 'codexbloc' ),
-			'price'    => '€39',
-			'period'   => __( '/ year', 'codexbloc' ),
-			'note'     => __( 'For one store.', 'codexbloc' ),
-			'sites'    => __( '1 site', 'codexbloc' ),
-			'featured' => false,
-		),
-		array(
-			'name'     => __( 'Business', 'codexbloc' ),
-			'price'    => '€79',
-			'period'   => __( '/ year', 'codexbloc' ),
-			'note'     => __( 'For a few stores or staging + live.', 'codexbloc' ),
-			'sites'    => __( 'Up to 5 sites', 'codexbloc' ),
-			'featured' => true,
-		),
-		array(
-			'name'     => __( 'Agency', 'codexbloc' ),
-			'price'    => '€149',
-			'period'   => __( '/ year', 'codexbloc' ),
-			'note'     => __( 'For agencies and client work.', 'codexbloc' ),
-			'sites'    => __( 'Unlimited sites', 'codexbloc' ),
-			'featured' => false,
-		),
-	);
-}
-
-/**
- * What every premium license includes.
- */
-function codexbloc_license_includes() {
-	return array(
-		__( 'All premium features of the plugin', 'codexbloc' ),
-		__( '12 months of updates', 'codexbloc' ),
-		__( '12 months of priority email support', 'codexbloc' ),
-		__( 'License key for one-click updates in your dashboard', 'codexbloc' ),
-		__( 'Plugin keeps working if you do not renew', 'codexbloc' ),
-	);
-}
-
-/**
- * All-access bundle (WordPress products only). Shown as "coming soon" until
- * "All-access: checkout link" is set in the Customizer.
- */
-function codexbloc_all_access() {
-	return array(
-		'title'   => __( 'WP All-Access', 'codexbloc' ),
-		'text'    => __( 'Every premium WordPress plugin and theme we make, current and future, on unlimited sites.', 'codexbloc' ),
-		'price'   => '€179',
-		'period'  => __( '/ year', 'codexbloc' ),
-		'monthly' => __( 'or €19 / month', 'codexbloc' ),
-		'items'   => array(
-			__( 'All premium WordPress plugins and themes', 'codexbloc' ),
-			__( 'New products added automatically', 'codexbloc' ),
-			__( 'Unlimited sites', 'codexbloc' ),
-			__( 'Priority support for everything', 'codexbloc' ),
-		),
-	);
-}
-
-/**
- * Pricing FAQ. Review these against your checkout provider's terms.
- */
-function codexbloc_pricing_faqs() {
-	return array(
-		array(
-			'q' => __( 'What happens if I do not renew?', 'codexbloc' ),
-			'a' => __( 'The plugin keeps working on your site with all its premium features. You just stop receiving updates and support until you renew.', 'codexbloc' ),
-		),
-		array(
-			'q' => __( 'Can I try it before buying?', 'codexbloc' ),
-			'a' => __( 'Yes. Every premium plugin has a free version on WordPress.org, so you can test the core features on your store first.', 'codexbloc' ),
-		),
-		array(
-			'q' => __( 'Can I move to a bigger plan later?', 'codexbloc' ),
-			'a' => __( 'Yes. Contact us and we will upgrade your license. You only pay the difference.', 'codexbloc' ),
-		),
-		array(
-			'q' => __( 'Do staging and local sites count?', 'codexbloc' ),
-			'a' => __( 'No. Development, staging and localhost sites do not count toward your site limit.', 'codexbloc' ),
-		),
-		array(
-			'q' => __( 'Are taxes included?', 'codexbloc' ),
-			'a' => __( 'Prices are shown in euros without VAT. Any VAT or sales tax for your country is calculated at checkout.', 'codexbloc' ),
-		),
-		array(
-			'q' => __( 'Where can I buy PrestaShop modules?', 'codexbloc' ),
-			'a' => __( 'Our PrestaShop modules are sold through PrestaShop Addons, the official marketplace. They are not part of the WordPress plans on this page.', 'codexbloc' ),
-		),
-	);
-}
-
-/**
  * About page: "At a glance" facts shown beside the intro.
  */
 function codexbloc_about_facts() {
@@ -331,8 +205,8 @@ function codexbloc_about_facts() {
 		),
 		array(
 			'icon'  => 'download',
-			'label' => __( 'How to start', 'codexbloc' ),
-			'value' => __( 'Free version first, upgrade when ready', 'codexbloc' ),
+			'label' => __( 'Our plugins', 'codexbloc' ),
+			'value' => __( 'Free to download from WordPress.org', 'codexbloc' ),
 		),
 		array(
 			'icon'  => 'chat',
@@ -348,7 +222,7 @@ function codexbloc_about_facts() {
 function codexbloc_about_story() {
 	return array(
 		__( 'Most online stores do not need more features. They need the right ones, built well. Too many plugins slow a site down, crowd the dashboard and take hours to set up.', 'codexbloc' ),
-		__( 'So we build focused tools for WordPress and WooCommerce that do one job properly. Each one is lightweight, tested against current releases, and comes with a free version you can try on your own store first.', 'codexbloc' ),
+		__( 'So we build focused tools for WordPress and WooCommerce that do one job properly. Each one is lightweight, tested against current releases and easy to set up.', 'codexbloc' ),
 		__( 'When a business needs more than a plugin, we design, build and look after the whole website with the same focus on speed and simplicity.', 'codexbloc' ),
 	);
 }
@@ -358,8 +232,8 @@ function codexbloc_about_story() {
  */
 function codexbloc_about_promises() {
 	return array(
-		__( 'A free version of every plugin on WordPress.org', 'codexbloc' ),
-		__( 'No lock-in: premium plugins keep working if you do not renew', 'codexbloc' ),
+		__( 'Free plugins you can install from WordPress.org', 'codexbloc' ),
+		__( 'Lean code that keeps your store fast', 'codexbloc' ),
 		__( 'Support from the people who write the code', 'codexbloc' ),
 	);
 }
@@ -374,12 +248,8 @@ function codexbloc_about_faqs() {
 			'a' => __( 'Store owners, small businesses and agencies who use WordPress and WooCommerce and want tools that are fast, simple and dependable.', 'codexbloc' ),
 		),
 		array(
-			'q' => __( 'Can I try a product before I buy?', 'codexbloc' ),
-			'a' => __( 'Yes. Every premium plugin has a free version on WordPress.org, so you can test it on your own store first. Themes come with sample sites you can preview.', 'codexbloc' ),
-		),
-		array(
-			'q' => __( 'What happens if I do not renew a premium license?', 'codexbloc' ),
-			'a' => __( 'The plugin keeps working on your site with all its premium features. You just stop receiving updates and support until you renew.', 'codexbloc' ),
+			'q' => __( 'Where can I get your plugins?', 'codexbloc' ),
+			'a' => __( 'Our plugins are free on WordPress.org, so you can install them in one click from your WordPress dashboard. Themes come with sample sites you can preview before you choose.', 'codexbloc' ),
 		),
 		array(
 			'q' => __( 'Do you build custom websites?', 'codexbloc' ),
@@ -387,7 +257,7 @@ function codexbloc_about_faqs() {
 		),
 		array(
 			'q' => __( 'How do I get support?', 'codexbloc' ),
-			'a' => __( 'Free plugins are supported in the WordPress.org forums. Premium customers get priority email support. For anything else, use our contact page.', 'codexbloc' ),
+			'a' => __( 'Plugin questions are answered in the WordPress.org support forums. For themes, websites or anything else, send us a message through our contact page.', 'codexbloc' ),
 		),
 	);
 }

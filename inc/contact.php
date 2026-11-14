@@ -26,7 +26,7 @@ function codexbloc_contact_topics() {
 	return array(
 		'support'  => __( 'Product support', 'codexbloc' ),
 		'presales' => __( 'Pre-sales question', 'codexbloc' ),
-		'billing'  => __( 'Billing & licenses', 'codexbloc' ),
+		'billing'  => __( 'Orders & billing', 'codexbloc' ),
 		'project'  => __( 'Custom project / services', 'codexbloc' ),
 		'other'    => __( 'Something else', 'codexbloc' ),
 	);

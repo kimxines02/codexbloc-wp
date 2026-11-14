@@ -157,7 +157,7 @@ ul.products li.product .woocommerce-loop-product__title:first-child { @apply pt-
 /* Prices */
 .price del, .woocommerce-Price-amount del { @apply mr-1 font-normal text-slate-400; }
 .price ins { @apply no-underline; }
-.price .subscription-details, .price .woocommerce-price-suffix { @apply text-sm font-normal text-slate-500; }
+.price .woocommerce-price-suffix { @apply text-sm font-normal text-slate-500; }
 
 /* Star ratings (pure CSS, no icon font) */
 .star-rating { @apply relative block h-[1em] w-[5.4em] overflow-hidden text-sm leading-none; letter-spacing: 0.1em; }

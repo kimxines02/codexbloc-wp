@@ -92,8 +92,6 @@ function codexbloc_customize_register( $wp_customize ) {
 		'newsletter_button' => array( __( 'Newsletter: button text', 'codexbloc' ), 'text' ),
 		'newsletter_action' => array( __( 'Newsletter: form action URL from your email provider (blank = built-in signup)', 'codexbloc' ), 'url' ),
 		'newsletter_field'  => array( __( 'Newsletter: email field name used by your provider (e.g. EMAIL for Mailchimp)', 'codexbloc' ), 'text' ),
-		'all_access_url'    => array( __( 'All-access: checkout link (blank = shown as "coming soon")', 'codexbloc' ), 'url' ),
-		'addons_url'        => array( __( 'PrestaShop Addons seller page URL', 'codexbloc' ), 'url' ),
 	);
 
 	foreach ( $text_fields as $key => $field ) {

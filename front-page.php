@@ -16,7 +16,6 @@ $shop_url  = codexbloc_shop_url();
 $cta_url   = codexbloc_mod( 'hero_cta_url' ) ? codexbloc_link( codexbloc_mod( 'hero_cta_url' ) ) : $shop_url;
 $cta2_url  = codexbloc_link( codexbloc_mod( 'hero_cta2_url' ) );
 $contact   = codexbloc_link( codexbloc_mod( 'contact_url' ) );
-$plans     = codexbloc_plans();
 ?>
 
 <main id="main">
@@ -35,7 +34,7 @@ $plans     = codexbloc_plans();
 				<ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600">
 					<li class="flex items-center gap-2"><?php echo codexbloc_icon( 'check', 'h-4 w-4 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Free on WordPress.org', 'codexbloc' ); ?></li>
 					<li class="flex items-center gap-2"><?php echo codexbloc_icon( 'check', 'h-4 w-4 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Built lean and fast', 'codexbloc' ); ?></li>
-					<li class="flex items-center gap-2"><?php echo codexbloc_icon( 'check', 'h-4 w-4 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Yearly licenses, no lock-in', 'codexbloc' ); ?></li>
+					<li class="flex items-center gap-2"><?php echo codexbloc_icon( 'check', 'h-4 w-4 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Support from the developers', 'codexbloc' ); ?></li>
 				</ul>
 			</div>
 
@@ -52,9 +51,9 @@ $plans     = codexbloc_plans();
 							<span class="shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700"><?php esc_html_e( 'Free', 'codexbloc' ); ?></span>
 						</li>
 						<li class="flex items-center gap-4 p-4">
-							<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent"><?php echo codexbloc_icon( 'bolt', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-							<span class="min-w-0 grow"><span class="block font-semibold text-ink sm:truncate"><?php esc_html_e( 'Premium plugins', 'codexbloc' ); ?></span><span class="block text-sm text-slate-500"><?php esc_html_e( 'More features, priority support', 'codexbloc' ); ?></span></span>
-							<span class="shrink-0 rounded-full bg-accent-soft px-2.5 py-1 text-xs font-medium text-accent"><?php esc_html_e( 'From €39 / yr', 'codexbloc' ); ?></span>
+							<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent"><?php echo codexbloc_icon( 'bag', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+							<span class="min-w-0 grow"><span class="block font-semibold text-ink sm:truncate"><?php esc_html_e( 'Websites & online stores', 'codexbloc' ); ?></span><span class="block text-sm text-slate-500"><?php esc_html_e( 'Designed and built for you', 'codexbloc' ); ?></span></span>
+							<span class="shrink-0 rounded-full bg-accent-soft px-2.5 py-1 text-xs font-medium text-accent"><?php esc_html_e( 'Services', 'codexbloc' ); ?></span>
 						</li>
 						<li class="flex items-center gap-4 p-4">
 							<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500"><?php echo codexbloc_icon( 'code', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
@@ -128,37 +127,6 @@ $plans     = codexbloc_plans();
 		<a class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-dark sm:hidden" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'View all products', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 	</section>
 
-	<!-- Free vs premium -->
-	<section id="premium" class="cb-container scroll-mt-24 pt-16 sm:pt-24" aria-labelledby="cb-plans-title">
-		<div class="mx-auto max-w-2xl text-center">
-			<h2 id="cb-plans-title" class="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"><?php esc_html_e( 'Start free. Upgrade when you are ready.', 'codexbloc' ); ?></h2>
-			<p class="mt-3 text-slate-600"><?php esc_html_e( 'Every plugin has a free version. Premium adds more features, priority support and a year of updates.', 'codexbloc' ); ?></p>
-		</div>
-
-		<div class="mx-auto mt-10 grid grid-cols-1 max-w-4xl gap-5 md:grid-cols-2">
-			<?php foreach ( $plans as $key => $plan ) : ?>
-				<?php $is_premium = 'premium' === $key; ?>
-				<div class="flex flex-col rounded-2xl border p-6 sm:p-8 <?php echo $is_premium ? 'border-accent bg-accent-soft/40 ring-1 ring-accent/20' : 'border-slate-200 bg-white'; ?>">
-					<h3 class="text-lg font-semibold text-ink"><?php echo esc_html( $plan['title'] ); ?></h3>
-					<p class="mt-2 text-sm leading-relaxed text-slate-600"><?php echo esc_html( $plan['text'] ); ?></p>
-					<ul class="mt-6 space-y-3 text-sm text-slate-700">
-						<?php foreach ( $plan['items'] as $item ) : ?>
-							<li class="flex gap-3"><?php echo codexbloc_icon( 'check', 'mt-0.5 h-4 w-4 shrink-0 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><span><?php echo esc_html( $item ); ?></span></li>
-						<?php endforeach; ?>
-					</ul>
-					<div class="mt-auto pt-8">
-						<?php if ( $is_premium ) : ?>
-							<a class="btn btn-primary w-full" href="<?php echo esc_url( codexbloc_pricing_url() ); ?>"><?php esc_html_e( 'See pricing', 'codexbloc' ); ?></a>
-						<?php else : ?>
-							<?php $wporg = codexbloc_mod( 'wporg_url' ); ?>
-							<a class="btn btn-outline w-full" href="<?php echo esc_url( $wporg ? $wporg : $shop_url ); ?>"<?php echo $wporg ? ' target="_blank" rel="noopener"' : ''; ?>><?php echo $wporg ? esc_html__( 'Find us on WordPress.org', 'codexbloc' ) : esc_html__( 'Browse free plugins', 'codexbloc' ); ?></a>
-						<?php endif; ?>
-					</div>
-				</div>
-			<?php endforeach; ?>
-		</div>
-	</section>
-
 	<!-- Why Codexbloc -->
 	<section class="cb-container pt-16 sm:pt-24" aria-labelledby="cb-why-title">
 		<div class="mx-auto max-w-2xl text-center">
@@ -177,7 +145,7 @@ $plans     = codexbloc_plans();
 	</section>
 
 	<!-- Services -->
-	<section class="mt-16 border-t border-slate-200 bg-slate-50 py-16 sm:mt-24 sm:py-24" aria-labelledby="cb-services-title">
+	<section id="services" class="mt-16 scroll-mt-16 border-t border-slate-200 bg-slate-50 py-16 sm:mt-24 sm:py-24" aria-labelledby="cb-services-title">
 		<div class="cb-container">
 
 			<!-- Header -->

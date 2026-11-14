@@ -223,7 +223,7 @@ add_filter(
 );
 
 /**
- * Single product: features, buttons, details and upgrade box.
+ * Single product: features, buttons and details.
  */
 function codexbloc_single_features() {
 	global $product;
@@ -309,29 +309,6 @@ function codexbloc_single_links() {
 }
 add_action( 'woocommerce_single_product_summary', 'codexbloc_single_links', 35 );
 
-function codexbloc_single_upgrade() {
-	global $product;
-	$id  = $product->get_id();
-	$url = codexbloc_product_field( $id, 'premium_url' );
-	if ( ! $url ) {
-		return;
-	}
-	$lines = codexbloc_lines( codexbloc_product_field( $id, 'premium_features' ) );
-	?>
-	<div class="mt-8 rounded-2xl border border-accent/30 bg-accent-soft/50 p-5">
-		<h3 class="font-semibold text-ink"><?php esc_html_e( 'Want more? Go Premium', 'codexbloc' ); ?></h3>
-		<?php if ( $lines ) : ?>
-			<ul class="mt-3 space-y-2 text-sm text-slate-700">
-				<?php foreach ( $lines as $line ) : ?>
-					<li class="flex gap-2"><?php echo codexbloc_icon( 'check', 'mt-0.5 h-4 w-4 shrink-0 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><span><?php echo esc_html( $line ); ?></span></li>
-				<?php endforeach; ?>
-			</ul>
-		<?php endif; ?>
-		<a class="btn btn-primary mt-4 !px-4 !py-2 !text-sm" href="<?php echo esc_url( $url ); ?>"><?php esc_html_e( 'See premium plans', 'codexbloc' ); ?></a>
-	</div>
-	<?php
-}
-add_action( 'woocommerce_single_product_summary', 'codexbloc_single_upgrade', 36 );
 
 /**
  * Wrap the add-to-cart form and whatever plugins print right after it

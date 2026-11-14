@@ -196,7 +196,6 @@ function codexbloc_menu_fallback( $args ) {
 
 	$pages = array(
 		'services' => __( 'Services', 'codexbloc' ),
-		'pricing'  => __( 'Pricing', 'codexbloc' ),
 		'docs'     => __( 'Docs', 'codexbloc' ),
 		'about'    => __( 'About', 'codexbloc' ),
 		'contact'  => __( 'Contact', 'codexbloc' ),
@@ -300,14 +299,6 @@ function codexbloc_link( $url ) {
 		return home_url( $url );
 	}
 	return $url;
-}
-
-/**
- * URL of the Pricing page (slug "pricing"), or the homepage plans section.
- */
-function codexbloc_pricing_url() {
-	$page = get_page_by_path( 'pricing' );
-	return $page ? get_permalink( $page ) : home_url( '/#premium' );
 }
 
 /**

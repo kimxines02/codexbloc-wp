@@ -45,16 +45,6 @@ function codexbloc_product_field_defs() {
 			'type'  => 'textarea',
 			'help'  => __( 'One feature per line. Shown as a checklist next to the price.', 'codexbloc' ),
 		),
-		'premium_url'      => array(
-			'label' => __( 'Premium version link', 'codexbloc' ),
-			'type'  => 'url',
-			'help'  => __( 'On a FREE product: link to its premium product. Shows an upgrade box.', 'codexbloc' ),
-		),
-		'premium_features' => array(
-			'label' => __( 'What Premium adds', 'codexbloc' ),
-			'type'  => 'textarea',
-			'help'  => __( 'One per line. Only used together with the premium link above.', 'codexbloc' ),
-		),
 	);
 }
 

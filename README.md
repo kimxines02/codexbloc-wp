@@ -15,14 +15,7 @@ Tailwind CSS is compiled to one ~10 KB (gzipped) stylesheet. No web fonts, no jQ
 Products > Add New. Fill the **Codexbloc details** box under the description:
 - **WordPress.org URL** + price empty/0 = shows "Download free" instead of add to cart.
 - Version, requirements, key features (one per line), demo and docs links.
-- On a free product, **Premium version link** + "What Premium adds" shows an upgrade box.
 Featured products (star in the product list) appear first on the homepage.
-
-## Monthly / yearly premium plans
-Install **WooCommerce Subscriptions** (paid) or a compatible subscription plugin, then create a
-*Variable subscription* product with an attribute such as "Billing" = Monthly | Yearly and set the price and
-billing period per variation. The theme turns the dropdown into Monthly / Yearly pill buttons. Set the default
-variation in the product's Variations tab so one is preselected.
 
 ## Editing styles
 Source is in `src/input.css` and `tailwind.config.js`.
@@ -31,7 +24,7 @@ npm install
 npm run build   # writes assets/css/main.css
 npm run dev     # watch mode
 ```
-Homepage copy: `inc/defaults.php` (pillars, services, service prices, free/premium comparison).
+Homepage copy: `inc/defaults.php` (pillars, services, service prices, About page copy).
 
 ## Deployment
 Pushing to `main` builds the production CSS and deploys the theme over explicit FTPS to the configured WordPress theme directory. Configure these repository Actions secrets before the first deployment:
