@@ -303,25 +303,40 @@ table.variations label { @apply mb-2 block text-sm font-semibold text-ink; }
 
 
 /* Light-weight article typography (replaces the heavy typography plugin) */
-.cb-prose { @apply text-base leading-7 text-slate-700; }
+.cb-prose { @apply text-base leading-[1.75] text-slate-700 sm:text-[1.0625rem]; }
+.cb-prose > :first-child { @apply mt-0; }
 .cb-prose > * + * { @apply mt-5; }
-.cb-prose h1, .cb-prose h2, .cb-prose h3, .cb-prose h4 { @apply mt-9 font-semibold leading-snug tracking-tight text-ink; }
+.cb-prose h1, .cb-prose h2, .cb-prose h3, .cb-prose h4 { @apply mt-12 scroll-mt-28 font-semibold leading-snug tracking-tight text-ink; }
 .cb-prose h1 { @apply text-3xl; }
 .cb-prose h2 { @apply text-2xl; }
-.cb-prose h3 { @apply text-xl; }
-.cb-prose h4 { @apply text-lg; }
-.cb-prose a { @apply text-accent underline-offset-2 hover:underline; }
-.cb-prose ul { @apply list-disc pl-6; }
-.cb-prose ol { @apply list-decimal pl-6; }
-.cb-prose li + li { @apply mt-1.5; }
+.cb-prose h3 { @apply mt-9 text-lg; }
+.cb-prose h4 { @apply mt-8 text-base; }
+.cb-prose h2 + *, .cb-prose h3 + *, .cb-prose h4 + * { @apply mt-3; }
+.cb-prose strong { @apply font-semibold text-ink; }
+.cb-prose a { @apply font-medium text-accent underline decoration-accent/30 underline-offset-[3px] transition hover:decoration-accent; }
+.cb-prose ul { @apply list-disc pl-5 marker:text-slate-400; }
+.cb-prose ol { @apply list-decimal pl-5 marker:font-medium marker:text-slate-500; }
+.cb-prose li { @apply pl-1.5; }
+.cb-prose li + li { @apply mt-2; }
+.cb-prose li > ul, .cb-prose li > ol { @apply mt-2; }
 .cb-prose img, .cb-prose video, .cb-prose iframe { @apply h-auto max-w-full rounded-xl; }
-.cb-prose blockquote { @apply border-l-4 border-slate-200 pl-4 italic text-slate-600; }
+.cb-prose figcaption { @apply mt-2 text-center text-sm text-slate-500; }
+.cb-prose blockquote { @apply rounded-r-xl border-l-2 border-accent bg-slate-50 py-4 pl-5 pr-5 text-slate-700; }
 .cb-prose pre { @apply overflow-x-auto rounded-xl bg-slate-900 p-4 text-sm leading-6 text-slate-100; }
 .cb-prose code { @apply rounded bg-slate-100 px-1.5 py-0.5 text-[0.9em]; }
 .cb-prose pre code { @apply bg-transparent p-0; }
-.cb-prose table { @apply w-full border-collapse text-sm; }
-.cb-prose th, .cb-prose td { @apply border-b border-slate-200 px-3 py-2 text-left; }
-.cb-prose hr { @apply my-8 border-slate-200; }
+.cb-prose table { @apply w-full border-collapse overflow-hidden rounded-xl text-sm ring-1 ring-slate-200; }
+.cb-prose thead th { @apply bg-slate-50 font-semibold text-ink; }
+.cb-prose th, .cb-prose td { @apply border-b border-slate-200 px-4 py-3 text-left align-top; }
+.cb-prose tr:last-child td { @apply border-b-0; }
+.cb-prose hr { @apply my-12 border-slate-200; }
+
+/* Long pages: each H2 starts a ruled section */
+.cb-prose-sections > h2:not(:first-child) { @apply mt-14 border-t border-slate-200 pt-10; }
+.cb-prose-sections > h2 { @apply text-xl sm:text-2xl; }
+
+/* "On this page" active link */
+.cb-toc a.is-active { @apply border-accent font-medium text-ink; }
 
 /* Tabs and their content */
 .woocommerce-tabs ul.tabs { @apply m-0 mb-6 flex list-none gap-1 overflow-x-auto border-b border-slate-200 p-0; }

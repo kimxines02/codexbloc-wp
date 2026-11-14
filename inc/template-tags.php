@@ -309,3 +309,50 @@ function codexbloc_pricing_url() {
 	$page = get_page_by_path( 'pricing' );
 	return $page ? get_permalink( $page ) : home_url( '/#premium' );
 }
+
+/**
+ * Add anchor ids to H2 headings in rendered content and collect them for a table of contents.
+ *
+ * @param string $content Rendered post content (after the_content filters).
+ * @return array{content:string,toc:array<int,array{id:string,title:string}>}
+ */
+function codexbloc_content_toc( $content ) {
+	$toc  = array();
+	$used = array();
+
+	$content = preg_replace_callback(
+		'#<h2(\s[^>]*)?>(.*?)</h2>#is',
+		function ( $m ) use ( &$toc, &$used ) {
+			$attrs = isset( $m[1] ) ? $m[1] : '';
+			$title = trim( wp_strip_all_tags( $m[2] ) );
+			if ( '' === $title ) {
+				return $m[0];
+			}
+
+			if ( preg_match( '#\sid=(["\'])(.*?)\1#i', $attrs, $idm ) ) {
+				$id = $idm[2];
+			} else {
+				$base = sanitize_title( $title );
+				$base = $base ? $base : 'section';
+				$id   = $base;
+				$n    = 2;
+				while ( isset( $used[ $id ] ) ) {
+					$id = $base . '-' . $n++;
+				}
+				$attrs .= ' id="' . esc_attr( $id ) . '"';
+			}
+			$used[ $id ] = true;
+			$toc[]       = array(
+				'id'    => $id,
+				'title' => html_entity_decode( $title, ENT_QUOTES, 'UTF-8' ),
+			);
+			return '<h2' . $attrs . '>' . $m[2] . '</h2>';
+		},
+		$content
+	);
+
+	return array(
+		'content' => $content,
+		'toc'     => $toc,
+	);
+}
