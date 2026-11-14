@@ -22,6 +22,27 @@ $sent      = isset( $_GET['sent'] ) && ! $errors; // phpcs:ignore WordPress.Secu
 $recipient = codexbloc_contact_recipient();
 $topics    = codexbloc_contact_topics();
 $shop_url  = codexbloc_shop_url();
+
+// Pre-fill from links like /contact/?topic=presales&product=Name ("Contact us for pricing").
+// phpcs:disable WordPress.Security.NonceVerification
+if ( empty( $_POST['codexbloc_contact'] ) ) {
+	$get_topic = isset( $_GET['topic'] ) ? sanitize_key( wp_unslash( $_GET['topic'] ) ) : '';
+	if ( '' === $values['topic'] && isset( $topics[ $get_topic ] ) ) {
+		$values['topic'] = $get_topic;
+	}
+	$get_product = isset( $_GET['product'] ) ? sanitize_text_field( wp_unslash( $_GET['product'] ) ) : '';
+	if ( '' !== $get_product ) {
+		if ( '' === $values['subject'] ) {
+			/* translators: %s: product name. */
+			$values['subject'] = sprintf( __( 'Pricing: %s', 'codexbloc' ), $get_product );
+		}
+		if ( '' === $values['message'] ) {
+			/* translators: %s: product name. */
+			$values['message'] = sprintf( __( "Hi, I would like to know the price of %s.\n\nMy website: \nWhat I need: ", 'codexbloc' ), $get_product );
+		}
+	}
+}
+// phpcs:enable
 ?>
 
 <main id="main">

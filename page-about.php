@@ -21,10 +21,6 @@ $contact  = codexbloc_link( codexbloc_mod( 'contact_url' ) );
 
 $showcase = post_type_exists( 'cb_showcase' ) ? get_post_type_archive_link( 'cb_showcase' ) : '';
 
-// Starting price for website packages (inc/defaults.php).
-$service_tiers = codexbloc_service_prices();
-$service_from  = ! empty( $service_tiers ) ? $service_tiers[0]['price'] : '';
-
 $offers = array(
 	array(
 		'icon'   => 'puzzle',
@@ -54,13 +50,10 @@ $offers = array(
 		'icon'   => 'bag',
 		'title'  => __( 'Web design & development', 'codexbloc' ),
 		'text'   => __( 'Need it done for you? We design, build and maintain websites and online stores.', 'codexbloc' ),
-		'points' => array_filter(
-			array(
-				__( 'Business websites and WooCommerce stores', 'codexbloc' ),
-				/* translators: %s: starting price, e.g. "₱10,000". */
-				$service_from ? sprintf( __( 'Packages from %s', 'codexbloc' ), $service_from ) : '',
-				__( 'Ongoing care and maintenance', 'codexbloc' ),
-			)
+		'points' => array(
+			__( 'Business websites and WooCommerce stores', 'codexbloc' ),
+			__( 'Free, no-obligation quote', 'codexbloc' ),
+			__( 'Ongoing care and maintenance', 'codexbloc' ),
 		),
 		'label'  => __( 'Talk to us', 'codexbloc' ),
 		'url'    => $contact,

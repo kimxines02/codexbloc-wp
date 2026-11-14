@@ -122,49 +122,6 @@ function codexbloc_services() {
 }
 
 /**
- * Service packages with starting prices (PHP peso). Set to an empty array to hide.
- * Mark one package 'featured' => true to highlight it.
- */
-function codexbloc_service_prices() {
-	return array(
-		array(
-			'name'     => __( 'Starter', 'codexbloc' ),
-			'price'    => '₱10,000',
-			'note'     => __( 'For small businesses getting online.', 'codexbloc' ),
-			'features' => array(
-				__( 'Up to 5 pages', 'codexbloc' ),
-				__( 'Mobile-ready design', 'codexbloc' ),
-				__( 'Basic SEO setup', 'codexbloc' ),
-				__( 'Contact form', 'codexbloc' ),
-			),
-		),
-		array(
-			'name'     => __( 'Business', 'codexbloc' ),
-			'price'    => '₱18,000',
-			'note'     => __( 'For growing brands that need to be found.', 'codexbloc' ),
-			'featured' => true,
-			'features' => array(
-				__( 'Up to 10 pages', 'codexbloc' ),
-				__( 'Full SEO optimization', 'codexbloc' ),
-				__( 'Social media integration', 'codexbloc' ),
-				__( 'Everything in Starter', 'codexbloc' ),
-			),
-		),
-		array(
-			'name'     => __( 'E-Commerce', 'codexbloc' ),
-			'price'    => '₱25,000',
-			'note'     => __( 'For selling products online.', 'codexbloc' ),
-			'features' => array(
-				__( 'Online store, up to 15 products', 'codexbloc' ),
-				__( 'Payment gateway setup', 'codexbloc' ),
-				__( 'Inventory management', 'codexbloc' ),
-				__( 'Everything in Business', 'codexbloc' ),
-			),
-		),
-	);
-}
-
-/**
  * Service process steps shown on the homepage.
  */
 function codexbloc_service_steps() {

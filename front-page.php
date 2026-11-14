@@ -17,7 +17,6 @@ $cta_url   = codexbloc_mod( 'hero_cta_url' ) ? codexbloc_link( codexbloc_mod( 'h
 $cta2_url  = codexbloc_link( codexbloc_mod( 'hero_cta2_url' ) );
 $contact   = codexbloc_link( codexbloc_mod( 'contact_url' ) );
 $showcase  = post_type_exists( 'cb_showcase' ) ? get_post_type_archive_link( 'cb_showcase' ) : '';
-$packages  = codexbloc_service_prices();
 
 // Hero: the three ways we help, so visitors can pick a path at a glance.
 $hero_paths = array(
@@ -41,8 +40,7 @@ $hero_paths = array(
 		'icon'        => 'bag',
 		'title'       => __( 'A website built for you', 'codexbloc' ),
 		'text'        => __( 'We design, build and look after your site', 'codexbloc' ),
-		/* translators: %s: starting price of website packages. */
-		'badge'       => ! empty( $packages ) ? sprintf( __( 'From %s', 'codexbloc' ), $packages[0]['price'] ) : '',
+		'badge'       => __( 'Free quote', 'codexbloc' ),
 		'badge_class' => 'bg-accent-soft text-accent',
 		'url'         => '#services',
 	),

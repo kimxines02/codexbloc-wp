@@ -13,7 +13,9 @@ Tailwind CSS is compiled to one ~10 KB (gzipped) stylesheet. No web fonts, no jQ
 
 ## Adding products
 Products > Add New. Fill the **Codexbloc details** box under the description:
-- **WordPress.org URL** + price empty/0 = shows "Download free" instead of add to cart.
+- **WordPress.org URL** + price empty/0 = shows "Free" and a "Download free" button.
+- Every other product hides its price and cart button and shows **Contact us for pricing**,
+  which opens the contact form pre-filled with the product name. Prices you enter are kept for your records only.
 - Version, requirements, key features (one per line), demo and docs links.
 Featured products (star in the product list) appear first on the homepage.
 
@@ -24,7 +26,7 @@ npm install
 npm run build   # writes assets/css/main.css
 npm run dev     # watch mode
 ```
-Homepage copy: `inc/defaults.php` (pillars, services, service prices, About page copy).
+Homepage copy: `inc/defaults.php` (pillars, services, About page copy).
 
 ## Deployment
 Pushing to `main` builds the production CSS and deploys the theme over explicit FTPS to the configured WordPress theme directory. Configure these repository Actions secrets before the first deployment:
