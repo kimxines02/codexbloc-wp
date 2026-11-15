@@ -5,6 +5,7 @@
  * - Turns WooCommerce variation dropdowns (e.g. size or version) into pill buttons
  * - Product gallery thumbnails as a slider (vertical beside the image on sm+)
  * - Product image lightbox with a thumbnail column on the right
+ * - Shop filter sidebar: always open on desktop, collapsible on phones
  */
 (function () {
 	'use strict';
@@ -381,5 +382,13 @@
 		document.addEventListener('DOMContentLoaded', initLightboxes);
 	} else {
 		initLightboxes();
+	}
+	/* Shop filters: open on desktop, collapsed on phones -------------------- */
+	var filters = document.querySelector('[data-cb-filters]');
+	if (filters && window.matchMedia) {
+		var desktop = window.matchMedia('(min-width: 1024px)');
+		var syncFilters = function () { if (desktop.matches) { filters.open = true; } };
+		syncFilters();
+		if (desktop.addEventListener) { desktop.addEventListener('change', syncFilters); }
 	}
 })();

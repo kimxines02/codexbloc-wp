@@ -85,47 +85,196 @@ add_filter(
 );
 
 /**
- * Category pills above the shop loop. Easy navigation between
- * Plugins / Themes / PrestaShop modules.
+ * Is this a product listing that gets the filter sidebar?
  */
-function codexbloc_shop_filters() {
-	if ( ! ( is_shop() || is_product_taxonomy() ) ) {
-		return;
+function codexbloc_has_shop_sidebar() {
+	return function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() ) && ! is_search();
+}
+
+/**
+ * Price ranges offered in the sidebar: key => [ min, max, label ].
+ * A null bound means "no limit".
+ */
+function codexbloc_price_ranges() {
+	$money = function ( $amount ) {
+		return html_entity_decode( wp_strip_all_tags( wc_price( $amount, array( 'decimals' => 0 ) ) ), ENT_QUOTES, 'UTF-8' );
+	};
+	return array(
+		'free'   => array( null, 0, __( 'Free', 'codexbloc' ) ),
+		'0-25'   => array( 0.01, 25, sprintf( /* translators: %s: price */ __( 'Under %s', 'codexbloc' ), $money( 25 ) ) ),
+		'25-50'  => array( 25, 50, $money( 25 ) . ' – ' . $money( 50 ) ),
+		'50-100' => array( 50, 100, $money( 50 ) . ' – ' . $money( 100 ) ),
+		'100+'   => array( 100, null, sprintf( /* translators: %s: price */ __( 'Over %s', 'codexbloc' ), $money( 100 ) ) ),
+	);
+}
+
+/**
+ * Current listing URL without page number, keeping the sort order.
+ */
+function codexbloc_shop_base_url() {
+	$url = is_product_taxonomy() ? get_term_link( get_queried_object() ) : wc_get_page_permalink( 'shop' );
+	if ( is_wp_error( $url ) ) {
+		$url = wc_get_page_permalink( 'shop' );
 	}
+	if ( isset( $_GET['orderby'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		$url = add_query_arg( 'orderby', sanitize_key( wp_unslash( $_GET['orderby'] ) ), $url ); // phpcs:ignore WordPress.Security.NonceVerification
+	}
+	return $url;
+}
+
+/**
+ * Price filter currently in the URL, as [ min|null, max|null ].
+ */
+function codexbloc_current_price() {
+	// phpcs:disable WordPress.Security.NonceVerification
+	$min = isset( $_GET['min_price'] ) && '' !== $_GET['min_price'] ? (float) wp_unslash( $_GET['min_price'] ) : null;
+	$max = isset( $_GET['max_price'] ) && '' !== $_GET['max_price'] ? (float) wp_unslash( $_GET['max_price'] ) : null;
+	// phpcs:enable
+	return array( $min, $max );
+}
+
+/**
+ * Category list items (recursive) for the sidebar.
+ *
+ * @param int   $parent    Parent term id.
+ * @param array $price_args Price query args to keep on category links.
+ * @param array $active    Ids of the current term and its ancestors.
+ */
+function codexbloc_sidebar_cats( $parent, $price_args, $active ) {
 	$terms = get_terms(
 		array(
 			'taxonomy'   => 'product_cat',
 			'hide_empty' => true,
-			'parent'     => 0,
+			'parent'     => $parent,
 			'exclude'    => array( (int) get_option( 'default_product_cat' ) ),
+			'orderby'    => 'menu_order',
 		)
 	);
-	if ( is_wp_error( $terms ) || count( $terms ) < 1 ) {
+	if ( is_wp_error( $terms ) || ! $terms ) {
 		return;
 	}
-	$current = is_product_category() ? get_queried_object_id() : 0;
-	$pill    = 'inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium transition ';
-	$on      = 'border-accent bg-accent text-white';
-	$off     = 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-ink';
-
-	echo '<nav class="mb-6 flex flex-wrap gap-2" aria-label="' . esc_attr__( 'Product categories', 'codexbloc' ) . '">';
-	printf(
-		'<a class="%s" href="%s">%s</a>',
-		esc_attr( $pill . ( $current ? $off : $on ) ),
-		esc_url( wc_get_page_permalink( 'shop' ) ),
-		esc_html__( 'All', 'codexbloc' )
-	);
+	echo '<ul class="' . ( $parent ? 'mt-1 space-y-0.5 border-l border-slate-200 pl-3 ml-3' : 'space-y-0.5' ) . '" role="list">';
 	foreach ( $terms as $term ) {
+		$is_current = is_product_category() && (int) get_queried_object_id() === (int) $term->term_id;
+		$is_open    = in_array( (int) $term->term_id, $active, true );
+		$link       = add_query_arg( $price_args, get_term_link( $term ) );
 		printf(
-			'<a class="%s" href="%s">%s</a>',
-			esc_attr( $pill . ( (int) $term->term_id === (int) $current ? $on : $off ) ),
-			esc_url( get_term_link( $term ) ),
-			esc_html( $term->name )
+			'<li><a class="%s" href="%s"%s><span>%s</span><span class="%s">%d</span></a>',
+			esc_attr( 'flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm transition ' . ( $is_current ? 'bg-accent-soft font-semibold text-accent' : 'text-slate-600 hover:bg-slate-100 hover:text-ink' ) ),
+			esc_url( $link ),
+			$is_current ? ' aria-current="page"' : '',
+			esc_html( $term->name ),
+			esc_attr( 'text-xs ' . ( $is_current ? 'text-accent' : 'text-slate-400' ) ),
+			(int) $term->count
 		);
+		if ( $is_open || 0 === $parent ) {
+			codexbloc_sidebar_cats( (int) $term->term_id, $price_args, $active );
+		}
+		echo '</li>';
 	}
-	echo '</nav>';
+	echo '</ul>';
 }
-add_action( 'woocommerce_before_shop_loop', 'codexbloc_shop_filters', 5 );
+
+/**
+ * Filter sidebar: categories and price.
+ */
+function codexbloc_shop_sidebar() {
+	list( $cur_min, $cur_max ) = codexbloc_current_price();
+	$price_on   = null !== $cur_min || null !== $cur_max;
+	$price_args = array_filter(
+		array(
+			'min_price' => null !== $cur_min ? $cur_min : null,
+			'max_price' => null !== $cur_max ? $cur_max : null,
+		),
+		function ( $v ) {
+			return null !== $v;
+		}
+	);
+
+	$active = array();
+	if ( is_product_category() ) {
+		$id     = (int) get_queried_object_id();
+		$active = array_merge( array( $id ), array_map( 'intval', get_ancestors( $id, 'product_cat', 'taxonomy' ) ) );
+	}
+	$shop_url  = add_query_arg( $price_args, wc_get_page_permalink( 'shop' ) );
+	$base      = remove_query_arg( array( 'min_price', 'max_price' ), codexbloc_shop_base_url() );
+	$heading   = 'mb-2 px-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500';
+	$item      = 'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition ';
+	$item_on   = 'bg-accent-soft font-semibold text-accent';
+	$item_off  = 'text-slate-600 hover:bg-slate-100 hover:text-ink';
+	$filtering = $price_on || is_product_taxonomy();
+	?>
+	<aside class="cb-shop-sidebar mb-8 lg:mb-0" aria-label="<?php esc_attr_e( 'Product filters', 'codexbloc' ); ?>">
+		<details class="cb-filters group rounded-2xl border border-slate-200 bg-white lg:sticky lg:top-24 lg:border-0 lg:bg-transparent" data-cb-filters>
+			<summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-ink lg:hidden">
+				<span><?php esc_html_e( 'Filters', 'codexbloc' ); ?></span>
+				<svg class="h-4 w-4 text-slate-500 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+			</summary>
+			<div class="space-y-8 border-t border-slate-100 p-3 lg:border-0 lg:p-0">
+				<div>
+					<p class="<?php echo esc_attr( $heading ); ?>"><?php esc_html_e( 'Categories', 'codexbloc' ); ?></p>
+					<a class="<?php echo esc_attr( 'flex items-center justify-between rounded-lg px-3 py-2 text-sm transition ' . ( is_product_taxonomy() ? $item_off : $item_on ) ); ?>" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'All products', 'codexbloc' ); ?></a>
+					<?php codexbloc_sidebar_cats( 0, $price_args, $active ); ?>
+				</div>
+
+				<div>
+					<p class="<?php echo esc_attr( $heading ); ?>"><?php esc_html_e( 'Price', 'codexbloc' ); ?></p>
+					<ul class="space-y-0.5" role="list">
+						<li><a class="<?php echo esc_attr( $item . ( $price_on ? $item_off : $item_on ) ); ?>" href="<?php echo esc_url( $base ); ?>"><span class="<?php echo esc_attr( 'h-3.5 w-3.5 shrink-0 rounded-full border ' . ( $price_on ? 'border-slate-300' : 'border-[4px] border-accent' ) ); ?>" aria-hidden="true"></span><?php esc_html_e( 'Any price', 'codexbloc' ); ?></a></li>
+						<?php
+						foreach ( codexbloc_price_ranges() as $range ) :
+							list( $min, $max, $label ) = $range;
+							$on   = $price_on
+								&& ( null === $min ? null === $cur_min : (float) $min === $cur_min )
+								&& ( null === $max ? null === $cur_max : (float) $max === $cur_max );
+							$args = array_filter(
+								array(
+									'min_price' => $min,
+									'max_price' => $max,
+								),
+								function ( $v ) {
+									return null !== $v;
+								}
+							);
+							?>
+							<li><a class="<?php echo esc_attr( $item . ( $on ? $item_on : $item_off ) ); ?>" href="<?php echo esc_url( add_query_arg( $args, $base ) ); ?>" rel="nofollow"<?php echo $on ? ' aria-current="true"' : ''; ?>><span class="<?php echo esc_attr( 'h-3.5 w-3.5 shrink-0 rounded-full border ' . ( $on ? 'border-[4px] border-accent' : 'border-slate-300' ) ); ?>" aria-hidden="true"></span><?php echo esc_html( $label ); ?></a></li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+
+				<?php if ( $filtering ) : ?>
+					<a class="mx-3 inline-flex text-sm font-medium text-accent hover:text-accent-dark" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>"><?php esc_html_e( 'Clear all filters', 'codexbloc' ); ?></a>
+				<?php endif; ?>
+			</div>
+		</details>
+	</aside>
+	<?php
+}
+
+/**
+ * Two-column layout on listings: filters on the left, products on the right.
+ */
+add_action(
+	'woocommerce_before_main_content',
+	function () {
+		if ( ! codexbloc_has_shop_sidebar() ) {
+			return;
+		}
+		echo '<div class="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">';
+		codexbloc_shop_sidebar();
+		echo '<div class="cb-shop-main min-w-0">';
+	},
+	30
+);
+add_action(
+	'woocommerce_after_main_content',
+	function () {
+		if ( codexbloc_has_shop_sidebar() ) {
+			echo '</div></div>';
+		}
+	},
+	5
+);
 
 add_action(
 	'woocommerce_before_shop_loop',
