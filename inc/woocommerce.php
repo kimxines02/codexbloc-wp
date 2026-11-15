@@ -543,3 +543,61 @@ add_filter(
 	},
 	20
 );
+
+/**
+ * Checkout for a digital-only store: no street address, city, state,
+ * postcode or phone. Kept: email (download link and licence key), first and
+ * last name (invoice and licence) and country (EU VAT evidence for
+ * electronically supplied services, plus fraud checks).
+ *
+ * To keep the postcode for card payments, remove 'postcode' from
+ * codexbloc_hidden_address_fields().
+ */
+function codexbloc_hidden_address_fields() {
+	return array( 'address_1', 'address_2', 'city', 'state', 'postcode' );
+}
+
+// Block checkout + classic checkout's country switcher: hide the fields for every country.
+add_filter(
+	'woocommerce_get_country_locale',
+	function ( $locale ) {
+		foreach ( array_keys( WC()->countries->get_countries() ) as $code ) {
+			foreach ( codexbloc_hidden_address_fields() as $field ) {
+				$locale[ $code ][ $field ]['required'] = false;
+				$locale[ $code ][ $field ]['hidden']   = true;
+			}
+		}
+		return $locale;
+	}
+);
+
+add_filter(
+	'woocommerce_get_country_locale_default',
+	function ( $fields ) {
+		foreach ( codexbloc_hidden_address_fields() as $field ) {
+			$fields[ $field ]['required'] = false;
+			$fields[ $field ]['hidden']   = true;
+		}
+		return $fields;
+	}
+);
+
+// Classic (shortcode) checkout and My account > Addresses: drop the fields outright.
+add_filter(
+	'woocommerce_billing_fields',
+	function ( $fields ) {
+		foreach ( array_merge( codexbloc_hidden_address_fields(), array( 'phone' ) ) as $field ) {
+			unset( $fields[ 'billing_' . $field ] );
+		}
+		return $fields;
+	},
+	20
+);
+
+// Phone field off in the Checkout block (same as choosing "Hidden" in its settings).
+add_filter(
+	'pre_option_woocommerce_checkout_phone_field',
+	function () {
+		return 'hidden';
+	}
+);
