@@ -177,25 +177,7 @@ function codexbloc_menu_fallback( $args ) {
 	$items   = array();
 
 	if ( function_exists( 'wc_get_page_permalink' ) ) {
-		$cats  = array(
-			array( array( 'wordpress-plugins' ), __( 'Plugins', 'codexbloc' ) ),
-			array( array( 'wordpress-themes' ), __( 'Themes', 'codexbloc' ) ),
-			array( codexbloc_prestashop_slugs(), __( 'PrestaShop', 'codexbloc' ) ),
-		);
-		$found = false;
-		foreach ( $cats as $cat ) {
-			foreach ( $cat[0] as $slug ) {
-				$term = get_term_by( 'slug', $slug, 'product_cat' );
-				if ( $term && ! is_wp_error( $term ) ) {
-					$items[] = array( $cat[1], get_term_link( $term ) );
-					$found   = true;
-					break;
-				}
-			}
-		}
-		if ( ! $found ) {
-			$items[] = array( __( 'Shop', 'codexbloc' ), wc_get_page_permalink( 'shop' ) );
-		}
+		$items[] = array( __( 'Products', 'codexbloc' ), wc_get_page_permalink( 'shop' ) );
 	}
 
 	$pages = array(
