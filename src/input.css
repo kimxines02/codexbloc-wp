@@ -477,4 +477,34 @@ body.logged-in.woocommerce-account .woocommerce { @apply lg:grid lg:grid-cols-[1
 .wc-block-components-button:not(.is-link):hover { background: rgb(var(--cb-accent-dark)) !important; }
 .wc-block-components-checkbox__input:checked, .wc-block-components-radio-control__input:checked { accent-color: rgb(var(--cb-accent)); }
 
+/* ==========================================================================
+   Header: animated pastel gradient (kept outside @layer so it is never purged)
+   ========================================================================== */
+.cb-header-gradient {
+  isolation: isolate;
+  background-color: #eef2ff;
+  background-image: linear-gradient(100deg, #fbe7f6 0%, #e6e3ff 18%, #d6e6ff 36%, #cdeefc 54%, #d3f5e8 72%, #eef8dc 86%, #fbe7f6 100%);
+  background-size: 300% 100%;
+  animation: cb-header-shift 16s ease-in-out infinite alternate;
+}
+/* Halftone dots fading in from the left and right edges */
+.cb-header-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(167, 139, 250, .35) 1px, transparent 1.4px);
+  background-size: 7px 7px;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 22%, transparent 78%, #000 100%);
+          mask-image: linear-gradient(90deg, #000 0%, transparent 22%, transparent 78%, #000 100%);
+}
+@keyframes cb-header-shift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cb-header-gradient { animation: none; }
+}
+
 @tailwind utilities;
