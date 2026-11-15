@@ -89,25 +89,25 @@ if ( codexbloc_newsletter_enabled() ) {
 <main id="main">
 
 	<!-- Hero -->
-	<section id="overview" class="relative isolate scroll-mt-16 overflow-hidden border-b border-slate-100 bg-gradient-to-b from-accent-soft/60 to-white" aria-labelledby="cb-hero-title">
-		<div class="pointer-events-none absolute -right-40 -top-40 -z-10 h-[32rem] w-[32rem] rounded-full bg-accent/10 blur-3xl" aria-hidden="true"></div>
+	<section id="overview" class="cb-hero-mesh relative isolate scroll-mt-16 overflow-hidden bg-[#0b0f17]" aria-labelledby="cb-hero-title">
+		<div class="cb-grid-lines pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
 		<div class="cb-container grid grid-cols-1 items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-24">
 			<div>
-				<p class="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-white px-3 py-1 text-xs font-medium text-accent">
-					<span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+				<p class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-sky-300 backdrop-blur">
+					<span class="h-1.5 w-1.5 rounded-full bg-sky-400" aria-hidden="true"></span>
 					<?php echo esc_html( codexbloc_mod( 'hero_eyebrow' ) ); ?>
 				</p>
-				<h1 id="cb-hero-title" class="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-[3.5rem]"><?php echo esc_html( codexbloc_mod( 'hero_title' ) ); ?></h1>
-				<p class="mt-5 max-w-xl text-lg leading-relaxed tracking-tight text-slate-600"><?php echo esc_html( codexbloc_mod( 'hero_text' ) ); ?></p>
+				<h1 id="cb-hero-title" class="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]"><?php echo esc_html( codexbloc_mod( 'hero_title' ) ); ?></h1>
+				<p class="mt-5 max-w-xl text-lg leading-relaxed tracking-tight text-slate-300"><?php echo esc_html( codexbloc_mod( 'hero_text' ) ); ?></p>
 				<div class="mt-8 flex flex-wrap gap-3">
 					<a class="btn btn-primary" href="<?php echo esc_url( $cta_url ); ?>"><?php echo esc_html( codexbloc_mod( 'hero_cta_label' ) ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
-					<a class="btn btn-outline" href="<?php echo esc_url( $cta2_url ); ?>"><?php echo esc_html( codexbloc_mod( 'hero_cta2_label' ) ); ?></a>
+					<a class="btn border border-white/20 bg-white/5 text-white hover:border-white/40 hover:bg-white/10 hover:text-white" href="<?php echo esc_url( $cta2_url ); ?>"><?php echo esc_html( codexbloc_mod( 'hero_cta2_label' ) ); ?></a>
 				</div>
-				<ul class="mt-10 grid max-w-xl grid-cols-1 gap-4 border-t border-slate-200/80 pt-6 text-sm sm:grid-cols-3" role="list">
+				<ul class="mt-10 grid max-w-xl grid-cols-1 gap-4 border-t border-white/10 pt-6 text-sm sm:grid-cols-3" role="list">
 					<?php foreach ( $hero_facts as $fact ) : ?>
 						<li class="flex items-start gap-2.5">
-							<?php echo codexbloc_icon( $fact['icon'], 'mt-0.5 h-4 w-4 shrink-0 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-							<span><span class="block font-semibold text-ink"><?php echo esc_html( $fact['title'] ); ?></span><span class="block text-slate-500"><?php echo esc_html( $fact['text'] ); ?></span></span>
+							<?php echo codexbloc_icon( $fact['icon'], 'mt-0.5 h-4 w-4 shrink-0 text-sky-400' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+							<span><span class="block font-semibold text-white"><?php echo esc_html( $fact['title'] ); ?></span><span class="block text-slate-400"><?php echo esc_html( $fact['text'] ); ?></span></span>
 						</li>
 					<?php endforeach; ?>
 				</ul>
@@ -115,7 +115,7 @@ if ( codexbloc_newsletter_enabled() ) {
 
 			<!-- What do you need? -->
 			<div class="w-full">
-				<div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-200/60 sm:p-3">
+				<div class="rounded-3xl border border-white/10 bg-white p-2 shadow-2xl shadow-black/40 ring-1 ring-white/10 sm:p-3">
 					<p class="px-3 pb-2 pt-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500 sm:px-4"><?php esc_html_e( 'What do you need?', 'codexbloc' ); ?></p>
 					<ul class="space-y-1" role="list">
 						<?php foreach ( $hero_paths as $path ) : ?>
