@@ -81,7 +81,7 @@ if ( empty( $_POST['codexbloc_contact'] ) ) {
 				<div class="rounded-2xl border border-slate-200 bg-white p-6">
 					<span class="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent"><?php echo codexbloc_icon( 'puzzle', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 					<h2 class="mt-4 font-semibold text-ink"><?php esc_html_e( 'Product support', 'codexbloc' ); ?></h2>
-					<p class="mt-1.5 text-sm leading-relaxed text-slate-600"><?php esc_html_e( 'Include the plugin name, your WordPress and WooCommerce versions, and the steps to reproduce the issue. It helps us fix things faster.', 'codexbloc' ); ?></p>
+					<p class="mt-1.5 text-sm leading-relaxed text-slate-600"><?php esc_html_e( 'Include the product name, your WordPress/WooCommerce or PrestaShop versions, and the steps to reproduce the issue. It helps us fix things faster.', 'codexbloc' ); ?></p>
 					<a class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-dark" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Browse products', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 				</div>
 			</aside>

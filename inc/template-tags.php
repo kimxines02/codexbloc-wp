@@ -26,6 +26,7 @@ function codexbloc_icon( $name, $class = 'h-5 w-5' ) {
 		'user'     => 'M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z',
 		'bag'      => 'M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z',
 		'bolt'     => 'm3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z',
+		'cube'     => 'm21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9',
 		'puzzle'   => 'M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z',
 		'shield'   => 'M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z',
 		'chat'     => 'M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM12 20.25c4.97 0 9-3.694 9-8.25S16.97 3.75 12 3.75 3 7.444 3 12c0 1.6.5 3.09 1.36 4.35L3.75 20.25l4.2-.8A9.9 9.9 0 0 0 12 20.25Z',
@@ -176,17 +177,20 @@ function codexbloc_menu_fallback( $args ) {
 	$items   = array();
 
 	if ( function_exists( 'wc_get_page_permalink' ) ) {
-		$cats = array(
-			'wordpress-plugins'  => __( 'Plugins', 'codexbloc' ),
-			'wordpress-themes'   => __( 'Themes', 'codexbloc' ),
-			'prestashop-modules' => __( 'PrestaShop', 'codexbloc' ),
+		$cats  = array(
+			array( array( 'wordpress-plugins' ), __( 'Plugins', 'codexbloc' ) ),
+			array( array( 'wordpress-themes' ), __( 'Themes', 'codexbloc' ) ),
+			array( codexbloc_prestashop_slugs(), __( 'PrestaShop', 'codexbloc' ) ),
 		);
 		$found = false;
-		foreach ( $cats as $slug => $label ) {
-			$term = get_term_by( 'slug', $slug, 'product_cat' );
-			if ( $term && ! is_wp_error( $term ) ) {
-				$items[] = array( $label, get_term_link( $term ) );
-				$found   = true;
+		foreach ( $cats as $cat ) {
+			foreach ( $cat[0] as $slug ) {
+				$term = get_term_by( 'slug', $slug, 'product_cat' );
+				if ( $term && ! is_wp_error( $term ) ) {
+					$items[] = array( $cat[1], get_term_link( $term ) );
+					$found   = true;
+					break;
+				}
 			}
 		}
 		if ( ! $found ) {
@@ -304,16 +308,25 @@ function codexbloc_link( $url ) {
 /**
  * Link to a product category by slug, falling back to the shop page.
  *
- * @param string $slug Product category slug.
+ * @param string|string[] $slugs Product category slug, or several to try in order.
  */
-function codexbloc_cat_url( $slug ) {
+function codexbloc_cat_url( $slugs ) {
 	if ( taxonomy_exists( 'product_cat' ) ) {
-		$term = get_term_by( 'slug', $slug, 'product_cat' );
-		if ( $term && ! is_wp_error( $term ) ) {
-			return get_term_link( $term );
+		foreach ( (array) $slugs as $slug ) {
+			$term = get_term_by( 'slug', $slug, 'product_cat' );
+			if ( $term && ! is_wp_error( $term ) ) {
+				return get_term_link( $term );
+			}
 		}
 	}
 	return codexbloc_shop_url();
+}
+
+/**
+ * Slugs the PrestaShop modules category may use, most specific first.
+ */
+function codexbloc_prestashop_slugs() {
+	return array( 'prestashop-modules', 'prestashop' );
 }
 
 /**

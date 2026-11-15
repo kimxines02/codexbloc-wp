@@ -16,16 +16,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 function codexbloc_defaults() {
 	return array(
 		'accent'          => '#0071e3',
-		'hero_eyebrow'    => __( 'Plugins & themes for WordPress and WooCommerce', 'codexbloc' ),
+		'hero_eyebrow'    => __( 'Plugins, themes & modules for WooCommerce and PrestaShop', 'codexbloc' ),
 		'hero_title'      => __( 'Lightweight tools that help your online store sell more.', 'codexbloc' ),
-		'hero_text'       => __( 'Simple, fast plugins and themes for WooCommerce, plus websites and online stores built for you. PrestaShop modules are coming soon.', 'codexbloc' ),
+		'hero_text'       => __( 'Simple, fast plugins and themes for WooCommerce, modules for PrestaShop, plus websites and online stores built for you.', 'codexbloc' ),
 		'hero_cta_label'  => __( 'Browse products', 'codexbloc' ),
 		'hero_cta_url'    => '',
 		'hero_cta2_label' => __( 'Our services', 'codexbloc' ),
 		'hero_cta2_url'   => '#services',
 		'contact_url'     => '/contact/',
 		'contact_email'   => '',
-		'footer_text'     => __( 'Plugins, themes and web services for WordPress and WooCommerce stores. PrestaShop modules coming soon.', 'codexbloc' ),
+		'footer_text'     => __( 'Plugins, themes, modules and web services for WooCommerce and PrestaShop stores.', 'codexbloc' ),
 		'facebook_url'    => '',
 		'x_url'           => '',
 		'linkedin_url'    => '',
@@ -69,7 +69,7 @@ function codexbloc_pillars() {
 		array(
 			'icon'  => 'shield',
 			'title' => __( 'Built with care', 'codexbloc' ),
-			'text'  => __( 'Tested with current WordPress and WooCommerce releases.', 'codexbloc' ),
+			'text'  => __( 'Tested with current WooCommerce and PrestaShop releases.', 'codexbloc' ),
 		),
 		array(
 			'icon'  => 'chat',
@@ -153,12 +153,12 @@ function codexbloc_about_facts() {
 		array(
 			'icon'  => 'puzzle',
 			'label' => __( 'What we build', 'codexbloc' ),
-			'value' => __( 'Plugins, themes and websites', 'codexbloc' ),
+			'value' => __( 'Plugins, themes, modules and websites', 'codexbloc' ),
 		),
 		array(
 			'icon'  => 'code',
 			'label' => __( 'Platforms', 'codexbloc' ),
-			'value' => __( 'WordPress & WooCommerce, PrestaShop soon', 'codexbloc' ),
+			'value' => __( 'WordPress, WooCommerce & PrestaShop', 'codexbloc' ),
 		),
 		array(
 			'icon'  => 'download',
@@ -179,7 +179,7 @@ function codexbloc_about_facts() {
 function codexbloc_about_story() {
 	return array(
 		__( 'Most online stores do not need more features. They need the right ones, built well. Too many plugins slow a site down, crowd the dashboard and take hours to set up.', 'codexbloc' ),
-		__( 'So we build focused tools for WordPress and WooCommerce that do one job properly. Each one is lightweight, tested against current releases and easy to set up.', 'codexbloc' ),
+		__( 'So we build focused tools for WooCommerce and PrestaShop that do one job properly. Each one is lightweight, tested against current releases and easy to set up.', 'codexbloc' ),
 		__( 'When a business needs more than a plugin, we design, build and look after the whole website with the same focus on speed and simplicity.', 'codexbloc' ),
 	);
 }
@@ -202,11 +202,11 @@ function codexbloc_about_faqs() {
 	return array(
 		array(
 			'q' => __( 'Who is Codexbloc for?', 'codexbloc' ),
-			'a' => __( 'Store owners, small businesses and agencies who use WordPress and WooCommerce and want tools that are fast, simple and dependable.', 'codexbloc' ),
+			'a' => __( 'Store owners, small businesses and agencies who use WooCommerce or PrestaShop and want tools that are fast, simple and dependable.', 'codexbloc' ),
 		),
 		array(
 			'q' => __( 'Where can I get your plugins?', 'codexbloc' ),
-			'a' => __( 'Our plugins are free on WordPress.org, so you can install them in one click from your WordPress dashboard. Themes come with sample sites you can preview before you choose.', 'codexbloc' ),
+			'a' => __( 'Our plugins are free on WordPress.org, so you can install them in one click from your WordPress dashboard. Themes come with sample sites you can preview before you choose, and PrestaShop modules are available in our shop.', 'codexbloc' ),
 		),
 		array(
 			'q' => __( 'Do you build custom websites?', 'codexbloc' ),
@@ -214,7 +214,7 @@ function codexbloc_about_faqs() {
 		),
 		array(
 			'q' => __( 'How do I get support?', 'codexbloc' ),
-			'a' => __( 'Plugin questions are answered in the WordPress.org support forums. For themes, websites or anything else, send us a message through our contact page.', 'codexbloc' ),
+			'a' => __( 'Plugin questions are answered in the WordPress.org support forums. For themes, PrestaShop modules, websites or anything else, send us a message through our contact page.', 'codexbloc' ),
 		),
 	);
 }

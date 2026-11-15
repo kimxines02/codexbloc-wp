@@ -48,6 +48,18 @@ $offers = array(
 		'url'    => $showcase ? $showcase : codexbloc_cat_url( 'wordpress-themes' ),
 	),
 	array(
+		'icon'   => 'cube',
+		'title'  => __( 'PrestaShop modules', 'codexbloc' ),
+		'text'   => __( 'The same lightweight approach, for stores that run on PrestaShop.', 'codexbloc' ),
+		'points' => array(
+			__( 'For PrestaShop 8 and 9', 'codexbloc' ),
+			__( 'Multistore ready', 'codexbloc' ),
+			__( 'Support from the developers', 'codexbloc' ),
+		),
+		'label'  => __( 'Browse modules', 'codexbloc' ),
+		'url'    => codexbloc_cat_url( codexbloc_prestashop_slugs() ),
+	),
+	array(
 		'icon'   => 'bag',
 		'title'  => __( 'Web design & development', 'codexbloc' ),
 		'text'   => __( 'Need it done for you? We design, build and maintain websites and online stores.', 'codexbloc' ),
@@ -94,7 +106,7 @@ while ( have_posts() ) {
 					</ol>
 				</nav>
 				<h1 class="mt-6 text-4xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-[3.5rem]"><?php esc_html_e( 'We help online stores run faster and sell more.', 'codexbloc' ); ?></h1>
-				<p class="mt-6 max-w-xl text-lg leading-relaxed tracking-tight text-slate-600"><?php esc_html_e( 'Codexbloc builds lightweight plugins, themes and websites for WordPress and WooCommerce. We keep our work simple, fast and easy to use, so you spend less time fixing your site and more time running your business.', 'codexbloc' ); ?></p>
+				<p class="mt-6 max-w-xl text-lg leading-relaxed tracking-tight text-slate-600"><?php esc_html_e( 'Codexbloc builds lightweight plugins, themes, modules and websites for WooCommerce and PrestaShop. We keep our work simple, fast and easy to use, so you spend less time fixing your site and more time running your business.', 'codexbloc' ); ?></p>
 				<div class="mt-8 flex flex-wrap gap-3">
 					<a class="btn btn-primary" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Browse products', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 					<a class="btn btn-outline" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Work with us', 'codexbloc' ); ?></a>
@@ -170,7 +182,7 @@ while ( have_posts() ) {
 				<p class="mt-4 text-lg leading-relaxed text-slate-600"><?php esc_html_e( 'Ready-made tools when you want to build it yourself, and a team when you want it done for you.', 'codexbloc' ); ?></p>
 			</div>
 
-			<div class="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-3">
+			<div class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
 				<?php foreach ( $offers as $offer ) : ?>
 					<article class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-7 transition duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.12)] sm:p-8">
 						<span class="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent"><?php echo codexbloc_icon( $offer['icon'], 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
@@ -184,11 +196,6 @@ while ( have_posts() ) {
 						<a class="mt-auto inline-flex items-center gap-1.5 pt-7 text-sm font-medium text-accent hover:text-accent-dark" href="<?php echo esc_url( $offer['url'] ); ?>"><?php echo esc_html( $offer['label'] ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4 transition group-hover:translate-x-0.5' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 					</article>
 				<?php endforeach; ?>
-			</div>
-
-			<div class="mt-5 flex flex-col items-start gap-3 rounded-2xl border border-dashed border-slate-300 px-6 py-5 sm:flex-row sm:items-center">
-				<span class="inline-flex shrink-0 rounded-full bg-slate-200/70 px-2.5 py-1 text-xs font-medium text-slate-700"><?php esc_html_e( 'Coming soon', 'codexbloc' ); ?></span>
-				<p class="text-sm text-slate-600"><strong class="font-semibold text-ink"><?php esc_html_e( 'PrestaShop modules.', 'codexbloc' ); ?></strong> <?php esc_html_e( 'The same lightweight approach, for stores outside WordPress.', 'codexbloc' ); ?></p>
 			</div>
 		</div>
 	</section>

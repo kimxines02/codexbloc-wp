@@ -19,7 +19,7 @@ $contact   = codexbloc_link( codexbloc_mod( 'contact_url' ) );
 $quote_url = add_query_arg( 'topic', 'project', $contact ); // Services: no prices, ask for a quote.
 $showcase  = post_type_exists( 'cb_showcase' ) ? get_post_type_archive_link( 'cb_showcase' ) : '';
 
-// Hero: the three ways we help, so visitors can pick a path at a glance.
+// Hero: the ways we help, so visitors can pick a path at a glance.
 $hero_paths = array(
 	array(
 		'icon'        => 'puzzle',
@@ -36,6 +36,14 @@ $hero_paths = array(
 		'badge'       => $showcase ? __( 'Live demos', 'codexbloc' ) : '',
 		'badge_class' => 'bg-slate-100 text-slate-600',
 		'url'         => $showcase ? $showcase : codexbloc_cat_url( 'wordpress-themes' ),
+	),
+	array(
+		'icon'        => 'cube',
+		'title'       => __( 'PrestaShop modules', 'codexbloc' ),
+		'text'        => __( 'The same lightweight tools for PrestaShop stores', 'codexbloc' ),
+		'badge'       => __( 'New', 'codexbloc' ),
+		'badge_class' => 'bg-amber-50 text-amber-700',
+		'url'         => codexbloc_cat_url( codexbloc_prestashop_slugs() ),
 	),
 	array(
 		'icon'        => 'bag',
@@ -128,14 +136,6 @@ if ( codexbloc_newsletter_enabled() ) {
 							</li>
 						<?php endforeach; ?>
 					</ul>
-					<div class="mt-1 flex items-center gap-4 rounded-2xl border border-dashed border-slate-200 p-3 sm:p-4">
-						<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-400"><?php echo codexbloc_icon( 'code', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-						<span class="min-w-0 grow">
-							<span class="block font-semibold text-slate-700"><?php esc_html_e( 'PrestaShop modules', 'codexbloc' ); ?></span>
-							<span class="mt-0.5 block text-sm text-slate-500"><?php esc_html_e( 'The same lightweight tools for PrestaShop stores', 'codexbloc' ); ?></span>
-						</span>
-						<span class="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600"><?php esc_html_e( 'Coming soon', 'codexbloc' ); ?></span>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -206,7 +206,7 @@ if ( codexbloc_newsletter_enabled() ) {
 	<section id="why" class="cb-container scroll-mt-16 pt-16 sm:pt-24" aria-labelledby="cb-why-title">
 		<div class="mx-auto max-w-2xl text-center">
 			<h2 id="cb-why-title" class="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"><?php esc_html_e( 'Why Codexbloc', 'codexbloc' ); ?></h2>
-			<p class="mt-3 text-slate-600"><?php esc_html_e( 'Practical products for real stores, built and supported by people who work with WordPress and WooCommerce every day.', 'codexbloc' ); ?></p>
+			<p class="mt-3 text-slate-600"><?php esc_html_e( 'Practical products for real stores, built and supported by people who work with WooCommerce and PrestaShop every day.', 'codexbloc' ); ?></p>
 		</div>
 		<div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
 			<?php foreach ( codexbloc_pillars() as $pillar ) : ?>
