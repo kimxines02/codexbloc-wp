@@ -89,7 +89,7 @@ if ( codexbloc_newsletter_enabled() ) {
 <main id="main">
 
 	<!-- Hero -->
-	<section id="overview" class="cb-pastel-bg relative isolate scroll-mt-16 overflow-hidden" aria-labelledby="cb-hero-title">
+	<section id="overview" class="cb-pastel-bg cb-under-header relative isolate scroll-mt-16 overflow-hidden" aria-labelledby="cb-hero-title">
 		<div class="cb-grid-lines pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
 		<div class="cb-container grid grid-cols-1 items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-24">
 			<div>

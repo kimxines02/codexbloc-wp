@@ -86,7 +86,7 @@ function codexbloc_shop_hero() {
 		array( 'chat', __( 'Support from the developers', 'codexbloc' ) ),
 	);
 	?>
-	<section class="cb-pastel-bg relative overflow-hidden border-b border-slate-900/5" aria-labelledby="cb-shop-title">
+	<section class="cb-pastel-bg cb-under-header relative overflow-hidden border-b border-slate-900/5" aria-labelledby="cb-shop-title">
 		<div class="cb-container py-10 sm:py-14">
 			<?php
 			woocommerce_breadcrumb(

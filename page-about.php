@@ -7,7 +7,7 @@
  * Anything typed in the page editor replaces the default story text.
  * Default copy lives in inc/defaults.php (codexbloc_about_*).
  *
- * Layout: dark hero with live stats, mission, bento grid of what we make,
+ * Layout: compact gradient hero, mission, bento grid of what we make,
  * numbered principles, flat FAQ, closing call to action.
  *
  * @package Codexbloc
@@ -23,25 +23,6 @@ $shop_url = codexbloc_shop_url();
 $contact  = codexbloc_link( codexbloc_mod( 'contact_url' ) );
 $quote    = add_query_arg( 'topic', 'project', $contact ); // Services: no prices, ask for a quote.
 $showcase = post_type_exists( 'cb_showcase' ) ? get_post_type_archive_link( 'cb_showcase' ) : '';
-
-// Live numbers, so the stats never go out of date.
-$product_count  = post_type_exists( 'product' ) ? (int) wp_count_posts( 'product' )->publish : 0;
-$showcase_count = post_type_exists( 'cb_showcase' ) ? (int) wp_count_posts( 'cb_showcase' )->publish : 0;
-
-$stats = array();
-if ( $product_count ) {
-	$stats[] = array( $product_count, _n( 'Product released', 'Products released', $product_count, 'codexbloc' ) );
-}
-$stats[] = array( '3', __( 'Platforms: WordPress, WooCommerce, PrestaShop', 'codexbloc' ) );
-if ( $showcase_count ) {
-	$stats[] = array( $showcase_count, _n( 'Sample site to preview', 'Sample sites to preview', $showcase_count, 'codexbloc' ) );
-}
-$stats[] = array( '1:1', __( 'Support from the developers', 'codexbloc' ) );
-$stat_cols = array(
-	2 => 'lg:grid-cols-2',
-	3 => 'lg:grid-cols-3',
-	4 => 'lg:grid-cols-4',
-);
 
 // Page editor content (if any) replaces the default story text.
 $editor_content = '';
@@ -63,32 +44,20 @@ $arrow      = codexbloc_icon( 'arrow', 'h-4 w-4 transition group-hover:translate
 <main id="main">
 
 	<!-- Hero -->
-	<section class="relative isolate overflow-hidden bg-[#0b0f17] text-white" aria-labelledby="cb-about-title">
-		<div class="cb-grid-lines pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
-		<div class="pointer-events-none absolute left-1/2 top-0 -z-10 h-[30rem] w-[60rem] max-w-[200%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/30 blur-[120px]" aria-hidden="true"></div>
-
-		<div class="cb-container pb-14 pt-16 text-center sm:pb-20 sm:pt-24 lg:pt-28">
-			<p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-slate-300">
-				<span class="text-emerald-400">~/codexbloc</span><span class="text-slate-500">$</span> cat about.md
+	<section class="cb-pastel-bg cb-under-header relative isolate overflow-hidden" aria-labelledby="cb-about-title">
+		<div class="cb-container pb-12 pt-10 text-center sm:pb-16 sm:pt-14">
+			<p class="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/60 px-3 py-1 font-mono text-xs text-slate-600 backdrop-blur">
+				<span class="text-emerald-600">~/codexbloc</span><span class="text-slate-400">$</span> cat about.md
 			</p>
-			<h1 id="cb-about-title" class="mx-auto mt-6 max-w-4xl text-5xl text-white font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-				<?php esc_html_e( 'Small tools.', 'codexbloc' ); ?><br>
+			<h1 id="cb-about-title" class="mx-auto mt-5 max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+				<?php esc_html_e( 'Small tools.', 'codexbloc' ); ?>
 				<span class="cb-gradient-text"><?php esc_html_e( 'Built properly.', 'codexbloc' ); ?></span>
 			</h1>
-			<p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-400 sm:text-xl"><?php esc_html_e( 'We make lightweight plugins, themes and modules for online stores, and build websites for businesses that want it done right.', 'codexbloc' ); ?></p>
-			<div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+			<p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-600"><?php esc_html_e( 'Lightweight plugins, themes and modules for online stores, plus websites built right.', 'codexbloc' ); ?></p>
+			<div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
 				<a class="btn btn-primary" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Explore products', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
-				<a class="btn border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10 hover:text-white" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Work with us', 'codexbloc' ); ?></a>
+				<a class="btn border border-slate-900/10 bg-white/60 text-ink backdrop-blur hover:border-slate-900/20 hover:bg-white hover:text-ink" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Work with us', 'codexbloc' ); ?></a>
 			</div>
-
-			<dl class="<?php echo esc_attr( 'mx-auto mt-16 grid max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 text-left sm:mt-20 ' . $stat_cols[ count( $stats ) ] ); ?>">
-				<?php foreach ( $stats as $stat ) : ?>
-					<div class="flex flex-col-reverse bg-[#0b0f17] p-5 sm:p-6">
-						<dt class="mt-1 text-sm leading-snug text-slate-400"><?php echo esc_html( $stat[1] ); ?></dt>
-						<dd class="text-3xl font-semibold tracking-tight tabular-nums text-white sm:text-4xl"><?php echo esc_html( $stat[0] ); ?></dd>
-					</div>
-				<?php endforeach; ?>
-			</dl>
 		</div>
 	</section>
 

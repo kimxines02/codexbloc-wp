@@ -501,7 +501,30 @@ body.logged-in.woocommerce-account .woocommerce { @apply lg:grid lg:grid-cols-[1
 .wc-block-components-checkbox__input:checked, .wc-block-components-radio-control__input:checked { accent-color: rgb(var(--cb-accent)); }
 
 /* ==========================================================================
-   Header + hero: shared animated pastel gradient (kept outside @layer so it is never purged)
+   Header: transparent at the top of the page, frosted glass once scrolled
+   (theme.js toggles .is-scrolled). Banners marked .cb-under-header slide up
+   under it so their background shows through.
+   ========================================================================== */
+.cb-site-header {
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.cb-site-header.is-scrolled,
+.cb-site-header:has(.cb-menu-toggle[aria-expanded="true"]) {
+  background-color: rgb(255 255 255 / 0.72);
+  border-bottom-color: rgb(15 23 42 / 0.06);
+  box-shadow: 0 4px 24px -12px rgb(15 23 42 / 0.12);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+          backdrop-filter: saturate(180%) blur(16px);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .cb-site-header.is-scrolled { background-color: rgb(255 255 255 / 0.95); }
+}
+.cb-under-header { margin-top: -4rem; padding-top: 4rem; }
+
+/* ==========================================================================
+   Shared animated pastel gradient (home hero, shop band, about hero) (kept outside @layer so it is never purged)
    ========================================================================== */
 .cb-pastel-bg {
   isolation: isolate;

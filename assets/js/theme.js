@@ -1,5 +1,6 @@
 /**
  * Codexbloc theme script (vanilla JS, no dependencies).
+ * - Header: transparent at the top, frosted once the page scrolls
  * - Mobile menu toggle
  * - Header search dropdown closes on outside click / Escape
  * - Turns WooCommerce variation dropdowns (e.g. size or version) into pill buttons
@@ -9,6 +10,20 @@
  */
 (function () {
 	'use strict';
+
+	/* Header scroll state --------------------------------------------------- */
+	var siteHeader = document.querySelector('.cb-site-header');
+	if (siteHeader) {
+		var ticking = false;
+		var onScroll = function () {
+			siteHeader.classList.toggle('is-scrolled', window.scrollY > 8);
+			ticking = false;
+		};
+		window.addEventListener('scroll', function () {
+			if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }
+		}, { passive: true });
+		onScroll();
+	}
 
 	/* Mobile menu ---------------------------------------------------------- */
 	var toggle = document.querySelector('.cb-menu-toggle');

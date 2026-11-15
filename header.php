@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <a class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow-lg" href="#main"><?php esc_html_e( 'Skip to content', 'codexbloc' ); ?></a>
 
-<header class="cb-pastel-bg sticky top-0 z-40">
+<header class="cb-site-header sticky top-0 z-40">
 	<div class="cb-container flex h-16 items-center justify-between gap-4">
 
 		<div class="flex shrink-0 items-center">
