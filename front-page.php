@@ -220,20 +220,128 @@ if ( codexbloc_newsletter_enabled() ) {
 		<a class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-dark sm:hidden" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'View all products', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 	</section>
 
-	<!-- Why Codexbloc -->
-	<section id="why" class="cb-container scroll-mt-16 pt-16 sm:pt-24" aria-labelledby="cb-why-title">
-		<div class="mx-auto max-w-2xl text-center">
-			<h2 id="cb-why-title" class="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"><?php esc_html_e( 'Why Codexbloc', 'codexbloc' ); ?></h2>
-			<p class="mt-3 text-slate-600"><?php esc_html_e( 'Practical products for real stores, built and supported by people who work with WooCommerce and PrestaShop every day.', 'codexbloc' ); ?></p>
+	<!-- Why Codexbloc (bento) -->
+	<?php
+	$pillars = array();
+	foreach ( codexbloc_pillars() as $pillar ) {
+		$pillars[ $pillar['icon'] ] = $pillar;
+	}
+	$bento_card = 'group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-2 shadow-sm shadow-slate-900/[0.03] transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-900/[0.07] motion-reduce:hover:translate-y-0';
+	$bento_vis  = 'cb-bento-visual relative flex h-44 items-center justify-center overflow-hidden rounded-[1.25rem] border border-slate-100 px-6';
+	$bento_body = 'px-5 pb-5 pt-5 sm:px-6 sm:pb-6';
+	$bento_icon = 'mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-accent-soft text-accent';
+	$bento_head = 'm-0 text-lg font-semibold tracking-tight text-ink';
+	$bento_text = 'mt-1.5 max-w-md text-[15px] leading-relaxed text-slate-600';
+	$pillar_txt = function ( $key, $field ) use ( $pillars ) {
+		return isset( $pillars[ $key ][ $field ] ) ? $pillars[ $key ][ $field ] : '';
+	};
+	?>
+	<section id="why" class="cb-container scroll-mt-16 pt-20 sm:pt-28" aria-labelledby="cb-why-title">
+		<div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+			<div class="max-w-2xl">
+				<p class="inline-flex items-center gap-2 rounded-full border border-accent/15 bg-accent-soft px-3 py-1 text-xs font-medium text-accent">
+					<span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span><?php esc_html_e( 'Why Codexbloc', 'codexbloc' ); ?>
+				</p>
+				<h2 id="cb-why-title" class="mt-4 text-3xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+					<?php esc_html_e( 'Built for real stores.', 'codexbloc' ); ?>
+					<span class="text-slate-400"><?php esc_html_e( 'Backed by real people.', 'codexbloc' ); ?></span>
+				</h2>
+				<p class="mt-4 text-lg leading-relaxed text-slate-600"><?php esc_html_e( 'Practical products for real stores, built and supported by people who work with WooCommerce and PrestaShop every day.', 'codexbloc' ); ?></p>
+			</div>
+			<a class="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-dark" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Browse products', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4 transition group-hover:translate-x-0.5' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 		</div>
-		<div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-			<?php foreach ( codexbloc_pillars() as $pillar ) : ?>
-				<div class="rounded-2xl border border-slate-200 bg-white p-6">
-					<span class="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent"><?php echo codexbloc_icon( $pillar['icon'], 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-					<h3 class="mt-4 font-semibold text-ink"><?php echo esc_html( $pillar['title'] ); ?></h3>
-					<p class="mt-1.5 text-sm leading-relaxed text-slate-600"><?php echo esc_html( $pillar['text'] ); ?></p>
+
+		<div class="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+
+			<!-- Fast: a page that loads in a blink -->
+			<div class="<?php echo esc_attr( $bento_card . ' lg:col-span-2' ); ?>">
+				<div class="<?php echo esc_attr( $bento_vis ); ?>" aria-hidden="true">
+					<div class="w-full max-w-md rounded-xl border border-slate-200 bg-white shadow-lg shadow-slate-900/5">
+						<div class="flex items-center gap-1.5 border-b border-slate-100 px-3 py-2">
+							<span class="h-2 w-2 rounded-full bg-slate-200"></span><span class="h-2 w-2 rounded-full bg-slate-200"></span><span class="h-2 w-2 rounded-full bg-slate-200"></span>
+							<span class="ml-2 h-4 flex-1 rounded-full bg-slate-100"></span>
+						</div>
+						<div class="relative h-0.5 overflow-hidden bg-slate-100"><span class="cb-load-bar absolute inset-y-0 left-0 bg-gradient-to-r from-accent to-violet-400"></span></div>
+						<div class="grid grid-cols-[4.5rem_1fr] gap-3 p-3">
+							<span class="h-16 rounded-lg bg-gradient-to-br from-indigo-100 to-cyan-100"></span>
+							<span class="space-y-2 pt-1">
+								<span class="block h-2.5 w-3/4 rounded-full bg-slate-200"></span>
+								<span class="block h-2 w-full rounded-full bg-slate-100"></span>
+								<span class="block h-2 w-2/3 rounded-full bg-slate-100"></span>
+								<span class="mt-1 block h-5 w-20 rounded-full bg-accent/90"></span>
+							</span>
+						</div>
+					</div>
 				</div>
-			<?php endforeach; ?>
+				<div class="<?php echo esc_attr( $bento_body ); ?>">
+					<span class="<?php echo esc_attr( $bento_icon ); ?>"><?php echo codexbloc_icon( 'bolt', 'h-5 w-5' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+					<h3 class="<?php echo esc_attr( $bento_head ); ?>"><?php echo esc_html( $pillar_txt( 'bolt', 'title' ) ); ?></h3>
+					<p class="<?php echo esc_attr( $bento_text ); ?>"><?php echo esc_html( $pillar_txt( 'bolt', 'text' ) ); ?></p>
+				</div>
+			</div>
+
+			<!-- Simple: a settings panel with a few clear switches -->
+			<div class="<?php echo esc_attr( $bento_card ); ?>">
+				<div class="<?php echo esc_attr( $bento_vis ); ?>" aria-hidden="true">
+					<div class="w-full max-w-[15rem] space-y-2.5 rounded-xl border border-slate-200 bg-white p-3.5 shadow-lg shadow-slate-900/5">
+						<?php foreach ( array( true, true, false ) as $i => $on ) : ?>
+							<span class="flex items-center justify-between gap-3">
+								<span class="<?php echo esc_attr( 'block h-2 rounded-full bg-slate-200 ' . ( 0 === $i ? 'w-20' : ( 1 === $i ? 'w-28' : 'w-16' ) ) ); ?>"></span>
+								<span class="<?php echo esc_attr( 'relative h-5 w-9 shrink-0 rounded-full transition ' . ( $on ? 'bg-accent' : 'bg-slate-200' ) ); ?>"><span class="<?php echo esc_attr( 'absolute top-0.5 h-4 w-4 rounded-full bg-white shadow-sm ' . ( $on ? 'right-0.5' : 'left-0.5' ) ); ?>"></span></span>
+							</span>
+						<?php endforeach; ?>
+						<span class="!mt-3.5 block h-7 rounded-lg bg-ink/90"></span>
+					</div>
+				</div>
+				<div class="<?php echo esc_attr( $bento_body ); ?>">
+					<span class="<?php echo esc_attr( $bento_icon ); ?>"><?php echo codexbloc_icon( 'puzzle', 'h-5 w-5' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+					<h3 class="<?php echo esc_attr( $bento_head ); ?>"><?php echo esc_html( $pillar_txt( 'puzzle', 'title' ) ); ?></h3>
+					<p class="<?php echo esc_attr( $bento_text ); ?>"><?php echo esc_html( $pillar_txt( 'puzzle', 'text' ) ); ?></p>
+				</div>
+			</div>
+
+			<!-- Built with care: tested on the platforms we support -->
+			<div class="<?php echo esc_attr( $bento_card ); ?>">
+				<div class="<?php echo esc_attr( $bento_vis ); ?>" aria-hidden="true">
+					<ul class="w-full max-w-[14rem] space-y-2" role="list">
+						<?php foreach ( array( 'WordPress', 'WooCommerce', 'PrestaShop' ) as $platform ) : ?>
+							<li class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-medium text-slate-700 shadow-sm">
+								<?php echo esc_html( $platform ); ?>
+								<span class="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white"><?php echo codexbloc_icon( 'check', 'h-3 w-3' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+				<div class="<?php echo esc_attr( $bento_body ); ?>">
+					<span class="<?php echo esc_attr( $bento_icon ); ?>"><?php echo codexbloc_icon( 'shield', 'h-5 w-5' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+					<h3 class="<?php echo esc_attr( $bento_head ); ?>"><?php echo esc_html( $pillar_txt( 'shield', 'title' ) ); ?></h3>
+					<p class="<?php echo esc_attr( $bento_text ); ?>"><?php echo esc_html( $pillar_txt( 'shield', 'text' ) ); ?></p>
+				</div>
+			</div>
+
+			<!-- Real support: a short conversation with the developers -->
+			<div class="<?php echo esc_attr( $bento_card . ' lg:col-span-2' ); ?>">
+				<div class="<?php echo esc_attr( $bento_vis ); ?>" aria-hidden="true">
+					<div class="flex w-full max-w-md flex-col gap-2.5 text-sm">
+						<span class="max-w-[80%] self-start rounded-2xl rounded-bl-md border border-slate-200 bg-white px-3.5 py-2 text-slate-700 shadow-sm"><?php esc_html_e( 'Could you help me set this up on my store?', 'codexbloc' ); ?></span>
+						<span class="flex max-w-[85%] items-end gap-2 self-end">
+							<span class="rounded-2xl rounded-br-md bg-accent px-3.5 py-2 text-white shadow-sm"><?php esc_html_e( 'Of course! Here is exactly what to do.', 'codexbloc' ); ?></span>
+							<span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink text-white"><?php echo codexbloc_icon( 'code', 'h-3.5 w-3.5' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+						</span>
+						<span class="mr-9 self-end text-xs text-slate-400"><?php esc_html_e( 'The Codexbloc developers', 'codexbloc' ); ?></span>
+					</div>
+				</div>
+				<div class="<?php echo esc_attr( $bento_body . ' flex flex-wrap items-end justify-between gap-4' ); ?>">
+					<div>
+						<span class="<?php echo esc_attr( $bento_icon ); ?>"><?php echo codexbloc_icon( 'chat', 'h-5 w-5' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+						<h3 class="<?php echo esc_attr( $bento_head ); ?>"><?php echo esc_html( $pillar_txt( 'chat', 'title' ) ); ?></h3>
+						<p class="<?php echo esc_attr( $bento_text ); ?>"><?php echo esc_html( $pillar_txt( 'chat', 'text' ) ); ?></p>
+					</div>
+					<?php if ( $contact ) : ?>
+						<a class="btn btn-outline px-5 py-2.5 text-sm" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Contact us', 'codexbloc' ); ?></a>
+					<?php endif; ?>
+				</div>
+			</div>
 		</div>
 	</section>
 

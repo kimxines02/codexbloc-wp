@@ -523,6 +523,36 @@ body.logged-in.woocommerce-account .woocommerce { @apply lg:grid lg:grid-cols-[1
 }
 .cb-under-header { margin-top: -4rem; padding-top: 4rem; }
 
+/* Homepage "Why Codexbloc" bento: soft tinted stage behind each illustration,
+   and a looping page-load bar on the "Fast by design" card. */
+.cb-bento-visual {
+  background:
+    radial-gradient(circle at 15% 20%, rgb(224 231 255 / 0.9), transparent 55%),
+    radial-gradient(circle at 85% 85%, rgb(207 250 254 / 0.8), transparent 55%),
+    radial-gradient(circle at 90% 10%, rgb(251 231 246 / 0.6), transparent 45%),
+    #f8fafc;
+}
+.cb-bento-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgb(15 23 42 / 0.06) 1px, transparent 1.4px);
+  background-size: 14px 14px;
+  -webkit-mask-image: radial-gradient(ellipse at center, transparent 35%, #000 100%);
+          mask-image: radial-gradient(ellipse at center, transparent 35%, #000 100%);
+  pointer-events: none;
+}
+.cb-bento-visual > * { position: relative; }
+.cb-load-bar { width: 100%; animation: cb-load 2.8s cubic-bezier(.2,.8,.2,1) infinite; }
+@keyframes cb-load {
+  0%   { width: 0; opacity: 1; }
+  45%  { width: 100%; opacity: 1; }
+  70%, 100% { width: 100%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cb-load-bar { animation: none; }
+}
+
 /* ==========================================================================
    Shared animated pastel gradient (home hero, shop band, about hero) (kept outside @layer so it is never purged)
    ========================================================================== */
