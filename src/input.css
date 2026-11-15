@@ -99,18 +99,11 @@ input.cb-input-bare { @apply rounded-full border-0 bg-transparent px-4 py-2.5 te
 }
 .cb-grid-lines {
   background-image:
-    linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    linear-gradient(rgb(15 23 42 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(15 23 42 / 0.05) 1px, transparent 1px);
   background-size: 56px 56px;
   -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
   mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
-}
-.cb-hero-mesh {
-  background-image:
-    radial-gradient(45rem 28rem at 85% -10%, rgb(var(--cb-accent) / 0.55), transparent 65%),
-    radial-gradient(36rem 26rem at 105% 60%, rgb(139 92 246 / 0.45), transparent 65%),
-    radial-gradient(40rem 24rem at 10% 115%, rgb(45 212 191 / 0.28), transparent 65%),
-    radial-gradient(30rem 22rem at 45% 110%, rgb(236 72 153 / 0.22), transparent 65%);
 }
 .cb-gradient-text {
   background-image: linear-gradient(90deg, rgb(var(--cb-accent)) 0%, #a78bfa 50%, #f472b6 100%);
@@ -478,17 +471,17 @@ body.logged-in.woocommerce-account .woocommerce { @apply lg:grid lg:grid-cols-[1
 .wc-block-components-checkbox__input:checked, .wc-block-components-radio-control__input:checked { accent-color: rgb(var(--cb-accent)); }
 
 /* ==========================================================================
-   Header: animated pastel gradient (kept outside @layer so it is never purged)
+   Header + hero: shared animated pastel gradient (kept outside @layer so it is never purged)
    ========================================================================== */
-.cb-header-gradient {
+.cb-pastel-bg {
   isolation: isolate;
   background-color: #eef2ff;
-  background-image: linear-gradient(100deg, #fbe7f6 0%, #e6e3ff 18%, #d6e6ff 36%, #cdeefc 54%, #d3f5e8 72%, #eef8dc 86%, #fbe7f6 100%);
+  background-image: linear-gradient(90deg, #fbe7f6 0%, #e6e3ff 18%, #d6e6ff 36%, #cdeefc 54%, #d3f5e8 72%, #eef8dc 86%, #fbe7f6 100%);
   background-size: 300% 100%;
   animation: cb-header-shift 16s ease-in-out infinite alternate;
 }
 /* Halftone dots fading in from the left and right edges */
-.cb-header-gradient::before {
+.cb-pastel-bg::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -504,7 +497,7 @@ body.logged-in.woocommerce-account .woocommerce { @apply lg:grid lg:grid-cols-[1
   100% { background-position: 100% 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cb-header-gradient { animation: none; }
+  .cb-pastel-bg { animation: none; }
 }
 
 @tailwind utilities;
