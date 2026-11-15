@@ -19,7 +19,7 @@ if ( $show_newsletter ) {
 }
 ?>
 
-<footer class="<?php echo $show_newsletter ? '' : 'mt-20 border-t border-slate-200 '; ?>bg-slate-50">
+<footer class="<?php echo ( $show_newsletter || apply_filters( 'codexbloc_footer_flush', false ) ) ? '' : 'mt-20 border-t border-slate-200 '; ?>bg-slate-50">
 	<div class="cb-container py-12">
 		<div class="grid grid-cols-1 gap-10 md:grid-cols-12">
 

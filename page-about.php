@@ -71,7 +71,7 @@ $arrow      = codexbloc_icon( 'arrow', 'h-4 w-4 transition group-hover:translate
 			<p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-slate-300">
 				<span class="text-emerald-400">~/codexbloc</span><span class="text-slate-500">$</span> cat about.md
 			</p>
-			<h1 id="cb-about-title" class="mx-auto mt-6 max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+			<h1 id="cb-about-title" class="mx-auto mt-6 max-w-4xl text-5xl text-white font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
 				<?php esc_html_e( 'Small tools.', 'codexbloc' ); ?><br>
 				<span class="cb-gradient-text"><?php esc_html_e( 'Built properly.', 'codexbloc' ); ?></span>
 			</h1>
@@ -130,7 +130,7 @@ $arrow      = codexbloc_icon( 'arrow', 'h-4 w-4 transition group-hover:translate
 						<span class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-white"><?php echo codexbloc_icon( 'puzzle', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 						<span class="rounded-full bg-emerald-400/10 px-2.5 py-1 text-xs font-medium text-emerald-300"><?php esc_html_e( 'Free on WordPress.org', 'codexbloc' ); ?></span>
 					</div>
-					<h3 class="relative mt-6 text-2xl font-semibold tracking-tight"><?php esc_html_e( 'WooCommerce plugins', 'codexbloc' ); ?></h3>
+					<h3 class="relative mt-6 text-2xl font-semibold tracking-tight text-white"><?php esc_html_e( 'WooCommerce plugins', 'codexbloc' ); ?></h3>
 					<p class="relative mt-2 max-w-md text-slate-400"><?php esc_html_e( 'Focused tools that each do one job well and keep your store fast.', 'codexbloc' ); ?></p>
 					<span class="<?php echo esc_attr( $tile_link . ' relative text-white' ); ?>"><?php esc_html_e( 'Browse plugins', 'codexbloc' ); ?><?php echo $arrow; // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 				</a>
@@ -161,7 +161,7 @@ $arrow      = codexbloc_icon( 'arrow', 'h-4 w-4 transition group-hover:translate
 						<span class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-white"><?php echo codexbloc_icon( 'bag', 'h-6 w-6' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 						<span class="rounded-full bg-white/15 px-2.5 py-1 text-xs font-medium text-white"><?php esc_html_e( 'Free quote', 'codexbloc' ); ?></span>
 					</div>
-					<h3 class="relative mt-6 text-2xl font-semibold tracking-tight"><?php esc_html_e( 'Websites built for you', 'codexbloc' ); ?></h3>
+					<h3 class="relative mt-6 text-2xl font-semibold tracking-tight text-white"><?php esc_html_e( 'Websites built for you', 'codexbloc' ); ?></h3>
 					<p class="relative mt-2 max-w-md text-white/80"><?php esc_html_e( 'Business sites and online stores, designed, built and looked after by us.', 'codexbloc' ); ?></p>
 					<span class="<?php echo esc_attr( $tile_link . ' relative text-white' ); ?>"><?php esc_html_e( 'Tell us about your project', 'codexbloc' ); ?><?php echo $arrow; // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 				</a>
@@ -225,4 +225,7 @@ $arrow      = codexbloc_icon( 'arrow', 'h-4 w-4 transition group-hover:translate
 </main>
 
 <?php
+// About page ends on its own call to action: no newsletter band, footer sits flush.
+add_filter( 'codexbloc_newsletter_enabled', '__return_false' );
+add_filter( 'codexbloc_footer_flush', '__return_true' );
 get_footer();
