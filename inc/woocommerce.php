@@ -48,6 +48,14 @@ remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 add_action(
 	'woocommerce_before_main_content',
 	function () {
+		if ( codexbloc_has_shop_sidebar() ) {
+			// Listings: the breadcrumb, title and description move into the gradient band.
+			remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
+			echo '<main id="main">';
+			codexbloc_shop_hero();
+			echo '<div class="cb-container py-10 sm:py-14">';
+			return;
+		}
 		echo '<main id="main" class="cb-container py-8 sm:py-12">';
 	},
 	10
@@ -55,10 +63,55 @@ add_action(
 add_action(
 	'woocommerce_after_main_content',
 	function () {
-		echo '</main>';
+		echo codexbloc_has_shop_sidebar() ? '</div></main>' : '</main>';
 	},
 	10
 );
+
+/**
+ * Listing title band: breadcrumb, title, description and reassurances on the
+ * same animated gradient as the header. WooCommerce's own title block is
+ * hidden on listings (see .cb-shop-main > .woocommerce-products-header).
+ */
+function codexbloc_shop_hero() {
+	$description = is_product_taxonomy() ? wp_strip_all_tags( term_description() ) : '';
+	if ( ! $description ) {
+		$description = is_product_taxonomy()
+			? ''
+			: __( 'Lightweight plugins, themes and modules for WooCommerce and PrestaShop. Tested on current releases and supported by the developers who built them.', 'codexbloc' );
+	}
+	$assurances = array(
+		array( 'download', __( 'Instant download', 'codexbloc' ) ),
+		array( 'shield', __( 'Secure checkout', 'codexbloc' ) ),
+		array( 'chat', __( 'Support from the developers', 'codexbloc' ) ),
+	);
+	?>
+	<section class="cb-pastel-bg relative overflow-hidden border-b border-slate-900/5" aria-labelledby="cb-shop-title">
+		<div class="cb-container py-10 sm:py-14">
+			<?php
+			woocommerce_breadcrumb(
+				array(
+					'wrap_before' => '<nav class="woocommerce-breadcrumb cb-shop-crumbs" aria-label="' . esc_attr__( 'Breadcrumb', 'codexbloc' ) . '">',
+					'delimiter'   => '<span class="mx-2 text-slate-400" aria-hidden="true">/</span>',
+				)
+			);
+			?>
+			<h1 id="cb-shop-title" class="m-0 text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-5xl"><?php woocommerce_page_title(); ?></h1>
+			<?php if ( $description ) : ?>
+				<p class="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600"><?php echo esc_html( $description ); ?></p>
+			<?php endif; ?>
+			<ul class="mt-7 flex flex-wrap gap-2.5" role="list">
+				<?php foreach ( $assurances as $item ) : ?>
+					<li class="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/60 px-3.5 py-1.5 text-sm font-medium text-slate-700 backdrop-blur">
+						<?php echo codexbloc_icon( $item[0], 'h-4 w-4 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+						<?php echo esc_html( $item[1] ); ?>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</section>
+	<?php
+}
 
 /**
  * Grid: 3 columns on the shop, 12 per page, 3 related products.
@@ -205,12 +258,12 @@ function codexbloc_shop_sidebar() {
 	$filtering = $price_on || is_product_taxonomy();
 	?>
 	<aside class="cb-shop-sidebar mb-8 lg:mb-0" aria-label="<?php esc_attr_e( 'Product filters', 'codexbloc' ); ?>">
-		<details class="cb-filters group rounded-2xl border border-slate-200 bg-white lg:sticky lg:top-24 lg:border-0 lg:bg-transparent" data-cb-filters>
+		<details class="cb-filters group rounded-2xl border border-slate-200 bg-white lg:sticky lg:top-24 lg:shadow-sm lg:shadow-slate-900/[0.03]" data-cb-filters>
 			<summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-ink lg:hidden">
 				<span><?php esc_html_e( 'Filters', 'codexbloc' ); ?></span>
 				<svg class="h-4 w-4 text-slate-500 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
 			</summary>
-			<div class="space-y-8 border-t border-slate-100 p-3 lg:border-0 lg:p-0">
+			<div class="space-y-8 border-t border-slate-100 p-3 lg:border-0 lg:py-5">
 				<div>
 					<p class="<?php echo esc_attr( $heading ); ?>"><?php esc_html_e( 'Categories', 'codexbloc' ); ?></p>
 					<a class="<?php echo esc_attr( 'flex items-center justify-between rounded-lg px-3 py-2 text-sm transition ' . ( is_product_taxonomy() ? $item_off : $item_on ) ); ?>" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'All products', 'codexbloc' ); ?></a>
@@ -279,7 +332,7 @@ add_action(
 add_action(
 	'woocommerce_before_shop_loop',
 	function () {
-		echo '<div class="mb-6 flex flex-wrap items-center justify-between gap-3">';
+		echo '<div class="cb-shop-toolbar">';
 	},
 	19
 );
@@ -312,6 +365,55 @@ function codexbloc_loop_category() {
 	}
 }
 add_action( 'woocommerce_shop_loop_item_title', 'codexbloc_loop_category', 5 );
+
+/**
+ * Product cards: featured badge, short summary, and a footer row with the
+ * price on the left and the button on the right.
+ */
+add_action(
+	'woocommerce_before_shop_loop_item_title',
+	function () {
+		global $product;
+		if ( $product && $product->is_featured() ) {
+			echo '<span class="cb-badge-featured">' . esc_html__( 'Featured', 'codexbloc' ) . '</span>';
+		}
+	},
+	9
+);
+
+add_action(
+	'woocommerce_after_shop_loop_item_title',
+	function () {
+		global $product;
+		if ( ! $product ) {
+			return;
+		}
+		$summary = wp_strip_all_tags( $product->get_short_description() );
+		if ( $summary ) {
+			echo '<p class="cb-card-summary">' . esc_html( wp_trim_words( $summary, 20 ) ) . '</p>';
+		}
+	},
+	7
+);
+
+remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
+add_action(
+	'woocommerce_after_shop_loop_item',
+	function () {
+		global $product;
+		$free = function_exists( 'codexbloc_is_free_product' ) && codexbloc_is_free_product( $product );
+		echo '<div class="cb-card-foot' . ( $free ? ' is-free' : '' ) . '">';
+		woocommerce_template_loop_price();
+	},
+	7
+);
+add_action(
+	'woocommerce_after_shop_loop_item',
+	function () {
+		echo '</div>';
+	},
+	20
+);
 
 /**
  * Header cart count updates without a page reload.
