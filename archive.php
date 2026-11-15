@@ -12,11 +12,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 
-<main id="main" class="cb-container py-10 sm:py-14">
-	<header class="mb-8 max-w-2xl">
-		<?php the_archive_title( '<h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">', '</h1>' ); ?>
-		<?php the_archive_description( '<div class="mt-3 text-slate-600">', '</div>' ); ?>
-	</header>
+<main id="main">
+	<?php
+	codexbloc_banner(
+		array(
+			'align' => 'left',
+			'title' => wp_strip_all_tags( get_the_archive_title() ),
+			'text'  => wp_strip_all_tags( get_the_archive_description() ),
+		)
+	);
+	?>
+
+	<div class="cb-container py-12 sm:py-16">
 
 	<?php if ( have_posts() ) : ?>
 		<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -31,6 +38,7 @@ get_header();
 	<?php else : ?>
 		<p class="text-slate-600"><?php esc_html_e( 'Nothing found here.', 'codexbloc' ); ?></p>
 	<?php endif; ?>
+	</div>
 </main>
 
 <?php

@@ -12,24 +12,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 
-<main id="main" class="cb-container py-10 sm:py-14">
+<main id="main">
 	<?php
 	while ( have_posts() ) :
 		the_post();
 		?>
-		<article id="post-<?php the_ID(); ?>" <?php post_class( 'mx-auto max-w-3xl' ); ?>>
-			<header class="mb-8">
-				<?php $cats = get_the_category(); ?>
-				<?php if ( $cats ) : ?>
-					<p class="text-xs font-medium uppercase tracking-wide text-accent"><a href="<?php echo esc_url( get_category_link( $cats[0] ) ); ?>"><?php echo esc_html( $cats[0]->name ); ?></a></p>
-				<?php endif; ?>
-				<h1 class="mt-2 text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-4xl"><?php the_title(); ?></h1>
-				<p class="mt-3 text-sm text-slate-500">
-					<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time>
-					<span aria-hidden="true">&middot;</span>
-					<?php the_author(); ?>
-				</p>
-			</header>
+		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+			<?php
+			$cats   = get_the_category();
+			$crumbs = array( array( __( 'Home', 'codexbloc' ), home_url( '/' ) ) );
+			if ( $cats ) {
+				$crumbs[] = array( $cats[0]->name, get_category_link( $cats[0] ) );
+			}
+			codexbloc_banner(
+				array(
+					'tag'    => 'header',
+					'align'  => 'left',
+					'width'  => 'mx-auto max-w-3xl',
+					'crumbs' => $crumbs,
+					'title'  => get_the_title(),
+					'extra'  => '<p class="mt-4 text-sm text-slate-500"><time datetime="' . esc_attr( get_the_date( 'c' ) ) . '">' . esc_html( get_the_date() ) . '</time> <span aria-hidden="true">&middot;</span> ' . esc_html( get_the_author() ) . '</p>',
+				)
+			);
+			?>
+
+			<div class="cb-container py-12 sm:py-16"><div class="mx-auto max-w-3xl">
 
 			<?php if ( has_post_thumbnail() ) : ?>
 				<div class="mb-8 overflow-hidden rounded-2xl bg-slate-50">
@@ -42,9 +49,10 @@ get_header();
 			</div>
 
 			<?php the_tags( '<p class="mt-8 flex flex-wrap gap-2 text-xs">', '', '</p>' ); ?>
+			</div></div>
 		</article>
 
-		<nav class="mx-auto mt-12 grid grid-cols-1 max-w-3xl gap-4 border-t border-slate-200 pt-6 text-sm sm:grid-cols-2" aria-label="<?php esc_attr_e( 'Post navigation', 'codexbloc' ); ?>">
+		<div class="cb-container pb-16"><nav class="mx-auto grid grid-cols-1 max-w-3xl gap-4 border-t border-slate-200 pt-6 text-sm sm:grid-cols-2" aria-label="<?php esc_attr_e( 'Post navigation', 'codexbloc' ); ?>">
 			<div><?php previous_post_link( '%link', '&larr; %title' ); ?></div>
 			<div class="sm:text-right"><?php next_post_link( '%link', '%title &rarr;' ); ?></div>
 		</nav>
@@ -53,6 +61,7 @@ get_header();
 		if ( comments_open() || get_comments_number() ) {
 			comments_template();
 		}
+		echo '</div>';
 	endwhile;
 	?>
 </main>

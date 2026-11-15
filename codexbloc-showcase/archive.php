@@ -25,24 +25,16 @@ $cb_newsletter = codexbloc_newsletter_enabled();
 <main id="main">
 
 	<!-- Intro -->
-	<section class="border-b border-slate-100 bg-gradient-to-b from-accent-soft/60 to-white">
-		<div class="cb-container py-14 sm:py-20">
-			<div class="mx-auto max-w-2xl text-center">
-				<p class="inline-flex items-center rounded-full border border-accent/20 bg-white px-3 py-1 text-xs font-medium text-accent"><?php esc_html_e( 'Showcase', 'codexbloc' ); ?></p>
-				<h1 class="mt-5 text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-5xl">
-					<?php
-					if ( $cb_current ) {
-						/* translators: %s: site type, e.g. Author Website */
-						printf( esc_html__( '%s samples', 'codexbloc' ), esc_html( $cb_current->name ) );
-					} else {
-						echo esc_html( cbsc_setting( 'title' ) );
-					}
-					?>
-				</h1>
-				<p class="mt-5 text-lg leading-relaxed tracking-tight text-slate-600"><?php echo esc_html( ( $cb_current && $cb_current->description ) ? $cb_current->description : cbsc_setting( 'intro' ) ); ?></p>
-			</div>
-		</div>
-	</section>
+	<?php
+	codexbloc_banner(
+		array(
+			'eyebrow' => __( 'Showcase', 'codexbloc' ),
+			/* translators: %s: site type, e.g. Author Website */
+			'title'   => $cb_current ? sprintf( __( '%s samples', 'codexbloc' ), $cb_current->name ) : cbsc_setting( 'title' ),
+			'text'    => ( $cb_current && $cb_current->description ) ? $cb_current->description : cbsc_setting( 'intro' ),
+		)
+	);
+	?>
 
 	<!-- Samples -->
 	<section class="cb-container py-12 sm:py-16">

@@ -37,42 +37,37 @@ $contact      = codexbloc_link( codexbloc_mod( 'contact_url' ) );
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 			<!-- Page header -->
-			<header class="border-b border-slate-200 bg-slate-50">
-				<div class="cb-container py-12 sm:py-16">
-					<div class="<?php echo $has_toc || $is_shop_page ? '' : 'mx-auto max-w-3xl'; ?>">
-						<nav aria-label="<?php esc_attr_e( 'Breadcrumb', 'codexbloc' ); ?>">
-							<ol class="flex flex-wrap items-center gap-1.5 text-sm text-slate-500" role="list">
-								<li><a class="transition hover:text-ink" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'codexbloc' ); ?></a></li>
-								<?php foreach ( array_reverse( get_post_ancestors( get_the_ID() ) ) as $ancestor ) : ?>
-									<li aria-hidden="true" class="text-slate-300">/</li>
-									<li><a class="transition hover:text-ink" href="<?php echo esc_url( get_permalink( $ancestor ) ); ?>"><?php echo esc_html( get_the_title( $ancestor ) ); ?></a></li>
-								<?php endforeach; ?>
-								<li aria-hidden="true" class="text-slate-300">/</li>
-								<li class="text-slate-700" aria-current="page"><?php the_title(); ?></li>
-							</ol>
-						</nav>
+			<?php
+			$crumbs = array( array( __( 'Home', 'codexbloc' ), home_url( '/' ) ) );
+			foreach ( array_reverse( get_post_ancestors( get_the_ID() ) ) as $ancestor ) {
+				$crumbs[] = array( get_the_title( $ancestor ), get_permalink( $ancestor ) );
+			}
+			$crumbs[] = array( get_the_title() );
 
-						<h1 class="mt-4 text-3xl font-semibold tracking-tight text-ink sm:text-5xl"><?php the_title(); ?></h1>
+			$updated = '';
+			if ( ! $is_shop_page ) {
+				$updated = '<p class="mt-5 inline-flex items-center gap-2 text-sm text-slate-500">'
+					. codexbloc_icon( 'clock', 'h-4 w-4' )
+					. sprintf(
+						/* translators: %s: last modified date. */
+						esc_html__( 'Last updated %s', 'codexbloc' ),
+						'<time datetime="' . esc_attr( get_the_modified_date( 'c' ) ) . '">' . esc_html( get_the_modified_date() ) . '</time>'
+					)
+					. '</p>';
+			}
 
-						<?php if ( has_excerpt() ) : ?>
-							<p class="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600"><?php echo esc_html( get_the_excerpt() ); ?></p>
-						<?php endif; ?>
-
-						<?php if ( ! $is_shop_page ) : ?>
-							<p class="mt-5 inline-flex items-center gap-2 text-sm text-slate-500">
-								<?php echo codexbloc_icon( 'clock', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-								<?php
-								printf(
-									/* translators: %s: last modified date. */
-									esc_html__( 'Last updated %s', 'codexbloc' ),
-									'<time datetime="' . esc_attr( get_the_modified_date( 'c' ) ) . '">' . esc_html( get_the_modified_date() ) . '</time>'
-								);
-								?>
-							</p>
-						<?php endif; ?>
-					</div>
-				</div>
-			</header>
+			codexbloc_banner(
+				array(
+					'tag'    => 'header',
+					'align'  => 'left',
+					'width'  => $has_toc || $is_shop_page ? 'max-w-3xl' : 'mx-auto max-w-3xl',
+					'crumbs' => $crumbs,
+					'title'  => get_the_title(),
+					'text'   => has_excerpt() ? get_the_excerpt() : '',
+					'extra'  => $updated,
+				)
+			);
+			?>
 
 			<!-- Page body -->
 			<div class="cb-container py-12 sm:py-16">

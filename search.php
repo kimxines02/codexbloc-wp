@@ -12,16 +12,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 
-<main id="main" class="cb-container py-10 sm:py-14">
-	<header class="mb-8 max-w-2xl">
-		<h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-			<?php
+<main id="main">
+	<?php
+	ob_start();
+	get_search_form();
+	$search_form = '<div class="mt-6 max-w-md">' . ob_get_clean() . '</div>';
+	codexbloc_banner(
+		array(
+			'align' => 'left',
 			/* translators: %s: search query */
-			printf( esc_html__( 'Search results for "%s"', 'codexbloc' ), esc_html( get_search_query() ) );
-			?>
-		</h1>
-		<div class="mt-5 max-w-md"><?php get_search_form(); ?></div>
-	</header>
+			'title' => sprintf( __( 'Search results for "%s"', 'codexbloc' ), get_search_query( false ) ),
+			'extra' => $search_form,
+		)
+	);
+	?>
+
+	<div class="cb-container py-12 sm:py-16">
 
 	<?php if ( have_posts() ) : ?>
 		<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -42,6 +48,7 @@ get_header();
 	<?php else : ?>
 		<p class="text-slate-600"><?php esc_html_e( 'No results. Try a different word.', 'codexbloc' ); ?></p>
 	<?php endif; ?>
+	</div>
 </main>
 
 <?php

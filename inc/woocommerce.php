@@ -85,32 +85,32 @@ function codexbloc_shop_hero() {
 		array( 'shield', __( 'Secure checkout', 'codexbloc' ) ),
 		array( 'chat', __( 'Support from the developers', 'codexbloc' ) ),
 	);
-	?>
-	<section class="cb-pastel-bg cb-under-header relative overflow-hidden border-b border-slate-900/5" aria-labelledby="cb-shop-title">
-		<div class="cb-container py-10 sm:py-14">
-			<?php
-			woocommerce_breadcrumb(
-				array(
-					'wrap_before' => '<nav class="woocommerce-breadcrumb cb-shop-crumbs" aria-label="' . esc_attr__( 'Breadcrumb', 'codexbloc' ) . '">',
-					'delimiter'   => '<span class="mx-2 text-slate-400" aria-hidden="true">/</span>',
-				)
-			);
-			?>
-			<h1 id="cb-shop-title" class="m-0 text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-5xl"><?php woocommerce_page_title(); ?></h1>
-			<?php if ( $description ) : ?>
-				<p class="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600"><?php echo esc_html( $description ); ?></p>
-			<?php endif; ?>
-			<ul class="mt-7 flex flex-wrap gap-2.5" role="list">
-				<?php foreach ( $assurances as $item ) : ?>
-					<li class="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/60 px-3.5 py-1.5 text-sm font-medium text-slate-700 backdrop-blur">
-						<?php echo codexbloc_icon( $item[0], 'h-4 w-4 text-accent' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-						<?php echo esc_html( $item[1] ); ?>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-	</section>
-	<?php
+	ob_start();
+	woocommerce_breadcrumb(
+		array(
+			'wrap_before' => '<nav class="woocommerce-breadcrumb cb-shop-crumbs" aria-label="' . esc_attr__( 'Breadcrumb', 'codexbloc' ) . '">',
+			'delimiter'   => '<span class="mx-2 text-slate-400" aria-hidden="true">/</span>',
+		)
+	);
+	$crumbs = ob_get_clean();
+
+	$chips = '<ul class="mt-7 flex flex-wrap gap-2.5" role="list">';
+	foreach ( $assurances as $item ) {
+		$chips .= '<li class="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/60 px-3.5 py-1.5 text-sm font-medium text-slate-700 backdrop-blur">'
+			. codexbloc_icon( $item[0], 'h-4 w-4 text-accent' )
+			. esc_html( $item[1] ) . '</li>';
+	}
+	$chips .= '</ul>';
+
+	codexbloc_banner(
+		array(
+			'align'  => 'left',
+			'before' => $crumbs,
+			'title'  => woocommerce_page_title( false ),
+			'text'   => $description,
+			'extra'  => $chips,
+		)
+	);
 }
 
 /**

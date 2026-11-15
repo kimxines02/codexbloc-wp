@@ -447,3 +447,76 @@ function codexbloc_legal_links() {
 		)
 	);
 }
+
+/**
+ * Page banner shared by every template: the animated pastel gradient that
+ * slides up under the transparent header, with optional breadcrumb, eyebrow
+ * pill, title, intro text and extra HTML.
+ *
+ * @param array $args {
+ *     @type string $tag     Wrapper element: 'section' (default) or 'header'.
+ *     @type string $align   'center' (default) or 'left'.
+ *     @type string $width   Classes for the inner column (overrides the default).
+ *     @type array  $crumbs  Breadcrumb as [ [ label, url ], ... ]; an item without url is the current page.
+ *     @type string $eyebrow Small pill above the title.
+ *     @type string $title   Title text (escaped here).
+ *     @type string $text    Intro text (escaped here).
+ *     @type string $before  Trusted HTML printed above the title, e.g. a ready-made breadcrumb.
+ *     @type string $extra   Trusted HTML printed after the text (already escaped by the caller).
+ * }
+ */
+function codexbloc_banner( $args ) {
+	$args   = wp_parse_args(
+		$args,
+		array(
+			'tag'     => 'section',
+			'align'   => 'center',
+			'width'   => '',
+			'crumbs'  => array(),
+			'before'  => '',
+			'eyebrow' => '',
+			'title'   => '',
+			'text'    => '',
+			'extra'   => '',
+		)
+	);
+	$center = 'center' === $args['align'];
+	$tag    = 'header' === $args['tag'] ? 'header' : 'section';
+	$width  = $args['width'] ? $args['width'] : ( $center ? 'mx-auto max-w-2xl text-center' : 'max-w-3xl' );
+	?>
+	<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput ?> class="cb-pastel-bg cb-under-header relative isolate overflow-hidden border-b border-slate-900/5">
+		<div class="cb-container pb-12 pt-10 sm:pb-16 sm:pt-14">
+			<div class="<?php echo esc_attr( $width ); ?>">
+				<?php if ( $args['crumbs'] ) : ?>
+					<nav class="mb-5" aria-label="<?php esc_attr_e( 'Breadcrumb', 'codexbloc' ); ?>">
+						<ol class="<?php echo esc_attr( 'flex flex-wrap items-center gap-1.5 text-sm font-medium text-slate-500' . ( $center ? ' justify-center' : '' ) ); ?>" role="list">
+							<?php foreach ( $args['crumbs'] as $i => $crumb ) : ?>
+								<?php if ( $i ) : ?>
+									<li aria-hidden="true" class="text-slate-400">/</li>
+								<?php endif; ?>
+								<?php if ( ! empty( $crumb[1] ) ) : ?>
+									<li><a class="text-slate-600 transition hover:text-accent" href="<?php echo esc_url( $crumb[1] ); ?>"><?php echo esc_html( $crumb[0] ); ?></a></li>
+								<?php else : ?>
+									<li class="text-slate-500" aria-current="page"><?php echo esc_html( $crumb[0] ); ?></li>
+								<?php endif; ?>
+							<?php endforeach; ?>
+						</ol>
+					</nav>
+				<?php endif; ?>
+				<?php echo $args['before']; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+				<?php if ( $args['eyebrow'] ) : ?>
+					<p class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/60 px-3 py-1 text-xs font-medium text-accent backdrop-blur">
+						<span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+						<?php echo esc_html( $args['eyebrow'] ); ?>
+					</p>
+				<?php endif; ?>
+				<h1 class="m-0 text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-5xl"><?php echo esc_html( $args['title'] ); ?></h1>
+				<?php if ( $args['text'] ) : ?>
+					<p class="<?php echo esc_attr( 'mt-4 text-lg leading-relaxed text-slate-600' . ( $center ? '' : ' max-w-2xl' ) ); ?>"><?php echo esc_html( $args['text'] ); ?></p>
+				<?php endif; ?>
+				<?php echo $args['extra']; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+			</div>
+		</div>
+	</<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
+	<?php
+}

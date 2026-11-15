@@ -48,17 +48,15 @@ if ( empty( $_POST['codexbloc_contact'] ) ) {
 <main id="main">
 
 	<!-- Intro -->
-	<section class="border-b border-slate-100 bg-gradient-to-b from-accent-soft/60 to-white">
-		<div class="cb-container py-14 sm:py-20">
-			<div class="mx-auto max-w-2xl text-center">
-				<p class="inline-flex items-center rounded-full border border-accent/20 bg-white px-3 py-1 text-xs font-medium text-accent"><?php esc_html_e( 'Contact us', 'codexbloc' ); ?></p>
-				<?php while ( have_posts() ) : the_post(); ?>
-					<h1 class="mt-5 text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-5xl"><?php esc_html_e( 'How can we help?', 'codexbloc' ); ?></h1>
-					<p class="mt-5 text-lg leading-relaxed tracking-tight text-slate-600"><?php esc_html_e( 'Questions about a plugin, a theme, or a custom project? Send us a message and the people who build our products will get back to you.', 'codexbloc' ); ?></p>
-				<?php endwhile; ?>
-			</div>
-		</div>
-	</section>
+	<?php
+	codexbloc_banner(
+		array(
+			'eyebrow' => __( 'Contact us', 'codexbloc' ),
+			'title'   => __( 'How can we help?', 'codexbloc' ),
+			'text'    => __( 'Questions about a plugin, a theme, or a custom project? Send us a message and the people who build our products will get back to you.', 'codexbloc' ),
+		)
+	);
+	?>
 
 	<section class="cb-container py-14 sm:py-20">
 		<div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
