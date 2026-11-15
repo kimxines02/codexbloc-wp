@@ -146,34 +146,6 @@ function codexbloc_service_steps() {
 }
 
 /**
- * About page: "At a glance" facts shown beside the intro.
- */
-function codexbloc_about_facts() {
-	return array(
-		array(
-			'icon'  => 'puzzle',
-			'label' => __( 'What we build', 'codexbloc' ),
-			'value' => __( 'Plugins, themes, modules and websites', 'codexbloc' ),
-		),
-		array(
-			'icon'  => 'code',
-			'label' => __( 'Platforms', 'codexbloc' ),
-			'value' => __( 'WordPress, WooCommerce & PrestaShop', 'codexbloc' ),
-		),
-		array(
-			'icon'  => 'download',
-			'label' => __( 'Our plugins', 'codexbloc' ),
-			'value' => __( 'Free to download from WordPress.org', 'codexbloc' ),
-		),
-		array(
-			'icon'  => 'chat',
-			'label' => __( 'Support', 'codexbloc' ),
-			'value' => __( 'Straight from the people who build it', 'codexbloc' ),
-		),
-	);
-}
-
-/**
  * About page: story paragraphs. Typing content in the page editor replaces these.
  */
 function codexbloc_about_story() {
@@ -185,13 +157,26 @@ function codexbloc_about_story() {
 }
 
 /**
- * About page: promises listed under the story.
+ * About page: numbered principles.
  */
-function codexbloc_about_promises() {
+function codexbloc_about_principles() {
 	return array(
-		__( 'Free plugins you can install from WordPress.org', 'codexbloc' ),
-		__( 'Lean code that keeps your store fast', 'codexbloc' ),
-		__( 'Support from the people who write the code', 'codexbloc' ),
+		array(
+			'title' => __( 'One job, done well', 'codexbloc' ),
+			'text'  => __( 'Every product solves one clear problem. No bloated settings pages, no features you will never use.', 'codexbloc' ),
+		),
+		array(
+			'title' => __( 'Speed is a feature', 'codexbloc' ),
+			'text'  => __( 'Lean code and no extra scripts. If it slows your store down, it does not ship.', 'codexbloc' ),
+		),
+		array(
+			'title' => __( 'Plain language', 'codexbloc' ),
+			'text'  => __( 'Clear settings, clear docs and clear answers. You should never need a developer to set up our tools.', 'codexbloc' ),
+		),
+		array(
+			'title' => __( 'We stand behind it', 'codexbloc' ),
+			'text'  => __( 'We test on current releases, fix what breaks and answer your questions ourselves.', 'codexbloc' ),
+		),
 	);
 }
 
