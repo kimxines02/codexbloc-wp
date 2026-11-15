@@ -146,7 +146,7 @@ if ( codexbloc_newsletter_enabled() ) {
 		<div class="mb-8 flex items-end justify-between gap-4">
 			<div>
 				<h2 id="cb-products-title" class="text-2xl font-semibold tracking-tight text-ink sm:text-3xl"><?php esc_html_e( 'Our products', 'codexbloc' ); ?></h2>
-				<p class="mt-2 text-slate-600"><?php esc_html_e( 'Plugins and themes you can install today.', 'codexbloc' ); ?></p>
+				<p class="mt-2 text-slate-600"><?php esc_html_e( 'Plugins, themes and PrestaShop modules you can use today.', 'codexbloc' ); ?></p>
 			</div>
 			<a class="hidden shrink-0 items-center gap-1 text-sm font-medium text-accent hover:text-accent-dark sm:inline-flex" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'View all', 'codexbloc' ); ?><?php echo codexbloc_icon( 'arrow', 'h-4 w-4' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 		</div>
@@ -154,23 +154,41 @@ if ( codexbloc_newsletter_enabled() ) {
 		<?php
 		$products_shown = false;
 		if ( $has_wc ) {
-			$query_args = array(
-				'post_type'           => 'product',
-				'posts_per_page'      => 4,
-				'ignore_sticky_posts' => true,
-				'tax_query'           => array( // phpcs:ignore WordPress.DB.SlowDBQuery
-					array(
-						'taxonomy' => 'product_visibility',
-						'field'    => 'name',
-						'terms'    => 'featured',
-					),
+			// Featured products first, then the newest ones to fill the row.
+			$limit       = 4;
+			$visible_tax = array( // phpcs:ignore WordPress.DB.SlowDBQuery
+				array(
+					'taxonomy' => 'product_visibility',
+					'field'    => 'name',
+					'terms'    => array( 'exclude-from-catalog' ),
+					'operator' => 'NOT IN',
 				),
 			);
-			$loop = new WP_Query( $query_args );
-			if ( ! $loop->have_posts() ) {
-				unset( $query_args['tax_query'] );
-				$loop = new WP_Query( $query_args );
-			}
+			$featured_ids = array_slice( array_map( 'intval', wc_get_featured_product_ids() ), 0, $limit );
+			$latest_ids   = get_posts(
+				array(
+					'post_type'      => 'product',
+					'post_status'    => 'publish',
+					'posts_per_page' => $limit,
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+					'fields'         => 'ids',
+					'tax_query'      => $visible_tax, // phpcs:ignore WordPress.DB.SlowDBQuery
+				)
+			);
+			$product_ids = array_slice( array_values( array_unique( array_merge( $featured_ids, $latest_ids ) ) ), 0, $limit );
+
+			$loop = new WP_Query(
+				array(
+					'post_type'           => 'product',
+					'post_status'         => 'publish',
+					'post__in'            => $product_ids ? $product_ids : array( 0 ),
+					'orderby'             => 'post__in',
+					'posts_per_page'      => $limit,
+					'ignore_sticky_posts' => true,
+					'tax_query'           => $visible_tax, // phpcs:ignore WordPress.DB.SlowDBQuery
+				)
+			);
 			if ( $loop->have_posts() ) {
 				$products_shown = true;
 				echo '<ul class="products cb-grid-4">';
