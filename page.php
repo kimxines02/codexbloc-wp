@@ -42,6 +42,10 @@ $contact      = codexbloc_link( codexbloc_mod( 'contact_url' ) );
 			foreach ( array_reverse( get_post_ancestors( get_the_ID() ) ) as $ancestor ) {
 				$crumbs[] = array( get_the_title( $ancestor ), get_permalink( $ancestor ) );
 			}
+			// My account sub-pages (Orders, Downloads...): Home / My account / Orders.
+			if ( function_exists( 'is_account_page' ) && is_account_page() && is_wc_endpoint_url() ) {
+				$crumbs[] = array( get_post_field( 'post_title', get_the_ID() ), wc_get_page_permalink( 'myaccount' ) );
+			}
 			$crumbs[] = array( get_the_title() );
 
 			$updated = '';
