@@ -340,7 +340,7 @@ div.type-product > .onsale { @apply left-4 top-4; }
 .cb-buy { @apply mt-6 flex max-w-xl flex-col gap-3 sm:flex-row sm:items-start; }
 .cb-buy > :empty { display: none; }
 .cb-buy > *, .cb-buy form.cart > * { @apply m-0 w-full min-w-0 sm:flex-1 sm:basis-0; }
-.cb-buy form.cart { @apply m-0 max-w-none flex-col flex-nowrap sm:flex-row; }
+.cb-buy form.cart { @apply m-0 max-w-none flex-row flex-nowrap; }
 .cb-buy form.cart > input[type="hidden"], .cb-buy form.cart > .quantity:has(input[type="hidden"]) { display: none; }
 .cb-buy .single_add_to_cart_button { @apply w-full px-5; }
 .cb-buy .ppc-button-wrapper, .cb-buy #ppc-button-ppcp-gateway,
